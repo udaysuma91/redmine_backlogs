@@ -33,3 +33,4 @@ group :development do
   gem "thin"
   gem 'cucumber-rails', '=0.3.2'
 end
+gem "xml-simple"
