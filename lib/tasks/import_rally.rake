@@ -110,26 +110,26 @@ class Converter
       story['obj'] = obj
     }
 
-    if @epictracker
-      @parents.each{|key, name|
-        parent = @stories[key]['obj']
-        if parent
-          parent.tracker = @epictracker
-          parent.save!
-          puts "Set tracker to #{@epictracker} for #{parent}"
-        else
-          puts "Parent #{key} not found"
-        end
-        
-      }
-      @stories.each{|ref, story|
-          obj = story['obj']
-          parent = @stories[story['parent']]
-          obj.parent_issue_id = parent.id if parent
-          obj.save!
-          puts "Set parent to #{parent} for #{obj}" if parent
-      }
-    end
+#    if @epictracker
+#      @parents.each{|key, name|
+#        parent = @stories[key]['obj']
+#        if parent
+#          parent.tracker = @epictracker
+#          parent.save!
+#          puts "Set tracker to #{@epictracker} for #{parent}"
+#        else
+#          puts "Parent #{key} not found"
+#        end
+#        
+#      }
+#      @stories.each{|ref, story|
+#          obj = story['obj']
+#          parent = @stories[story['parent']]
+#          obj.parent_issue_id = parent.id if parent
+#          obj.save!
+#          puts "Set parent to #{parent} for #{obj}" if parent
+#      }
+#    end
   end
 
   def process(data)
