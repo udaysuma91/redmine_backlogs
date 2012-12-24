@@ -32,12 +32,34 @@ module Backlogs
         @history ||= RbIssueHistory.find_or_create_by_issue_id(self.id)
       end
 
+      def is_epic?
+        return RbEpic.trackers.include?(tracker_id) && self.epic.nil?
+      end
+
       def is_story?
         return RbStory.trackers.include?(tracker_id)
       end
 
       def is_task?
         return (tracker_id == RbTask.tracker)
+      end
+
+      def epic
+        return @rb_epic if @rb_epic_cached
+
+        @rb_epic_cached = true
+
+        if self.new_record?
+          parent_id = self.parent_id
+          parent_id = self.parent_issue_id if parent_id.blank?
+          parent_id = nil if parent_id.blank?
+          @rb_epic = parent_id ? RbEpic.find(parent_id) : nil
+          @rb_epic = RbEpic.find(:first, :order => 'lft DESC', :conditions => [ "root_id = ? and lft <= ? and rgt >= ? and tracker_id in (?)", @rb_epic.root_id, @rb_epic.lft, @rb_epic.rgt, RbEpic.trackers ]) if @rb_epic && !RbEpic.trackers.include?(@rb_epic.tracker_id)
+        else
+          @rb_epic = RbEpic.find(:first, :order => 'lft DESC', :conditions => [ "root_id = ? and lft < ? and rgt > ? and tracker_id in (?)", root_id, lft, rgt, RbEpic.trackers ])
+        end
+
+        return @rb_epic
       end
 
       def story
@@ -111,6 +133,7 @@ module Backlogs
               self.start_date = nil
               self.due_date = nil
             end
+            #else epic - no such automatism please.
           end
         end
         self.remaining_hours = self.leaves.sum("COALESCE(remaining_hours, 0)").to_f unless self.leaves.empty?

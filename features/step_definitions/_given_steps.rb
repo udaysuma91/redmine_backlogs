@@ -207,10 +207,18 @@ Given /^the (.*) project has the backlogs plugin enabled$/ do |project_id|
   @project.enable_module!('backlogs')
 
   # Configure the story and task trackers
+  epic_trackers = [(Tracker.find_by_name('Epic') || Tracker.create!(:name => 'Epic'))]
   story_trackers = [(Tracker.find_by_name('Story') || Tracker.create!(:name => 'Story'))]
   task_tracker = (Tracker.find_by_name('Task') || Tracker.create!(:name => 'Task'))
 
   copy_from = Tracker.find(:first, :conditions=>{:name => 'Feature request'})
+  epic_trackers.each{|tracker|
+    if copy_from.respond_to? :workflow_rules #redmine 2 master
+      tracker.workflow_rules.copy(copy_from)
+    else
+      tracker.workflows.copy(copy_from)
+    end
+  }
   story_trackers.each{|tracker|
     if copy_from.respond_to? :workflow_rules #redmine 2 master
       tracker.workflow_rules.copy(copy_from)
@@ -226,8 +234,10 @@ Given /^the (.*) project has the backlogs plugin enabled$/ do |project_id|
     task_tracker.workflows.copy(copy_from)
   end
 
+  epic_trackers = epic_trackers.map{|tracker| tracker.id }
   story_trackers = story_trackers.map{|tracker| tracker.id }
   task_tracker = task_tracker.id
+  Backlogs.setting[:epic_trackers] = epic_trackers
   Backlogs.setting[:story_trackers] = story_trackers
   Backlogs.setting[:task_tracker] = task_tracker
 

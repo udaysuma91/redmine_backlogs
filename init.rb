@@ -51,6 +51,7 @@ Redmine::Plugin.register :redmine_backlogs do
   version 'v0.9.35'
 
   settings :default => {
+                         :epic_trackers             => nil,
                          :story_trackers            => nil,
                          :task_tracker              => nil,
                          :card_spec                 => nil,
