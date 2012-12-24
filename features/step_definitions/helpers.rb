@@ -160,6 +160,14 @@ def initialize_story_params(project_id = nil)
   @story
 end
 
+def initialize_epic_params(project_id = nil)
+  @epic = HashWithIndifferentAccess.new(RbEpic.new.attributes)
+  @epic['project_id'] = project_id ? Project.find(project_id).id : @project.id
+  @epic['tracker_id'] = RbEpic.trackers.first
+  @epic['author_id']  = @user.id
+  @epic
+end
+
 def initialize_task_params(story_id)
   params = HashWithIndifferentAccess.new(RbTask.new.attributes)
   params['project_id'] = RbStory.find_by_id(story_id).project_id

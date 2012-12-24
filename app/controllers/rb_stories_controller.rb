@@ -30,7 +30,11 @@ class RbStoriesController < RbApplicationController
   def create
     params['author_id'] = User.current.id
     begin
-      story = RbStory.create_and_position(params)
+      if RbEpic.trackers.include?(params[:tracker_id].to_i)
+        story = RbEpic.create_and_position(params)
+      else
+        story = RbStory.create_and_position(params)
+      end
     rescue => e
       render :text => e.message.blank? ? e.to_s : e.message, :status => 400
       return

@@ -1,4 +1,4 @@
-class RbEpic < RbStory
+class RbEpic < Issue
   unloadable
 
   def self.find_options(options)

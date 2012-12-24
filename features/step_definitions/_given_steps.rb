@@ -7,6 +7,7 @@ Before do
   @projects = nil
   @sprint = nil
   @story = nil
+  @epic = nil
   Backlogs.setting[:include_sat_and_sun] = false
 end
 
@@ -119,7 +120,7 @@ Given /^I am viewing the backlog settings page for project (.*)$/ do |project_na
   verify_request_status(200)
 end
 
-Given /^I set the (.+) of the story to (.+)$/ do |attribute, value|
+Given /^I set the (.+) of the (story|epic) to (.+)$/ do |attribute, klass, value|
   if attribute=="tracker"
     attribute="tracker_id"
     value = Tracker.find(:first, :conditions => ["name=?", value]).id
@@ -242,7 +243,7 @@ Given /^the (.*) project has the backlogs plugin enabled$/ do |project_id|
   Backlogs.setting[:task_tracker] = task_tracker
 
   # Make sure these trackers are enabled in the project
-  @project.update_attribute :tracker_ids, (story_trackers << task_tracker)
+  @project.update_attribute :tracker_ids, (story_trackers + epic_trackers << task_tracker)
 
   # make sure existing stories don't occupy positions that the tests are going to use
   Issue.connection.execute("update issues set position = (position - #{Issue.minimum(:position)}) + #{Issue.maximum(:position)} + 50000")
