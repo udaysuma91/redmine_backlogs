@@ -4,7 +4,12 @@ class RbMasterBacklogsController < RbApplicationController
   unloadable
 
   def show
-    product_backlog_stories = RbStory.product_backlog(@project)
+    if params[:scope] == 'epic'
+      puts "EPIC backlog requested #{params}"
+      product_backlog_stories = RbEpic.product_backlog(@project)
+    else
+      product_backlog_stories = RbStory.product_backlog(@project)
+    end
 
     #collect all sprints which are sharing into @project
     sprints = @project.open_shared_sprints

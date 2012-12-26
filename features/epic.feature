@@ -12,6 +12,9 @@ Feature: Product Owner Epic
         | Sprint 001 | 2010-01-01        | 2010-01-31     |
         | Sprint 002 | 2010-02-01        | 2010-02-28     |
       And I have deleted all existing issues
+      And I have defined the following epics in the product backlog:
+        | subject |
+        | Epic 1 |
       And I have defined the following stories in the product backlog:
         | subject |
         | Story 1 |
@@ -23,10 +26,27 @@ Feature: Product Owner Epic
         | Story A | Sprint 001 |
         | Story B | Sprint 001 |
 
-  Scenario: Create a new Epic
+  Scenario: View the product backlog
     Given I am viewing the master backlog
-      And I want to create an epic
-      And I set the subject of the epic to A Whole New Epic
-     When I create the epic
-     Then the request should complete successfully
-      And the 1st epic in the product backlog should be A Whole New Epic
+     Then I should see the product backlog
+      And I should see 4 stories in the product backlog
+      And I should see 2 sprint backlogs
+    Given I am viewing the epic backlog
+     Then I should see 1 epics in the epic backlog
+
+#  Scenario: Create a new Epic
+#    Given I am viewing the master backlog
+#      And I want to create an epic
+#      And I set the subject of the epic to A Whole New Epic
+#     When I create the epic
+#     Then the request should complete successfully
+#      And the 1st epic in the product backlog should be A Whole New Epic
+
+#  Scenario: Update a Epic
+#    Given I am viewing the master backlog
+#      And I want to edit the epic with subject Epic 1
+#      And I set the subject of the story to Relaxdiego was here
+#     When I update the story
+#     Then the request should complete successfully
+#      And the story should have a subject of Relaxdiego was here
+##      And the story should be at position 1

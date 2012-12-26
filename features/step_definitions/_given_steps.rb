@@ -334,14 +334,18 @@ Given /^I have deleted all existing issues$/ do
   @project.issues.delete_all
 end
 
-Given /^I have defined the following stories in the product backlog:$/ do |table|
+Given /^I have defined the following (stories|epics) in the product backlog:$/ do |typ, table|
   table.hashes.each do |story|
     if story['project_id']
       project = get_project(story.delete('project_id'))
     else
       project = @project
     end
-    params = initialize_story_params project.id
+    if typ == 'epics'
+      params = initialize_epic_params project.id
+    else
+      params = initialize_story_params project.id
+    end
     params['subject'] = story.delete('subject').strip
     params['story_points'] = story.delete('points').to_i if story['points'].to_s != ''
     params['release_id'] = RbRelease.find_by_name(story['release']).id if story['release'].to_s.strip != ''
@@ -352,7 +356,11 @@ Given /^I have defined the following stories in the product backlog:$/ do |table
     # NOTE: We're bypassing the controller here because we're just
     # setting up the database for the actual tests. The actual tests,
     # however, should NOT bypass the controller
-    RbStory.create_and_position(params).move_to_bottom
+    if typ == 'epics'
+      RbEpic.create_and_position(params).move_to_bottom
+    else
+      RbStory.create_and_position(params).move_to_bottom
+    end
   end
 end
 
