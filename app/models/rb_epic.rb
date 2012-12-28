@@ -101,18 +101,12 @@ class RbEpic < Issue
     return sprint_of
   end
 
-  def self.epics_open(project)
-    stories = []
-
-    RbEpic.find(:all,
-                  :order => :position,
-                  :conditions => ["project_id = ? AND tracker_id in (?) and is_closed = ?",project.id,RbEpic.trackers,false],
-                  :joins => :status).each_with_index {|story, i|
-      story.rank = i + 1
-      stories << story
-    }
-    return stories
-  end
+  scope :epics, lambda { 
+    where('tracker_id in (?)', RbEpic.trackers)
+  }
+  scope :in_projects, lambda { |projects|
+    where('project_id in (?)', projects.map{|p|p.id})
+  }
 
   def self.create_and_position(params)
     params['prev'] = params.delete('prev_id') if params.include?('prev_id')

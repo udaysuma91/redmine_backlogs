@@ -4,10 +4,9 @@ class RbEpicboardsController < RbApplicationController
   unloadable
 
   def show
-    stories = RbStory.stories_open(@project)
-    @epics = RbEpic.epics_open(@project)
-    puts "STORIES on epic board #{stories.map{|s|s.subject}}"    
-    puts "EPICS on epic board #{@epics.map{|s|s.subject}}"    
+    @projects = @project.projects_in_shared_product_backlog #self or self and descendants
+    stories = RbStory.in_projects(@projects).stories.visible.order(:position)
+    @epics = RbEpic.in_projects(@projects).epics.visible.order(:position)
     @story_ids    = stories.map{|s| s.id}
 
     @settings = Backlogs.settings

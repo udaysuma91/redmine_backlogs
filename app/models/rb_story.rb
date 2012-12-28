@@ -128,6 +128,13 @@ class RbStory < Issue
     return release_of
   end
 
+  scope :stories, lambda { 
+    where('tracker_id in (?)', RbStory.trackers)
+  }
+  scope :in_projects, lambda { |projects|
+    where('project_id in (?)', projects.map{|p|p.id})
+  }
+
   def self.create_and_position(params)
     params['prev'] = params.delete('prev_id') if params.include?('prev_id')
     params['next'] = params.delete('next_id') if params.include?('next_id')
