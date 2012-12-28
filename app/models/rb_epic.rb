@@ -133,6 +133,11 @@ class RbEpic < Issue
           :order => "updated_on ASC")
   end
 
+  def self.configured
+    # requires restart? #return @epics_configured_cached unless @epics_configured_cached.nil?
+    @epics_configured_cached = RbEpic.trackers(:type => :trackers).length > 0
+  end
+
   def self.trackers(options = {})
     # legacy
     options = {:type => options} if options.is_a?(Symbol)
