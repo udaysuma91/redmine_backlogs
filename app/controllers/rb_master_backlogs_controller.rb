@@ -5,11 +5,11 @@ class RbMasterBacklogsController < RbApplicationController
 
   def show
     if params[:scope] == 'epic'
-      puts "EPIC backlog requested #{params}"
-      product_backlog_stories = RbEpic.product_backlog(@project)
+      cls = RbEpic
     else
-      product_backlog_stories = RbStory.product_backlog(@project)
+      cls = RbStory
     end
+    product_backlog_stories = cls.product_backlog(@project)
 
     #collect all sprints which are sharing into @project
     sprints = @project.open_shared_sprints
@@ -17,14 +17,14 @@ class RbMasterBacklogsController < RbApplicationController
     #TIB (ajout des sprints fermés)
     c_sprints = @project.closed_shared_sprints
 
-    last_story = RbStory.find(
+    last_story = cls.find(
                           :first,
                           :conditions => ["project_id=? AND tracker_id in (?)", @project.id, RbStory.trackers],
                           :order => "updated_on DESC"
                           )
     @last_update = (last_story ? last_story.updated_on : nil)
     @product_backlog = { :sprint => nil, :stories => product_backlog_stories }
-    sprints_backlog_storie_of = RbStory.backlogs_by_sprint(@project, [sprints, c_sprints].flatten)
+    sprints_backlog_storie_of = cls.backlogs_by_sprint(@project, [sprints, c_sprints].flatten)
     @sprint_backlogs = sprints.map{ |s| { :sprint => s, :stories => sprints_backlog_storie_of[s.id] } }
     @c_sprint_backlogs = c_sprints.map{|s| { :sprint => s, :stories => sprints_backlog_storie_of[s.id] } }
 
