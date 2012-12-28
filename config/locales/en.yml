@@ -37,6 +37,8 @@ en:
   backlogs_product_backlog: Product backlog
   backlogs_sprints: Sprints
   backlogs_story: Story
+  backlogs_epic: Epic
+  rb_stories_in_no_epic: Stories not sorted into an Epic
   backlogs_story_tracker: Story trackers
   backlogs_epic_tracker: Epic trackers
   backlogs_task: Task

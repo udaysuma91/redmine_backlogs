@@ -22,6 +22,7 @@ end
 Given /^I am a product owner of the project$/ do
   role = Role.find(:first, :conditions => "name='Manager'")
   role.permissions << :view_master_backlog
+  role.permissions << :view_epicboards
   role.permissions << :create_stories
   role.permissions << :update_stories
   role.permissions << :view_releases
@@ -41,6 +42,7 @@ Given /^I am a scrum master of the project$/ do
   role.permissions << :view_master_backlog
   role.permissions << :view_releases
   role.permissions << :view_taskboards
+  role.permissions << :view_epicboards
   role.permissions << :update_sprints
   role.permissions << :update_stories
   role.permissions << :create_impediments

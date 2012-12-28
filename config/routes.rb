@@ -62,6 +62,9 @@ def rb_common_routes(rb)
   rb_match rb, 'master_backlog/:project_id/menu',
                :to => 'rb_master_backlogs#menu'
 
+  rb_match rb, 'epicboard/:project_id',
+               :to => 'rb_epicboards#show'
+
   rb_match rb, 'impediment/create', :to => 'rb_impediments#create'
   rb_match rb, 'impediment/update/:id', :to => 'rb_impediments#update'
 
@@ -99,7 +102,6 @@ ActionController::Routing::Routes.draw do |map|
     rb.resource   :task,             :except => :index,             :controller => :rb_tasks,           :as => "task/:id"
     rb.resources  :tasks,            :only => :index,               :controller => :rb_tasks,           :as => "tasks/:story_id"
     rb.resource   :taskboard,        :only => :show,                :controller => :rb_taskboards,      :as => "taskboards/:sprint_id"
-
     rb_common_routes rb
   end
 end

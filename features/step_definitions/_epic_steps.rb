@@ -4,6 +4,12 @@ Given /^I am viewing the epic backlog$/ do
   verify_request_status(200)
 end
 
+Given /^I am viewing the epicboard$/ do
+  visit url_for(:controller => :projects, :action => :show, :id => @project.identifier, :only_path=>true)
+  visit url_for(:controller => :rb_epicboards, :action => :show, :project_id => @project.identifier, :only_path=>true)
+  verify_request_status(200)
+end
+
 Given /^I want to create an epic$/ do
   @story_params = initialize_epic_params
 end

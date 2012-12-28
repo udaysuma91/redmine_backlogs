@@ -105,6 +105,9 @@ Redmine::Plugin.register :redmine_backlogs do
                                         :rb_burndown_charts  => [:embedded, :show, :print],
                                         :rb_updated_items    => :show
                                       }
+    permission :view_epicboards,      {
+                                        :rb_epicboards       => :show
+                                      }
 
     # Release permissions
     permission :modify_releases,      { :rb_releases => [:new, :create, :edit, :snapshot, :destroy]  }

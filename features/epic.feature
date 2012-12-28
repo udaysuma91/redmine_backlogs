@@ -50,3 +50,6 @@ Feature: Product Owner Epic
 #     Then the request should complete successfully
 #      And the story should have a subject of Relaxdiego was here
 ##      And the story should be at position 1
+
+  Scenario: View the epic board
+    Given I am viewing the epicboard
