@@ -107,6 +107,7 @@ See RB.Taskboard.initialize()
   background-color:#ffffcc;
 }
 .story,
+.epic,
 .label_sprint_impediments{
   -moz-box-shadow: 2px 2px 2px #CCCCCC;
   -webkit-box-shadow: 2px 2px 2px #CCCCCC;;
@@ -125,7 +126,8 @@ See RB.Taskboard.initialize()
   position:relative;
   width:190px;
 }
-.story .id{
+.story .id,
+.epic .id {
   -moz-border-radius:4px 4px 4px 4px;
   -webkit-border-radius:4px 4px 4px 4px;
   border-radius:4px 4px 4px 4px;
@@ -137,14 +139,18 @@ See RB.Taskboard.initialize()
   line-height: 14px;
 }
 .story .id a,
-.story .id .remaininghours {
+.epic .id a,
+.story .id .remaininghours,
+.epic .id .remaininghours {
   float:right;
   margin-left: 4px;
 }
-.story .id .assignee{
+.story .id .assignee,
+.epic .id .assignee{
   font-weight: bold;
 }
-.story .subject{
+.story .subject,
+.epic .subject{
   height:63px;
   line-height:13px;
   margin-top:0;
@@ -152,16 +158,15 @@ See RB.Taskboard.initialize()
   padding:2px;
   width:186px;
 }
+.epic .project,
 .story .project {
   text-align:left;
 }
-.story .id .v {
-  display:none;
-}
+.epic.closed .subject,
 .story.closed .subject{
   text-decoration:line-through;
 }
-.story .story_points.editable{
+#tasboard .story .story_points.editable{
   -moz-border-radius:15px 15px 15px 15px;
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
@@ -173,7 +178,8 @@ See RB.Taskboard.initialize()
   bottom:-5px;
   right:-5px;
 }
-.story .story_points.editable:empty{
+.story .story_points.editable:empty,
+.epic .story_points.editable:empty{
   display:none;
 }
 
@@ -215,19 +221,20 @@ See RB.Taskboard.initialize()
   height:12px;
   opacity:0.5;
   overflow:hidden;
+  padding: 0;
   padding-bottom:1px;
   padding-right:3px;
   text-align:right;
   width:82px;
 }
-.issue .id .v{
+.story .v,
+.epic .v,
+.issue .v,
+.issue .tracker_id {
   display:none;
 }
 .issue .id a{
   opacity:1.0;
-}
-.issue .editable:hover{
-  background-color:transparent;
 }
 .issue .subject.editable{
   height:52px;
@@ -251,9 +258,6 @@ See RB.Taskboard.initialize()
   width:81px;
   white-space:nowrap;
 }
-.issue .assigned_to_id .v{
-  display:none;
-}
 
 .issue .priority_id.editable{
   -moz-border-radius:15px 15px 15px 15px;
@@ -271,11 +275,8 @@ See RB.Taskboard.initialize()
   right:-5px;
 }
 
-.issue .priority_id .v{
-  display:none;
-}
-
-.issue .remaining_hours.editable{
+.issue .remaining_hours.editable,
+#epicboard .issue .story_points{
   -moz-border-radius:15px 15px 15px 15px;
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
@@ -388,10 +389,12 @@ See RB.Taskboard.initialize()
 
 /* compact view */
 .compact .story,
+.compact .epic,
 .compact .label_sprint_impediments{
   height:15px;
 }
-.compact .story .subject{
+.compact .story .subject,
+.compact .epic .subject{
   display:none;
 }
 .compact .issue{

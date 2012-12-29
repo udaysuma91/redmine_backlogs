@@ -1,6 +1,6 @@
 <!-- EPICBOARD VIEW -->
 <% content_for :head_tags do %>
-  <%= javascript_include_tag  'show_main', 'board_updater', 'taskboard_updater', 'taskboard', 'model', 'issue', 'task', 'impediment',  'jquery/jquery.multiselect.js', 'jquery/jquery.qtip.pack.js', 'jquery/jquery.qtip.setup.js', :plugin => 'redmine_backlogs' %>
+  <%= javascript_include_tag  'show_main', 'board_updater', 'epicboard', 'model', 'issue', 'task', 'story', 'jquery/jquery.multiselect.js', 'jquery/jquery.qtip.pack.js', 'jquery/jquery.qtip.setup.js', :plugin => 'redmine_backlogs' %>
   <%= stylesheet_link_tag 'jquery/jquery.qtip.css', :plugin => 'redmine_backlogs' %>
   <%= stylesheet_link_tag 'jquery/jquery.multiselect.css', :plugin => 'redmine_backlogs' %>
   <%= stylesheet_link_tag 'taskboard.css', :plugin => 'redmine_backlogs', :media => 'print,screen' %>
@@ -23,13 +23,11 @@
 
 <%- content_for :view_specific_links do %>
   <span id="col_width"><%= l(:label_column_width) %>: <input name="col_width"/></span>
-  <a id="disable_autorefresh">Disable Auto-refresh</a>
-  <a id="refresh">Refresh</a>
 <%- end %>
 
 <%- content_for :main do %>
 <span id="userid" style="visibility:hidden;"><%= User.current.id %></span>
-<div id="taskboard">
+<div id="epicboard">
 
   <table id="board_header" cellspacing="0">
     <tr>
@@ -40,11 +38,11 @@
     </tr>
   </table>
 
-  <table id="tasks" class="board" cellspacing="0">
+  <table id="stories" class="board" cellspacing="0">
     <%- @epics.each do |story| %>
     <tr id="swimlane-<%= story.id %>" class="story-swimlane">
       <td>
-        <div class="story <%= mark_if_closed(story) %>" <%= build_inline_style(story) %>>
+        <div class="epic <%= mark_if_closed(story) %>" <%= build_inline_style(story) %>>
           <div class="id story_tooltip">
             <div class="tooltip_text"><%= render :partial => "rb_stories/tooltip", :object => story %></div>
             <%= link_to story.id, {:controller => 'issues', :action => 'show', :id => story.id}, { :target => "_blank" } %>
@@ -68,17 +66,15 @@
       </td>
       <%- @statuses.each do |status| %>
       <td class="swimlane list <%= status.is_closed? ? 'closed' : '' %>" id="<%= story.id %>_<%= status.id %>">
-        <%= render :partial => "rb_tasks/task",
+        <%= render :partial => "rb_stories/story",
                    :collection => story.descendants.visible.order(:position).where('tracker_id in (?)', RbStory.trackers).where('status_id = ?',status.id)
        %>
       </td>
       <%- end %>
     </tr>
     <%- end %>
-  </table>
 
-  <table id="impediments" class="board" cellspacing="0">
-    <tr>
+    <tr id="unassigned_stories">
       <td><div class="label_sprint_impediments">
             <span class="add_new">
               <%= image_tag("add.png", :alt => "+") %>
@@ -87,7 +83,7 @@
       </div></td>
       <%- @statuses.each do |status| %>
       <td class="swimlane list <%= status.is_closed? ? 'closed' : '' %>" id="impcell_<%= status.id %>">
-        <%= render :partial => "rb_tasks/task",
+        <%= render :partial => "rb_stories/story",
                    :collection => RbStory.stories.in_projects(@projects).visible.
                                           order(:position).where('status_id = ?',status.id)
         %>
@@ -117,10 +113,7 @@
     <%= users_assignable_options_for_select(@project.assignable_users) %>
   </select>
   <div id="task_template">
-    <%= render :partial => "rb_tasks/task", :object => RbTask.new %>
-  </div>
-  <div id="impediment_template">
-    <%= render :partial => "rb_impediments/impediment", :object => RbTask.new %>
+    <%= render :partial => "rb_stories/story", :object => RbStory.new %>
   </div>
   <!-- end of templates -->
   <div id="issue_editor"> </div>

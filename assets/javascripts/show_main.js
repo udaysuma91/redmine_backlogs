@@ -1,11 +1,18 @@
-// Initialize everything after DOM is loaded
+// Initialize taskboard after DOM is loaded
 RB.$(function() {  
-  var board = RB.Factory.initialize(RB.Taskboard, RB.$('#taskboard'));
+  var board;
+  if (RB.$('#taskboard').length) {
+    board = RB.Factory.initialize(RB.Taskboard, RB.$('#taskboard'));
+  } else if (RB.$('#epicboard')) {
+    console.log('show_main: initializing epic board');
+    board = RB.Factory.initialize(RB.Epicboard, RB.$('#epicboard'));
+  }
   if (RB.TaskboardUpdater) RB.TaskboardUpdater.start();
 
   // Capture 'click' instead of 'mouseup' so we can preventDefault();
   RB.$('#show_charts').bind('click', RB.showCharts);
   
+  // element coloring from templated user id option list 
   RB.$('#assigned_to_id_options').bind('change', function(){
     c = RB.$(this).children(':selected').attr('color');
     c_light = RB.$(this).children(':selected').attr('color_light');
