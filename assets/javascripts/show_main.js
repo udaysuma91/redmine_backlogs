@@ -1,7 +1,7 @@
 // Initialize everything after DOM is loaded
 RB.$(function() {  
   var board = RB.Factory.initialize(RB.Taskboard, RB.$('#taskboard'));
-  RB.TaskboardUpdater.start();
+  if (RB.TaskboardUpdater) RB.TaskboardUpdater.start();
 
   // Capture 'click' instead of 'mouseup' so we can preventDefault();
   RB.$('#show_charts').bind('click', RB.showCharts);
