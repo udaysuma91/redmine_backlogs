@@ -48,7 +48,11 @@ class RbStoriesController < RbApplicationController
   end
 
   def update
-    story = RbStory.find(params[:id])
+    if RbEpic.trackers.include?(params[:tracker_id].to_i)
+      story = RbEpic.find(params[:id])
+    else
+      story = RbStory.find(params[:id])
+    end
     begin
       result = story.update_and_position!(params)
     rescue => e
