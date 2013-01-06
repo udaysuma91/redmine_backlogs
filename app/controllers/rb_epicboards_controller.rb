@@ -16,10 +16,8 @@ class RbEpicboardsController < RbApplicationController
     statuses = tracker.issue_statuses
     # disable columns by default
     if User.current.admin? || stories.length == 0
-      puts "User is admin"
       @statuses = statuses
     else
-      puts "User is not admin"
       enabled = {}
       statuses.each{|s| enabled[s.id] = false}
       # enable all statuses held by current tasks, regardless of whether the current user has access
@@ -42,7 +40,6 @@ class RbEpicboardsController < RbApplicationController
       }
       @statuses = statuses.select{|s| enabled[s.id]}
     end
-    puts "STATUSES on epic board #{@statuses.map{|s|s.name}}"
 
     if stories.size == 0
       @last_updated = nil
