@@ -14,6 +14,7 @@ class RbTask < Issue
 
     Tracker.all.each{|t|
       s = t.issue_statuses.collect{|s| s.id}.sort
+      next if RbStory.trackers.include?(t.id)
       trackers << t.id if !trackers.include?(t.id) && s == statuses
     }
 
