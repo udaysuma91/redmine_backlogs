@@ -166,7 +166,7 @@ See RB.Taskboard.initialize()
 .story.closed .subject{
   text-decoration:line-through;
 }
-#tasboard .story .story_points.editable{
+#taskboard .story .story_points.editable{
   -moz-border-radius:15px 15px 15px 15px;
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
@@ -179,6 +179,8 @@ See RB.Taskboard.initialize()
   right:-5px;
 }
 .story .story_points.editable:empty,
+#epicboard .story .status_id,
+#epicboard .story .project,
 .epic .story_points.editable:empty{
   display:none;
 }
