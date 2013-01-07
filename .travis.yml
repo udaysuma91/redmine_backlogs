@@ -44,6 +44,7 @@ script:
 - cp config/database.yml.travis $WORKSPACE/database.yml
 - bash -x ./redmine_install.sh -r
 - bash -x ./redmine_install.sh -i
+- bash -x ./redmine_install.sh -t features/epic.feature
 - bash -x ./redmine_install.sh -t features/burndown.feature
 - bash -x ./redmine_install.sh -t features/cecilia_burndown.feature
 - bash -x ./redmine_install.sh -t features/common.feature
