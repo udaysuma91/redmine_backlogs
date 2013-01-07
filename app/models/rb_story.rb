@@ -1,6 +1,8 @@
 class RbStory < Issue
   unloadable
 
+  def self.tracker_setting :story_trackers end
+
   def self.find_options(options)
     options = options.dup
 
@@ -163,7 +165,7 @@ class RbStory < Issue
     # somewhere early in the initialization process during first-time migration this gets called when the table doesn't yet exist
     trackers = []
     if has_settings_table
-      trackers = Backlogs.setting[:story_trackers]
+      trackers = Backlogs.setting[tracker_setting]
       trackers = [] if trackers.blank?
     end
 
@@ -210,7 +212,7 @@ class RbStory < Issue
     self.position!(params)
 
     # lft and rgt fields are handled by acts_as_nested_set
-    attribs = params.select{|k,v| !['prev', 'id', 'project_id', 'lft', 'rgt'].include?(k) && RbStory.column_names.include?(k) }
+    attribs = params.select{|k,v| !['prev', 'id', 'project_id', 'lft', 'rgt'].include?(k) && self.class.column_names.include?(k) }
     attribs = Hash[*attribs.flatten]
 
     return self.journalized_update_attributes attribs
@@ -221,13 +223,13 @@ class RbStory < Issue
       if params['prev'].blank?
         self.move_to_top
       else
-        self.move_after(RbStory.find(params['prev']))
+        self.move_after(self.class.find(params['prev']))
       end
     elsif params.include?('next')
       if params['next'].blank?
         self.move_to_bottom
       else
-        self.move_before(RbStory.find(params['next']))
+        self.move_before(self.class.find(params['next']))
       end
     end
   end
@@ -329,7 +331,7 @@ class RbStory < Issue
   end
 
   def rank
-    return super(RbStory.find_options(:project => self.project_id, :sprint => self.fixed_version_id))
+    return super(self.class.find_options(:project => self.project_id, :sprint => self.fixed_version_id))
   end
 
   def story_follow_task_state
