@@ -18,6 +18,10 @@ class RbEpic < Issue
     sprint_ids = [sprint_ids] if sprint_ids && !sprint_ids.is_a?(Array)
     sprint_ids = sprint_ids.collect{|s| s.is_a?(Integer) ? s : s.id} if sprint_ids
 
+    release_ids = options.delete(:release)
+    release_ids = [release_ids] if release_ids && !release_ids.is_a?(Array)
+    release_ids = release_ids.collect{|s| s.is_a?(Integer) ? s : s.id} if release_ids
+
     permission = options.delete(:permission)
     permission = false if permission.nil?
 
@@ -35,6 +39,7 @@ class RbEpic < Issue
     pbl_condition = ["
       project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
       and tracker_id in (?)
+      and release_id is NULL
       and fixed_version_id is NULL
       and is_closed = ?", RbEpic.trackers, false]
     if Backlogs.settings[:sharing_enabled]
@@ -47,8 +52,14 @@ class RbEpic < Issue
         and tracker_id in (?)
         and fixed_version_id IN (?)", project_id, RbEpic.trackers, sprint_ids]
     end
+    release_condition = ["
+      tracker_id in (?)
+      and fixed_version_id is NULL
+      and release_id in (?)", RbEpic.trackers, release_ids]
 
-    if sprint_ids.nil?
+    if release_ids
+      Backlogs::ActiveRecord.add_condition(options, release_condition)
+    elsif sprint_ids.nil?
       Backlogs::ActiveRecord.add_condition(options, pbl_condition)
       options[:joins] ||= []
       options[:joins] [options[:joins]] unless options[:joins].is_a?(Array)
@@ -61,13 +72,14 @@ class RbEpic < Issue
     return options
   end
 
-  def self.backlog(project_id, sprint_id, options={})
+  def self.backlog(project_id, sprint_id, release_id, options={})
     stories = []
 
     prev = nil
     RbEpic.visible.find(:all, RbEpic.find_options(options.merge({
       :project => project_id,
       :sprint => sprint_id,
+      :release => release_id,
       :order => 'issues.position',
     }))).each_with_index {|story, i|
       stories << story
@@ -84,15 +96,19 @@ class RbEpic < Issue
   end
 
   def self.product_backlog(project, limit=nil)
-    return RbEpic.backlog(project.id, nil, :limit => limit)
+    return RbEpic.backlog(project.id, nil, nil, :limit => limit)
   end
 
   def self.sprint_backlog(sprint, options={})
-    return RbEpic.backlog(sprint.project.id, sprint.id, options)
+    return RbEpic.backlog(sprint.project.id, sprint.id, nil, options)
+  end
+
+  def self.release_backlog(release, options={})
+    return RbEpic.backlog(release.project.id, nil, release.id, options)
   end
 
   def self.backlogs_by_sprint(project, sprints, options={})
-    ret = RbEpic.backlog(project.id, sprints.map {|s| s.id }, options)
+    ret = RbEpic.backlog(project.id, sprints.map {|s| s.id }, nil, options)
     sprint_of = {}
     ret.each do |backlog|
       sprint_of[backlog.fixed_version_id] ||= []
@@ -107,6 +123,16 @@ class RbEpic < Issue
   scope :in_projects, lambda { |projects|
     where('project_id in (?)', projects.map{|p|p.id})
   }
+
+  def self.backlogs_by_release(project, releases, options={})
+    ret = RbEpic.backlog(project.id, nil, releases.map {|s| s.id }, options)
+    release_of = {}
+    ret.each do |backlog|
+      release_of[backlog.release_id] ||= []
+      release_of[backlog.release_id].push(backlog)
+    end
+    return release_of
+  end
 
   def self.create_and_position(params)
     params['prev'] = params.delete('prev_id') if params.include?('prev_id')

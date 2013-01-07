@@ -83,6 +83,9 @@ module BacklogsPlugin
             vbe = issue.velocity_based_estimate
             snippet += "<tr><th>#{l(:field_velocity_based_estimate)}</th><td>#{vbe ? vbe.to_s + ' days' : '-'}</td></tr>"
 
+          end
+
+          if issue.is_story? || issue.is_epic?
             unless issue.release_id.nil?
               release = RbRelease.find(issue.release_id)
               snippet += "<tr><th>#{l(:field_release)}</th><td>#{link_to release.name, :controller=>'rb_releases', :action=>'show', :release_id=>release}</td></tr>"
@@ -118,7 +121,9 @@ module BacklogsPlugin
             #snippet += context[:form].label(:story_points)
             snippet += context[:form].text_field(:story_points, :size => 3)
             snippet += '</p>'
+          end
 
+          if issue.is_story? || issue.is_epic?
             if issue.safe_attribute?('release_id') && issue.assignable_releases.any?
               snippet += '<p>'
               snippet += context[:form].select :release_id, release_options_for_select(issue.assignable_releases, issue.release), :include_blank => true 

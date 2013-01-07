@@ -29,7 +29,7 @@ class RbMasterBacklogsController < RbApplicationController
     @c_sprint_backlogs = c_sprints.map{|s| { :sprint => s, :stories => sprints_backlog_storie_of[s.id] } }
 
     releases = @project.open_releases_by_date
-    releases_backlog_storie_of = RbStory.backlogs_by_release(@project, releases)
+    releases_backlog_storie_of = cls.backlogs_by_release(@project, releases)
     @release_backlogs = releases.map{ |r| { :release => r, :stories => releases_backlog_storie_of[r.id] } }
 
     respond_to do |format|
