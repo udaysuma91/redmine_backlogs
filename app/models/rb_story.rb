@@ -41,22 +41,22 @@ class RbStory < Issue
       and tracker_id in (?)
       and release_id is NULL
       and fixed_version_id is NULL
-      and is_closed = ?", RbStory.trackers, false]
+      and is_closed = ?", trackers, false]
     if Backlogs.settings[:sharing_enabled]
       sprint_condition = ["
         tracker_id in (?)
-        and fixed_version_id IN (?)", RbStory.trackers, sprint_ids]
+        and fixed_version_id IN (?)", trackers, sprint_ids]
     else
       sprint_condition = ["
         project_id = ?
         and tracker_id in (?)
-        and fixed_version_id IN (?)", project_id, RbStory.trackers, sprint_ids]
+        and fixed_version_id IN (?)", project_id, trackers, sprint_ids]
     end
     release_condition = ["
       project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
       and tracker_id in (?)
       and fixed_version_id is NULL
-      and release_id in (?)", RbStory.trackers, release_ids]
+      and release_id in (?)", trackers, release_ids]
 
     if release_ids
       Backlogs::ActiveRecord.add_condition(options, release_condition)
@@ -77,7 +77,7 @@ class RbStory < Issue
     stories = []
 
     prev = nil
-    RbStory.visible.find(:all, RbStory.find_options(options.merge({
+    visible.find(:all, find_options(options.merge({
       :project => project_id,
       :sprint => sprint_id,
       :release => release_id,
@@ -97,19 +97,19 @@ class RbStory < Issue
   end
 
   def self.product_backlog(project, limit=nil)
-    return RbStory.backlog(project.id, nil, nil, :limit => limit)
+    return backlog(project.id, nil, nil, :limit => limit)
   end
 
   def self.sprint_backlog(sprint, options={})
-    return RbStory.backlog(sprint.project.id, sprint.id, nil, options)
+    return backlog(sprint.project.id, sprint.id, nil, options)
   end
 
   def self.release_backlog(release, options={})
-    return RbStory.backlog(release.project.id, nil, release.id, options)
+    return backlog(release.project.id, nil, release.id, options)
   end
 
   def self.backlogs_by_sprint(project, sprints, options={})
-    ret = RbStory.backlog(project.id, sprints.map {|s| s.id }, nil, options)
+    ret = backlog(project.id, sprints.map {|s| s.id }, nil, options)
     sprint_of = {}
     ret.each do |backlog|
       sprint_of[backlog.fixed_version_id] ||= []
@@ -119,7 +119,7 @@ class RbStory < Issue
   end
 
   def self.backlogs_by_release(project, releases, options={})
-    ret = RbStory.backlog(project.id, nil, releases.map {|s| s.id }, options)
+    ret = backlog(project.id, nil, releases.map {|s| s.id }, options)
     release_of = {}
     ret.each do |backlog|
       release_of[backlog.release_id] ||= []
@@ -141,9 +141,9 @@ class RbStory < Issue
     params['prev'] = nil if (['next', 'prev'] - params.keys).size == 2
 
     # lft and rgt fields are handled by acts_as_nested_set
-    attribs = params.select{|k,v| !['prev', 'next', 'id', 'lft', 'rgt'].include?(k) && RbStory.column_names.include?(k) }
+    attribs = params.select{|k,v| !['prev', 'next', 'id', 'lft', 'rgt'].include?(k) && column_names.include?(k) }
     attribs = Hash[*attribs.flatten]
-    s = RbStory.new(attribs)
+    s = new(attribs)
     s.save!
     s.position!(params)
 

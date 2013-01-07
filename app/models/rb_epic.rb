@@ -1,161 +1,13 @@
-class RbEpic < Issue
+class RbEpic < RbStory
   unloadable
-
-  def self.find_options(options)
-    options = options.dup
-
-    project = options.delete(:project)
-    if project.nil?
-      project_id = nil
-    elsif project.is_a?(Integer)
-      project_id = project
-      project = nil
-    else
-      project_id = project.id
-    end
-
-    sprint_ids = options.delete(:sprint)
-    sprint_ids = [sprint_ids] if sprint_ids && !sprint_ids.is_a?(Array)
-    sprint_ids = sprint_ids.collect{|s| s.is_a?(Integer) ? s : s.id} if sprint_ids
-
-    release_ids = options.delete(:release)
-    release_ids = [release_ids] if release_ids && !release_ids.is_a?(Array)
-    release_ids = release_ids.collect{|s| s.is_a?(Integer) ? s : s.id} if release_ids
-
-    permission = options.delete(:permission)
-    permission = false if permission.nil?
-
-    options[:conditions] ||= []
-
-    if permission
-      if Issue.respond_to? :visible_condition
-        visible = Issue.visible_condition(User.current, :project => project || Project.find(project_id))
-      else
-    	  visible = Project.allowed_to_condition(User.current, :view_issues)
-      end
-      Backlogs::ActiveRecord.add_condition(options, visible)
-    end
-
-    pbl_condition = ["
-      project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
-      and tracker_id in (?)
-      and release_id is NULL
-      and fixed_version_id is NULL
-      and is_closed = ?", RbEpic.trackers, false]
-    if Backlogs.settings[:sharing_enabled]
-      sprint_condition = ["
-        tracker_id in (?)
-        and fixed_version_id IN (?)", RbEpic.trackers, sprint_ids]
-    else
-      sprint_condition = ["
-        project_id = ?
-        and tracker_id in (?)
-        and fixed_version_id IN (?)", project_id, RbEpic.trackers, sprint_ids]
-    end
-    release_condition = ["
-      tracker_id in (?)
-      and fixed_version_id is NULL
-      and release_id in (?)", RbEpic.trackers, release_ids]
-
-    if release_ids
-      Backlogs::ActiveRecord.add_condition(options, release_condition)
-    elsif sprint_ids.nil?
-      Backlogs::ActiveRecord.add_condition(options, pbl_condition)
-      options[:joins] ||= []
-      options[:joins] [options[:joins]] unless options[:joins].is_a?(Array)
-      options[:joins] << :status
-      options[:joins] << :project
-    else
-      Backlogs::ActiveRecord.add_condition(options, sprint_condition)
-    end
-
-    return options
-  end
-
-  def self.backlog(project_id, sprint_id, release_id, options={})
-    stories = []
-
-    prev = nil
-    RbEpic.visible.find(:all, RbEpic.find_options(options.merge({
-      :project => project_id,
-      :sprint => sprint_id,
-      :release => release_id,
-      :order => 'issues.position',
-    }))).each_with_index {|story, i|
-      stories << story
-
-      prev.higher_item = story if prev
-      story.lower_item = prev
-
-      story.rank = i + 1
-
-      prev = story
-    }
-
-    return stories
-  end
-
-  def self.product_backlog(project, limit=nil)
-    return RbEpic.backlog(project.id, nil, nil, :limit => limit)
-  end
-
-  def self.sprint_backlog(sprint, options={})
-    return RbEpic.backlog(sprint.project.id, sprint.id, nil, options)
-  end
-
-  def self.release_backlog(release, options={})
-    return RbEpic.backlog(release.project.id, nil, release.id, options)
-  end
-
-  def self.backlogs_by_sprint(project, sprints, options={})
-    ret = RbEpic.backlog(project.id, sprints.map {|s| s.id }, nil, options)
-    sprint_of = {}
-    ret.each do |backlog|
-      sprint_of[backlog.fixed_version_id] ||= []
-      sprint_of[backlog.fixed_version_id].push(backlog)
-    end
-    return sprint_of
-  end
 
   scope :epics, lambda { 
     where('tracker_id in (?)', RbEpic.trackers)
   }
-  scope :in_projects, lambda { |projects|
-    where('project_id in (?)', projects.map{|p|p.id})
-  }
-
-  def self.backlogs_by_release(project, releases, options={})
-    ret = RbEpic.backlog(project.id, nil, releases.map {|s| s.id }, options)
-    release_of = {}
-    ret.each do |backlog|
-      release_of[backlog.release_id] ||= []
-      release_of[backlog.release_id].push(backlog)
-    end
-    return release_of
-  end
-
-  def self.create_and_position(params)
-    params['prev'] = params.delete('prev_id') if params.include?('prev_id')
-    params['next'] = params.delete('next_id') if params.include?('next_id')
-
-    # lft and rgt fields are handled by acts_as_nested_set
-    attribs = params.select{|k,v| !['prev', 'id', 'lft', 'rgt'].include?(k) && RbEpic.column_names.include?(k) }
-    attribs = Hash[*attribs.flatten]
-    s = RbEpic.new(attribs)
-    s.save!
-    s.position!(params)
-    return s
-  end
-
-  def self.find_all_updated_since(since, project_id)
-    find(:all,
-          :conditions => ["project_id = ? AND updated_on > ? AND tracker_id in (?)", project_id, Time.parse(since), trackers],
-          :order => "updated_on ASC")
-  end
 
   def self.configured
     # requires restart? #return @epics_configured_cached unless @epics_configured_cached.nil?
-    @epics_configured_cached = RbEpic.trackers(:type => :trackers).length > 0
+    @epics_configured_cached = trackers(:type => :trackers).length > 0
   end
 
   def self.trackers(options = {})
@@ -181,29 +33,8 @@ class RbEpic < Issue
     end
   end
 
-  def self.has_settings_table
-    ActiveRecord::Base.connection.tables.include?('settings')
-  end
-
   def stories
     return self.children
-  end
-
-  def set_points(p)
-    return self.journalized_update_attribute(:story_points, nil) if p.blank? || p == '-'
-
-    return self.journalized_update_attribute(:story_points, 0) if p.downcase == 's'
-
-    return self.journalized_update_attribute(:story_points, Float(p)) if Float(p) >= 0
-  end
-
-  def points_display(notsized='-')
-    # For reasons I have yet to uncover, activerecord will
-    # sometimes return numbers as Fixnums that lack the nil?
-    # method. Comparing to nil should be safe.
-    return notsized if story_points == nil || story_points.blank?
-    return 'S' if story_points == 0
-    return story_points.to_s
   end
 
   def update_and_position!(params)
@@ -212,7 +43,7 @@ class RbEpic < Issue
     self.position!(params)
 
     # lft and rgt fields are handled by acts_as_nested_set
-    attribs = params.select{|k,v| !['prev', 'id', 'project_id', 'lft', 'rgt'].include?(k) && RbEpic.column_names.include?(k) }
+    attribs = params.select{|k,v| !['prev', 'id', 'project_id', 'lft', 'rgt'].include?(k) && column_names.include?(k) }
     attribs = Hash[*attribs.flatten]
 
     return self.journalized_update_attributes attribs
@@ -232,25 +63,6 @@ class RbEpic < Issue
         self.move_before(RbEpic.find(params['next']))
       end
     end
-  end
-
-  def burndown(sprint = nil, status=nil)
-    sprint ||= self.fixed_version.becomes(RbSprint) if self.fixed_version
-    return nil if sprint.nil? || !sprint.has_burndown?
-
-    bd = {:points_committed => [], :points_accepted => [], :points_resolved => [], :hours_remaining => []}
-
-    self.history.filter(sprint, status).each{|d|
-      if d.nil? || d[:sprint] != sprint.id || d[:tracker] != :story
-        [:points_committed, :points_accepted, :points_resolved, :hours_remaining].each{|k| bd[k] << nil}
-      else
-        bd[:points_committed] << d[:story_points]
-        bd[:points_accepted] << (d[:status_success] ? d[:story_points] : 0)
-        bd[:points_resolved] << (d[:status_success] || d[:hours].to_f == 0.0 ? d[:story_points] : 0)
-        bd[:hours_remaining] << (d[:status_closed] ? 0 : d[:hours])
-      end
-    }
-    return bd
   end
 
   def rank
