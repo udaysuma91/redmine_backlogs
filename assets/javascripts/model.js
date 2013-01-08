@@ -91,7 +91,7 @@ RB.Model = RB.Object.create({
       var fieldType = field.attr('fieldtype') ? field.attr('fieldtype') : 'input';
       var fieldName = field.attr('fieldname');
       var fieldLabel = field.attr('fieldlabel');
-      var input;
+      var input, value;
       
       RB.$(document.createElement("label")).text(fieldLabel).appendTo(editor);
       input = fieldType=='select' ? RB.$('#' + fieldName + '_options').clone(true) : RB.$(document.createElement(fieldType));

@@ -121,7 +121,8 @@ RB.Backlog = RB.Object.create({
           }
         });
 
-        menu.find('.add_new_story').bind('mouseup', self.handleNewStoryClick);
+        menu.find('.add_new_story').bind('mouseup', function(event) {self.handleNewStoryClick(event, this);});
+        menu.find('.add_new_epic').bind('mouseup', function(event) {self.handleNewEpicClick(event, this);});
         menu.find('.add_new_sprint').bind('mouseup', self.handleNewSprintClick);
         // capture 'click' instead of 'mouseup' so we can preventDefault();
         menu.find('.show_burndown_chart').bind('click', function(ev){ self.showBurndownChart(ev); });
@@ -236,17 +237,26 @@ RB.Backlog = RB.Object.create({
     return this.$.children(".stories").first();
   },
 
-  handleNewStoryClick: function(event){
+  __get_project_id: function(event, el) {
     if(event.button > 1) return;
     event.preventDefault();
 
     var project_id = null;
-    var project_id_class = RB.$(this).attr('class').match(/project_id_([0-9]+)/);
+    var project_id_class = RB.$(el).attr('class').match(/project_id_([0-9]+)/);
     if(project_id_class && project_id_class.length == 2) {
       project_id = project_id_class[1];
     }
+    return project_id
+  },
 
-    RB.$(this).parents('.backlog').data('this').newStory(project_id);
+  handleNewStoryClick: function(event, el){
+    var project_id = this.__get_project_id(event, el);
+    this.newStory(project_id);
+  },
+
+  handleNewEpicClick: function(event, el){
+    var project_id = this.__get_project_id(event, el);
+    this.newStory(project_id);
   },
 
   handleNewSprintClick: function(event){
