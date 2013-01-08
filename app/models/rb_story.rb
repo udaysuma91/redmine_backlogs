@@ -1,7 +1,7 @@
 class RbStory < Issue
   unloadable
 
-  def self.tracker_setting :story_trackers end
+  def self.tracker_setting; :story_trackers end
 
   def self.find_options(options)
     options = options.dup
