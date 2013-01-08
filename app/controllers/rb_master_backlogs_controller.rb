@@ -4,7 +4,8 @@ class RbMasterBacklogsController < RbApplicationController
   unloadable
 
   def show
-    if params[:scope] == 'epic'
+    session[:rb_masterbl_mode] = params[:rb_masterbl_mode] || nil
+    if session[:rb_masterbl_mode] == 'epic'
       cls = RbEpic
     else
       cls = RbStory
@@ -32,15 +33,23 @@ class RbMasterBacklogsController < RbApplicationController
     releases_backlog_storie_of = cls.backlogs_by_release(@project, releases)
     @release_backlogs = releases.map{ |r| { :release => r, :stories => releases_backlog_storie_of[r.id] } }
 
+    @trackers = cls.trackers(:project => @project, :type => :trackers) #for rb_stories/helpers story template
+
     respond_to do |format|
       format.html { render :layout => "rb"}
     end
   end
 
-  def _menu_new
+  def _menu_new(typ)
     links = []
-    label_new = :label_new_story
-    add_class = 'add_new_story'
+    case typ
+    when :story
+      label_new = :label_new_story
+      add_class = 'add_new_story'
+    when :epic
+      label_new = :label_new_epic
+      add_class = 'add_new_epic'
+    end
 
     if @settings[:sharing_enabled]
       # FIXME: (pa sharing) usability is bad, menu is inconsistent. Sometimes we have a submenu with one entry, sometimes we have non-sharing behavior without submenu
@@ -71,7 +80,11 @@ class RbMasterBacklogsController < RbApplicationController
   def menu
     links = []
 
-    links += _menu_new
+    if session[:rb_masterbl_mode] == 'epic'
+      links += _menu_new :epic
+    else
+      links += _menu_new :story
+    end
 
     links << {:label => l(:label_new_sprint), :url => '#', :classname => 'add_new_sprint'
              } unless @sprint
