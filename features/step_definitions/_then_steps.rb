@@ -57,6 +57,10 @@ Then /^I should see (\d+) stories in the product backlog$/ do |count|
   page.all(:css, "#stories-for-product-backlog .story").length.should == count.to_i
 end
 
+Then /^I should see (\d+) epics in the epic backlog$/ do |count|
+  page.all(:css, "#product_backlog_container .backlog .story").length.should == count.to_i
+end
+
 Then /^show me the list of sprints$/ do
   header = [['id', 3], ['name', 18], ['sprint_start_date', 18], ['effective_date', 18], ['updated_on', 20]]
   data = RbSprint.open_sprints(@project).collect{|sprint| [sprint.id, sprint.name, sprint.start_date, sprint.effective_date, sprint.updated_on] }
@@ -132,9 +136,10 @@ Then /^calendar feed download should (succeed|fail)$/ do |status|
   (status == 'succeed').should == page.body.include?('BEGIN:VCALENDAR')
 end
 
-Then /^the (\d+)(?:st|nd|rd|th) story in (.+) should be (.+)$/ do |position, backlog, subject|
+Then /^the (\d+)(?:st|nd|rd|th) (story|epic) in (.+) should be (.+)$/ do |position, klass, backlog, subject|
+  cls = (klass=='epic') ? RbEpic : RbStory
   sprint = (backlog == 'the product backlog' ? nil : Version.find_by_name(backlog))
-  story = RbStory.find_by_rank(position.to_i, RbStory.find_options(:project => @project, :sprint => sprint))
+  story = cls.find_by_rank(position.to_i, cls.find_options(:project => @project, :sprint => sprint))
 
   story.should_not be_nil
   story.subject.should == subject
@@ -214,11 +219,11 @@ Then /^the story should be at the (top|bottom)$/ do |position|
   end
 end
 
-Then /^the story should be at position (.+)$/ do |position|
-  story_position(@story).should == position.to_i
+Then /^the (story|epic) should be at position (.+)$/ do |klass, position|
+  story_position(@story, klass=='epic').should == position.to_i
 end
 
-Then /^the story should have a (.+) of (.+)$/ do |attribute, value|
+Then /^the (story|epic) should have a (.+) of (.+)$/ do |klass, attribute, value|
   @story.reload
   if attribute=="tracker"
     attribute="tracker_id"

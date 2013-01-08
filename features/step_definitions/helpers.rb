@@ -161,11 +161,11 @@ def initialize_story_params(project_id = nil)
 end
 
 def initialize_epic_params(project_id = nil)
-  @epic = HashWithIndifferentAccess.new(RbEpic.new.attributes)
-  @epic['project_id'] = project_id ? Project.find(project_id).id : @project.id
-  @epic['tracker_id'] = RbEpic.trackers.first
-  @epic['author_id']  = @user.id
-  @epic
+  @story = HashWithIndifferentAccess.new(RbEpic.new.attributes)
+  @story['project_id'] = project_id ? Project.find(project_id).id : @project.id
+  @story['tracker_id'] = RbEpic.trackers.first
+  @story['author_id']  = @user.id
+  @story
 end
 
 def initialize_task_params(story_id)
@@ -230,12 +230,13 @@ def task_position(task)
   return p1
 end
 
-def story_position(story)
-  p1 = RbStory.backlog(story.project, story.fixed_version_id, nil).select{|s| s.id == story.id}[0].rank
+def story_position(story, is_epic=false)
+  cls = is_epic ? RbEpic : RbStory
+  p1 = cls.backlog(story.project, story.fixed_version_id, nil).select{|s| s.id == story.id}[0].rank
   p2 = story.rank
   p1.should == p2
 
-  s2 = RbStory.find_by_rank(p1, RbStory.find_options(:project => @project, :sprint => current_sprint))
+  s2 = cls.find_by_rank(p1, cls.find_options(:project => @project, :sprint => current_sprint))
   s2.should_not be_nil
   s2.id.should == story.id
 

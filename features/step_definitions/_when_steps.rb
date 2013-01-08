@@ -12,7 +12,7 @@ When /^I (try to )?create the impediment( on project )?(.*)$/ do |attempt, on, p
   verify_request_status(200) if attempt == ''
 end
 
-When /^I (try to )?create the story$/ do |attempt|
+When /^I (try to )?create the (story|epic)$/ do |attempt, klass|
   page.driver.post(
                       url_for(:controller => :rb_stories,
                               :action => :create,
@@ -136,7 +136,7 @@ When /^I (try to )?update the sprint$/ do |attempt|
   verify_request_status(200) if attempt == ''
 end
 
-When /^I (try to )?update the story$/ do |attempt|
+When /^I (try to )?update the (story|epic)$/ do |attempt, typ|
   page.driver.post(
                       url_for(:controller => :rb_stories,
                               :action => :update,

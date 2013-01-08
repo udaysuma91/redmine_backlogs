@@ -6,8 +6,7 @@ Before do
   Timecop.return
   @projects = nil
   @sprint = nil
-  @story = nil
-  @epic = nil
+  @story = nil #is also epic.
   Backlogs.setting[:include_sat_and_sun] = false
 end
 
@@ -86,6 +85,18 @@ Given /^I am viewing the master backlog$/ do
   verify_request_status(200)
 end
 
+Given /^I am viewing the epic backlog$/ do
+  visit url_for(:controller => :projects, :action => :show, :id => @project.identifier, :only_path=>true)
+  visit url_for(:controller => :rb_master_backlogs, :action => :show, :project_id => @project.identifier, :only_path=>true, :rb_masterbl_mode=>'epic')
+  verify_request_status(200)
+end
+
+Given /^I am viewing the epicboard$/ do
+  visit url_for(:controller => :projects, :action => :show, :id => @project.identifier, :only_path=>true)
+  visit url_for(:controller => :rb_epicboards, :action => :show, :project_id => @project.identifier, :only_path=>true)
+  verify_request_status(200)
+end
+
 Then /^at ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})$/ do |time|
   set_now(time, :msg => "at #{time}")
 end
@@ -142,6 +153,10 @@ Given /^I want to create a story$/ do
   @story_params = initialize_story_params
 end
 
+Given /^I want to create an epic$/ do
+  @story_params = initialize_epic_params
+end
+
 Given /^I want to create a task for (.+)$/ do |story_subject|
   story = RbStory.find(:first, :conditions => ["subject=?", story_subject])
   @task_params = initialize_task_params(story.id)
@@ -189,8 +204,9 @@ Given /^I want to set the (.+) of the impediment to (.+)$/ do |attribute, value|
   @impediment_params[attribute] = value
 end
 
-Given /^I want to edit the story with subject (.+)$/ do |subject|
-  @story = RbStory.find(:first, :conditions => ["subject=?", subject])
+Given /^I want to edit the (story|epic) with subject (.+)$/ do |klass, subject|
+  cls = (klass=='epic') ? RbEpic : RbStory
+  @story = cls.find(:first, :conditions => ["subject=?", subject])
   @story.should_not be_nil
   @story_params = HashWithIndifferentAccess.new(@story.attributes)
 end
