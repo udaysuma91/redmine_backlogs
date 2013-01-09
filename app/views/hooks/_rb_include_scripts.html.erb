@@ -1,7 +1,14 @@
+<!-- _rb_include_scripts -->
+<!-- <%=
+begin
+ is_backlogs_view ? "BACKLOG view" : "redmine view"
+rescue
+ is_backlogs_view = false
+ "redmine view2"
+end %> -->
 <%= stylesheet_link_tag 'jquery/jquery.jqplot.min.css', :plugin => 'redmine_backlogs' %>
 
-<%= javascript_include_tag 'jquery/jquery-1.6.2.min.js', :plugin => 'redmine_backlogs' %>
-<%= javascript_include_tag 'jquery/jquery-ui-1.8.16.custom.min.js', :plugin => 'redmine_backlogs' %>
+<%= javascript_include_tag 'jquery/jquery-1.7.2-ui-1.8.21-ujs-2.0.3.js', :plugin => 'redmine_backlogs' %>
 <%= javascript_include_tag 'jquery/jquery.jeditable.mini.js', :plugin => 'redmine_backlogs' %>
 <%= javascript_include_tag 'jquery/jquery.scrollfollow.js', :plugin => 'redmine_backlogs' %>
 
@@ -19,4 +26,7 @@
         src="<%= url_for(:controller => 'rb_server_variables',
                          :action => 'index', :format => 'js') %>">
 </script>
-<%= javascript_include_tag 'common.js', 'burndown.js', :plugin => 'redmine_backlogs' %>
+<%= unless is_backlogs_view
+  javascript_include_tag 'common.js', 'burndown.js', :plugin => 'redmine_backlogs' 
+end %>
+<!-- end _rb_include_scripts -->

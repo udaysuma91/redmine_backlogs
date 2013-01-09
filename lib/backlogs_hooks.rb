@@ -54,8 +54,9 @@ module BacklogsPlugin
           return %{
             <div id="backlogs_view_issues_sidebar"></div>
             <script type="text/javascript">
-              jQuery(document).ready(function() {
-                jQuery('#backlogs_view_issues_sidebar').load('#{url}');
+              var j = RB.$ || $;
+              j(document).ready(function() {
+                j('#backlogs_view_issues_sidebar').load('#{url}');
               });
             </script>
           }
@@ -117,7 +118,7 @@ module BacklogsPlugin
             snippet += '</p>'
 
             if issue.descendants.length != 0 && !issue.new_record?
-              snippet += javascript_include_tag 'jquery/jquery-1.6.2.min.js', :plugin => 'redmine_backlogs'
+              snippet += javascript_include_tag 'jquery/jquery-1.7.2-ui-1.8.21-ujs-2.0.3.js', :plugin => 'redmine_backlogs'
               snippet += <<-generatedscript
 
                 <script type="text/javascript">
@@ -181,7 +182,7 @@ module BacklogsPlugin
 
             # this wouldn't be necesary if the schedules plugin
             # didn't disable the contextual hook
-            snippet += javascript_include_tag 'jquery/jquery-1.6.2.min.js', :plugin => 'redmine_backlogs'
+            snippet += javascript_include_tag 'jquery/jquery-1.7.2-ui-1.8.21-ujs-2.0.3.js', :plugin => 'redmine_backlogs'
             snippet += <<-generatedscript
 
               <script type="text/javascript">
@@ -284,7 +285,7 @@ module BacklogsPlugin
           end
         end
 
-        return context[:controller].send(:render_to_string, {:locals => context}.merge(:partial=> 'hooks/rb_include_scripts'))
+        return context[:controller].send(:render_to_string, {:locals => context }.merge(:partial=> 'hooks/rb_include_scripts'))
       end
 
       def view_timelog_edit_form_bottom(context={ })

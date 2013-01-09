@@ -8,7 +8,7 @@
 <%= csrf_meta_tag %>
 <%= favicon %>
 
-<%= call_hook :view_layouts_base_html_head %>
+<%= call_hook :view_layouts_base_html_head, :is_backlogs_view=>true %>
 
 <%= stylesheet_link_tag 'global.css', 'jquery/jquery-ui.css', :plugin => 'redmine_backlogs', :media => 'print,screen' %>
 <%= stylesheet_link_tag 'global_print.css', :plugin => 'redmine_backlogs', :media => 'print' %>

@@ -14,6 +14,7 @@
     'jquery/jquery.liveFilter.js',
     'jquery/jquery.liveFilter.setup.js',
     'jquery/rails.js',
+    'common.js',
     'master_backlog',
     'backlog',
     'model',
@@ -28,12 +29,12 @@
   <%= stylesheet_link_tag 'jquery/jquery.qtip.css', :plugin => 'redmine_backlogs' %>
   <%= stylesheet_link_tag 'master_backlog.css', :plugin => 'redmine_backlogs', :media => 'print,screen' %>
   <%= stylesheet_link_tag 'master_backlog_print.css', :plugin => 'redmine_backlogs', :media => 'print' %>
-  <script type="text/javascript">jQuery(document).ready(function() { jQuery("#livefilter_controll").focus(); });</script>
+  <script type="text/javascript">RB.$(document).ready(function() { RB.$("#livefilter_controll").focus(); });</script>
   <!--[if IE]>
   <script type="text/javascript">
-    jQuery(document).ready(function() {
-      jQuery("#backlogs_container ul").each(function() {
-        jQuery(this).find('li:odd').css('background-color', '#dddddd');
+    RB.$(document).ready(function() {
+      RB.$("#backlogs_container ul").each(function() {
+        RB.$(this).find('li:odd').css('background-color', '#dddddd');
       });
     });
   </script>

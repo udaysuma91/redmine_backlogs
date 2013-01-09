@@ -1,6 +1,6 @@
 <html><head>
   <title><%= h @sprint.name %></title>
-  <%= call_hook :view_layouts_base_html_head %>
+  <%= call_hook :view_layouts_base_html_head, :is_backlogs_view=>false %><%# behave like std redmine view and get common/burndown.js from hook %>
 </head><body>
 <% if @sprint.has_burndown? %>
   <%= render :partial => 'burndown', :locals => {:sprint => @sprint, :mode => :full, :style => "width: #{@width}px; height: #{@height}px" } %>
