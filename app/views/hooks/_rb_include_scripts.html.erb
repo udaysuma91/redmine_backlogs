@@ -5,7 +5,7 @@ unless defined?(is_backlogs_view)
 end %>
 <%= stylesheet_link_tag 'jquery/jquery.jqplot.min.css', :plugin => 'redmine_backlogs' %>
 <% if is_backlogs_view || !(Redmine::VERSION::MAJOR >= 2 && Redmine::VERSION::MINOR >= 1) %>
-<%= javascript_include_tag 'jquery/jquery-1.7.2-ui-1.8.21-ujs-2.0.3.js', :plugin => 'redmine_backlogs' %>
+<%= javascript_include_tag 'jquery/jquery-1.8.3-ui-1.9.2.min.js', :plugin => 'redmine_backlogs' %>
 <% end %>
 <%= javascript_include_tag 'jquery/jquery.jeditable.mini.js', :plugin => 'redmine_backlogs' %>
 <%= javascript_include_tag 'jquery/jquery.scrollfollow.js', :plugin => 'redmine_backlogs' %>
