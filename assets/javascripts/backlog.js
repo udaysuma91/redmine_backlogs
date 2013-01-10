@@ -137,16 +137,16 @@ RB.Backlog = RB.Object.create({
     var storyProject = item.find(".story_project").text();
 
     // disable invalid drag targets
-    RB.$('#sprint_backlogs_container .stories').sortable('disable');
+    RB.$('#sprint_backlogs_container .stories').filter(':ui-sortable').sortable('disable');
     if (RB.constants.project_versions[storyProject]) {
       for (var i = 0; i < RB.constants.project_versions[storyProject].length; i++) {
-        RB.$('#stories-for-' + RB.constants.project_versions[storyProject][i]).sortable('enable');
+        RB.$('#stories-for-' + RB.constants.project_versions[storyProject][i]).filter(':ui-sortable').sortable('enable');
       }
     }
 
     //disable product backlog if the dragged story is not in self or descendants
     if (!RB.constants.projects_in_product_backlog[storyProject]) {
-      RB.$('#product_backlog_container .stories').sortable('disable');
+      RB.$('#product_backlog_container .stories').filter(':ui-sortable').sortable('disable');
     }
   },
 
@@ -195,7 +195,7 @@ RB.Backlog = RB.Object.create({
   
   enableAllSortables: function() {
     // enable all backlogs as drop targets
-    RB.$('.stories').sortable('enable');
+    RB.$('.stories').filter(':ui-sortable').sortable('enable');
   },
 
   getSprint: function(){
