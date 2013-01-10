@@ -11,7 +11,7 @@
 #raise Capybara::TimeoutError after some time (default 5s, here 15s, set in support/setup.rb).
 def wait_for_ajax
   wait_until { 
-    page.evaluate_script('RB.$.active') == 0 #jQuery.ajax.active in the next release
+    page.evaluate_script('RB.$.active') == 0 #jQuery.active is undocumented. Must check when upgrading jQuery-1.8.3 to something else.
   }
 end
 
