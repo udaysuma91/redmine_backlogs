@@ -5,6 +5,7 @@
  *
  * http://www.erichynds.com/jquery/jquery-ui-multiselect-widget/
  *
+ * Modified 20130110 remove usage of effects for ui-1.9
  * Depends:
  *   - jQuery 1.4.2+
  *   - jQuery UI 1.8 widget factory
@@ -545,14 +546,14 @@ $.widget("ech.multiselect", {
 				.show()
 				.position( o.position )
 				.hide()
-				.show( effect, speed );
+				.show();
 		
 		// if position utility is not available...
 		} else {
 			menu.css({ 
 				top: pos.top + button.outerHeight(),
 				left: pos.left
-			}).show( effect, speed );
+			}).show();
 		}
 		
 		// select the first option
@@ -579,7 +580,7 @@ $.widget("ech.multiselect", {
 			speed = o.hide[1] || this.speed;
 		}
 	
-		this.menu.hide(effect, speed);
+		this.menu.hide();
 		this.button.removeClass('ui-state-active').trigger('blur').trigger('mouseleave');
 		this._isOpen = false;
 		this._trigger('close');
