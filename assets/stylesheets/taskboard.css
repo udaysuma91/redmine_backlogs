@@ -413,3 +413,7 @@ See RB.Taskboard.initialize()
 #ui-datepicker-div{
   display: none;
 }
+
+.ui-sortable-disabled {
+  background-color: gray;
+}
