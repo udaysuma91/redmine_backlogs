@@ -38,22 +38,22 @@ def rb_common_routes(rb)
                :to => 'rb_queries#impediments'
   rb_match rb, 'statistics', :to => 'rb_all_projects#statistics'
 
-  rb_match rb, 'server_variables/sprint/:sprint_id.js',
+  rb_match rb, 'server_variables/sprint/:sprint_id',
               :to => 'rb_server_variables#sprint',
               :format => 'js'
-  rb_match rb, 'server_variables/sprint/:sprint_id.js',
+  rb_match rb, 'server_variables/sprint/:sprint_id',
               :to => 'rb_server_variables#sprint',
               :format => nil
-  rb_match rb, 'server_variables.js',
+  rb_match rb, 'server_variables',
               :to => 'rb_server_variables#index',
               :format => 'js'
-  rb_match rb, 'server_variables.js',
+  rb_match rb, 'server_variables',
               :to => 'rb_server_variables#index',
               :format => nil
-  rb_match rb, 'server_variables/project/:project_id.js',
+  rb_match rb, 'server_variables/project/:project_id',
               :to => 'rb_server_variables#project',
               :format => 'js'
-  rb_match rb, 'server_variables/project/:project_id.js',
+  rb_match rb, 'server_variables/project/:project_id',
               :to => 'rb_server_variables#project',
               :format => nil
 
