@@ -24,10 +24,6 @@ RB.Epicboard = RB.Object.create(RB.Model, {
 
     // Initialize epic lists, restricting drop to the story
     var epics_lists =j.find('.story-swimlane');
-    if (!epics_lists || !epics_lists.length) {
-      alert("There are no epic states. Please check the workflow of your epics tracker in the administration section.");
-      return;
-    }
 
     var sortableOpts = {
       placeholder: 'placeholder',

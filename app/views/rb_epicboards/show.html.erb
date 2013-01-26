@@ -32,42 +32,42 @@
   <table id="board_header" cellspacing="0">
     <tr>
       <td><%= l(:backlogs_epic) %></td>
-      <%- @statuses.each do |status| %>
-      <td class="swimlane"><%= h status.name %></td>
+      <%- @columns.each do |col|  %>
+      <td class="swimlane"><%= h col[:sprint].name %></td>
       <%- end %>
     </tr>
   </table>
 
   <table id="stories" class="board" cellspacing="0">
-    <%- @epics.each do |story| %>
-    <tr id="swimlane-<%= story.id %>" class="story-swimlane">
+    <%- @epics.each do |epic| %>
+    <tr id="swimlane-<%= epic.id %>" class="story-swimlane">
       <td>
-        <div class="epic <%= mark_if_closed(story) %>" <%= build_inline_style(story) %>>
+        <div class="epic <%= mark_if_closed(epic) %>" <%= build_inline_style(epic) %>>
           <div class="id story_tooltip">
-            <div class="tooltip_text"><%= render :partial => "rb_stories/tooltip", :object => story %></div>
-            <%= link_to story.id, {:controller => 'issues', :action => 'show', :id => story.id}, { :target => "_blank" } %>
+            <div class="tooltip_text"><%= render :partial => "rb_stories/tooltip", :object => epic %></div>
+            <%= link_to epic.id, {:controller => 'issues', :action => 'show', :id => epic.id}, { :target => "_blank" } %>
             <span class="add_new">
               <%= image_tag("add.png", :alt => "+") %>
             </span>
             <span class="assignee">
-              <%= assignee_name_or_empty(story) %>
+              <%= assignee_name_or_empty(epic) %>
             </span>
-            <span class="remaininghours">(<%= story.remaining_hours.to_i %> <%= l(:label_hours) %>)</span>
           </div>
-          <div class="subject"><%= h story.subject %></div>
-          <%- if @project != story.project %>
+          <div class="subject"><%= h epic.subject %></div>
+          <%- if @project != epic.project %>
             <div class="id project">
-              <span class="t"><%= h story.project %></span>
-              <span class="v"><%= story.project.id %></span>
+              <span class="t"><%= h epic.project %></span>
+              <span class="v"><%= epic.project.id %></span>
             </div>
           <%- end %>
-          <div class="story_points editable" fieldname="story_points" fieldlabel="<%=l(:field_story_points)%>"><%= story.story_points %></div>
+          <div class="story_points editable" fieldname="story_points" fieldlabel="<%=l(:field_story_points)%>"><%= epic.story_points %></div>
         </div>
       </td>
-      <%- @statuses.each do |status| %>
-      <td class="swimlane list <%= status.is_closed? ? 'closed' : '' %>" id="<%= story.id %>_<%= status.id %>">
-        <%= render :partial => "rb_stories/story",
-                   :collection => story.descendants.visible.order(:position).where('tracker_id in (?)', RbStory.trackers).where('status_id = ?',status.id)
+      <%- @columns.each do |col| %>
+      <td class="swimlane list" id="<%= epic.id %>_<%= col[:sprint].id %>">
+        <%=
+         list = col[:stories].select{|s| s.parent_id == epic.id}
+         render :partial => "rb_stories/story", :collection => list
        %>
       </td>
       <%- end %>
@@ -81,11 +81,11 @@
             </span>
             <%= l(:rb_stories_in_no_epic) %>
       </div></td>
-      <%- @statuses.each do |status| %>
-      <td class="swimlane list <%= status.is_closed? ? 'closed' : '' %>" id="impcell_<%= status.id %>">
-        <%= render :partial => "rb_stories/story",
-                   :collection => RbStory.stories.in_projects(@projects).visible.
-                                          order(:position).where('status_id = ?',status.id)
+      <%- @columns.each do |col| %>
+      <td class="swimlane list" id="impcell_<%= col[:sprint].id %>">
+        <%=
+         list = col[:stories].select{|s| s.parent_id.nil?}
+         render :partial => "rb_stories/story", :collection => list
         %>
       </td>
       <%- end %>
