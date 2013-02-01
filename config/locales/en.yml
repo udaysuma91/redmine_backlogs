@@ -37,10 +37,7 @@ en:
   backlogs_product_backlog: Product backlog
   backlogs_sprints: Sprints
   backlogs_story: Story
-  backlogs_epic: Epic
-  rb_stories_in_no_epic: Stories not sorted into an Epic
   backlogs_story_tracker: Story trackers
-  backlogs_epic_tracker: Epic trackers
   backlogs_task: Task
   backlogs_task_tracker: Task tracker
   backlogs_wiki_template: Template for sprint wiki page
@@ -116,7 +113,6 @@ en:
   label_release_plural: Releases
   label_release_start_date: Release start date
   label_closed_releases: Closed releases
-  label_new_epic: New Epic
   label_new_story: New Story
   label_new_sprint: New Sprint
   label_download_sprint: Download
@@ -218,3 +214,7 @@ en:
   label_all_tasks: All tasks
   label_my_tasks: My tasks
   label_view_options: View options
+  backlogs_epic: Epic
+  label_new_epic: New Epic
+  backlogs_stories_in_no_epic: Stories not sorted into an Epic
+  backlogs_epic_tracker: Epic trackers
