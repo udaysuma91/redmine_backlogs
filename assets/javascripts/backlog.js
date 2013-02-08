@@ -23,6 +23,7 @@ RB.Backlog = RB.Object.create({
     j.data('this', this);
 
     // Make the list sortable
+    if (RB.permissions.update_stories) {
     list = this.getList();
     list.bind('mousedown', function(e){self.mouseDown(e);});
     list.bind('mouseup', function(e){self.mouseUp(e);});
@@ -37,6 +38,7 @@ RB.Backlog = RB.Object.create({
                    stop: function(e,u){ self.dragStop(e, u); },
                    update: function(e,u){ self.dragComplete(e, u); }
                   });
+    } //permissions
 
     if(this.isSprintBacklog()){
       RB.Factory.initialize(RB.Sprint, this.getSprint());
@@ -121,9 +123,13 @@ RB.Backlog = RB.Object.create({
           }
         });
 
-        menu.find('.add_new_story').bind('mouseup', function(event) {self.handleNewStoryClick(event, this);});
-        menu.find('.add_new_epic').bind('mouseup', function(event) {self.handleNewEpicClick(event, this);});
-        menu.find('.add_new_sprint').bind('mouseup', self.handleNewSprintClick);
+        if (RB.permissions.create_stories) {
+          menu.find('.add_new_story').bind('mouseup', function(event) {self.handleNewStoryClick(event, this);});
+          menu.find('.add_new_epic').bind('mouseup', function(event) {self.handleNewEpicClick(event, this);});
+        }
+        if (RB.permissions.create_sprints) {
+          menu.find('.add_new_sprint').bind('mouseup', self.handleNewSprintClick);
+        }
         // capture 'click' instead of 'mouseup' so we can preventDefault();
         menu.find('.show_burndown_chart').bind('click', function(ev){ self.showBurndownChart(ev); });
       }
@@ -238,23 +244,24 @@ RB.Backlog = RB.Object.create({
   },
 
   __get_project_id: function(event, el) {
-    if(event.button > 1) return;
-    event.preventDefault();
-
     var project_id = null;
     var project_id_class = RB.$(el).attr('class').match(/project_id_([0-9]+)/);
     if(project_id_class && project_id_class.length == 2) {
       project_id = project_id_class[1];
     }
-    return project_id
+    return project_id;
   },
 
   handleNewStoryClick: function(event, el){
+    if(event.button > 1) return;
+    event.preventDefault();
     var project_id = this.__get_project_id(event, el);
     this.newStory(project_id);
   },
 
   handleNewEpicClick: function(event, el){
+    if(event.button > 1) return;
+    event.preventDefault();
     var project_id = this.__get_project_id(event, el);
     this.newStory(project_id);
   },
