@@ -27,7 +27,7 @@
 
 <%- content_for :main do %>
 <span id="userid" style="visibility:hidden;"><%= User.current.id %></span>
-<div id="epicboard">
+<div id="epicboard" class="swimlaneboard">
 
   <table id="board_header" cellspacing="0">
     <tr>
@@ -67,7 +67,7 @@
       <td class="swimlane list" id="<%= epic.id %>_<%= col[:sprint].id %>">
         <%=
          list = col[:stories].select{|s| s.parent_id == epic.id}
-         render :partial => "rb_stories/story", :collection => list
+         render :partial => "rb_stories/story_eb", :collection => list, :as => :story
        %>
       </td>
       <%- end %>
@@ -84,8 +84,8 @@
       <%- @columns.each do |col| %>
       <td class="swimlane list" id="impcell_<%= col[:sprint].id %>">
         <%=
-         list = col[:stories].select{|s| s.parent_id.nil?}
-         render :partial => "rb_stories/story", :collection => list
+         list = col[:stories].select{|s| s.parent_id.nil?} #FIXME test for tracker not for parent nil
+         render :partial => "rb_stories/story_eb", :collection => list, :as => :story
         %>
       </td>
       <%- end %>

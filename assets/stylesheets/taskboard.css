@@ -1,11 +1,11 @@
-#taskboard, #taskboard table {
+.swimlaneboard, .swimlaneboard table {
   background-color: white;
   color: black;
 }
-#taskboard .task {
+.swimlaneboard .task {
   color: black; 
 }
-#taskboard .issue .subject {
+.swimlaneboard .issue .subject {
   white-space: normal;
 }
 
@@ -35,7 +35,7 @@ See RB.Taskboard.initialize()
   width:105px; /* Must be the same as min-width */
 }
 
-#taskboard { position: relative; } /*for fixed header*/
+.swimlaneboard { position: relative; } /*for fixed header*/
 #impediments { padding-top: 40px; }
 /* status labels */
 #board_header{
@@ -159,7 +159,7 @@ See RB.Taskboard.initialize()
 .story.closed .subject{
   text-decoration:line-through;
 }
-#taskboard .story .story_points.editable{
+.swimlaneboard .story .story_points.editable{
   -moz-border-radius:15px 15px 15px 15px;
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
@@ -179,7 +179,7 @@ See RB.Taskboard.initialize()
 }
 
 /* item styles used by .task and .impediment */
-#taskboard .issue, #taskboard .placeholder{
+.swimlaneboard .issue, .swimlaneboard .placeholder{
   background-color:#CCCCCC;
   background: -webkit-gradient(linear, left top, left bottom, from(#E0E0E0), to(#AAA));
   background: -moz-linear-gradient(top, #E0E0E0, #AAA);
@@ -196,12 +196,12 @@ See RB.Taskboard.initialize()
   width:85px;
   line-height: 12px;
 }
-#taskboard .issue{
+.swimlaneboard .issue{
   -moz-box-shadow: 2px 2px 2px #CCCCCC;
   -webkit-box-shadow: 2px 2px 2px #CCCCCC;
   box-shadow: 2px 2px 2px #CCCCCC;
 }
-#taskboard .placeholder{
+.swimlaneboard .placeholder{
   background-color:#FFFF00;
   border:1px dashed #333300;
   height:78px;
@@ -426,6 +426,6 @@ See RB.Taskboard.initialize()
   display: none;
 }
 
-/*EPICS*/
+/*epicboard*/
 #epicboard { position: relative; } /*for fixed header*/
 #epicboard #stories { padding-top: 40px; }

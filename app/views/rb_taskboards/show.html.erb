@@ -25,7 +25,7 @@
   <%# Usability: display default cursor if tasks cannot be dragged %>
   <% unless User.current.allowed_to?(:update_tasks, @project) %> 
     <style type="text/css">
-    #taskboard .issue{cursor:default;}
+    .swimlaneboard .issue{cursor:default;}
     </style>
   <% end %>
 <% end %>
@@ -67,7 +67,7 @@
 
 <%- content_for :main do %>
 <span id="userid" style="visibility:hidden;"><%= User.current.id %></span>
-<div id="taskboard">
+<div id="taskboard" class="swimlaneboard">
 
 
   <table id="board_header" cellspacing="0">
