@@ -99,9 +99,7 @@ See RB.Taskboard.initialize()
   cursor:pointer;
   background-color:#ffffcc;
 }
-.story,
-.epic,
-.label_sprint_impediments{
+.primary {
   -moz-box-shadow: 2px 2px 2px #CCCCCC;
   -webkit-box-shadow: 2px 2px 2px #CCCCCC;;
   box-shadow: 2px 2px 2px #CCCCCC;;
@@ -119,8 +117,7 @@ See RB.Taskboard.initialize()
   position:relative;
   width:190px;
 }
-.story .id,
-.epic .id {
+.primary .id {
   -moz-border-radius:4px 4px 4px 4px;
   -webkit-border-radius:4px 4px 4px 4px;
   border-radius:4px 4px 4px 4px;
@@ -131,19 +128,15 @@ See RB.Taskboard.initialize()
   padding:1px 3px 1px 3px;
   line-height: 14px;
 }
-.story .id a,
-.epic .id a,
-.story .id .remaininghours,
-.epic .id .remaininghours {
+.primary .id a,
+.primary .id .remaininghours {
   float:right;
   margin-left: 4px;
 }
-.story .id .assignee,
-.epic .id .assignee{
+.primary .id .assignee{
   font-weight: bold;
 }
-.story .subject,
-.epic .subject{
+.primary .subject{
   height:63px;
   line-height:13px;
   margin-top:0;
@@ -151,12 +144,10 @@ See RB.Taskboard.initialize()
   padding:2px;
   width:186px;
 }
-.epic .project,
-.story .project {
+.primary .project {
   text-align:left;
 }
-.epic.closed .subject,
-.story.closed .subject{
+.primary.closed .subject{
   text-decoration:line-through;
 }
 .swimlaneboard .story .story_points.editable{
@@ -171,10 +162,7 @@ See RB.Taskboard.initialize()
   bottom:-5px;
   right:-5px;
 }
-.story .story_points.editable:empty,
-#epicboard .story .status_id,
-#epicboard .story .project,
-.epic .story_points.editable:empty{
+.story_points.editable:empty{
   display:none;
 }
 
@@ -222,8 +210,7 @@ See RB.Taskboard.initialize()
   text-align:right;
   width:82px;
 }
-.story .v,
-.epic .v,
+.primary .v,
 .issue .v,
 .issue .tracker_id {
   display:none;
@@ -384,13 +371,10 @@ See RB.Taskboard.initialize()
 }
 
 /* compact view */
-.compact .story,
-.compact .epic,
-.compact .label_sprint_impediments{
+.compact .primary{
   height:15px;
 }
-.compact .story .subject,
-.compact .epic .subject{
+.compact .primary .subject{
   display:none;
 }
 .compact .issue{
@@ -430,3 +414,4 @@ See RB.Taskboard.initialize()
 /*epicboard*/
 #epicboard { position: relative; } /*for fixed header*/
 #epicboard #stories { padding-top: 40px; }
+#epicboard .story .status_id, #epicboard .story .project { display:none;}

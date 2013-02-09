@@ -42,7 +42,7 @@
     <%- @epics.each do |epic| %>
     <tr id="swimlane-<%= epic.id %>" class="story-swimlane">
       <td>
-        <div class="epic <%= mark_if_closed(epic) %>" <%= build_inline_style(epic) %>>
+        <div class="epic primary <%= mark_if_closed(epic) %>" <%= build_inline_style(epic) %>>
           <div class="id story_tooltip">
             <div class="tooltip_text"><%= render :partial => "rb_stories/tooltip", :object => epic %></div>
             <%= link_to epic.id, {:controller => 'issues', :action => 'show', :id => epic.id}, { :target => "_blank" } %>
@@ -75,7 +75,7 @@
     <%- end %>
 
     <tr id="unassigned_stories">
-      <td><div class="label_sprint_impediments">
+      <td><div class="label_sprint_impediments primary">
             <span class="add_new">
               <%= image_tag("add.png", :alt => "+") %>
             </span>
