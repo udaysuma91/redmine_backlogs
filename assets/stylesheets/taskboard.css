@@ -425,3 +425,7 @@ See RB.Taskboard.initialize()
 #ui-datepicker-div{
   display: none;
 }
+
+/*EPICS*/
+#epicboard { position: relative; } /*for fixed header*/
+#epicboard #stories { padding-top: 40px; }
