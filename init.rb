@@ -142,6 +142,7 @@ Redmine::Plugin.register :redmine_backlogs do
   end
 
   menu :project_menu, :rb_master_backlogs, { :controller => :rb_master_backlogs, :action => :show }, :caption => :label_backlogs, :after => :roadmap, :param => :project_id, :if => Proc.new { Backlogs.configured? }
-  menu :project_menu, :rb_releases, { :controller => :rb_releases, :action => :index }, :caption => :label_release_plural, :after => :rb_master_backlogs, :param => :project_id, :if => Proc.new { Backlogs.configured? }
+  menu :project_menu, :rb_epicboards, { :controller => :rb_epicboards, :action => :show }, :caption => :label_epics, :after => :rb_master_backlogs, :param => :project_id, :if => Proc.new { Backlogs.configured? }
+  menu :project_menu, :rb_releases, { :controller => :rb_releases, :action => :index }, :caption => :label_release_plural, :after => :rb_epicboards, :param => :project_id, :if => Proc.new { Backlogs.configured? }
   menu :application_menu, :rb_statistics, { :controller => :rb_all_projects, :action => :statistics}, :caption => :label_scrum_statistics, :if => Proc.new { Backlogs.configured? && User.current.allowed_to?({:controller => :rb_all_projects, :action => :statistics}, nil, :global => true) }
 end
