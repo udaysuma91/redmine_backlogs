@@ -4,7 +4,6 @@ RB.$(function() {
   if (RB.$('#taskboard').length) {
     board = RB.Factory.initialize(RB.Taskboard, RB.$('#taskboard'));
   } else if (RB.$('#epicboard')) {
-    console.log('show_main: initializing epic board');
     board = RB.Factory.initialize(RB.Epicboard, RB.$('#epicboard'));
   }
   if (RB.TaskboardUpdater) RB.TaskboardUpdater.start();

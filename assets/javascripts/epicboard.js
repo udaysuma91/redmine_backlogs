@@ -2,10 +2,9 @@
   EPICBOARD
 ***************************************/
 
-RB.Epicboard = RB.Object.create(RB.Model, {
+RB.Epicboard = RB.Object.create({
     
   initialize: function(el){
-    console.log('RB.Epicboard::initialize()');
     var j = RB.$(el);
     var self = this; // So we can bind the event handlers to this object
     
