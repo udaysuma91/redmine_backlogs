@@ -62,8 +62,13 @@ class RbStoriesController < RbApplicationController
 
     status = (result ? 200 : 400)
 
+    if params[:view] == 'story_eb'
+      view = 'story_eb'
+    else
+      view = 'story'
+    end
     respond_to do |format|
-      format.html { render :partial => "story", :object => story, :status => status }
+      format.html { render :partial => view, :object => story, :status => status, :as => :story }
     end
   end
 

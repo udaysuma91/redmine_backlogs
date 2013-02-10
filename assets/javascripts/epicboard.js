@@ -47,7 +47,7 @@ RB.Epicboard = RB.Object.create({
 
     // Initialize each story in the board
     j.find('.story').each(function(index){
-      RB.Factory.initialize(RB.Story, this); // 'this' refers to an element with class="story"
+      RB.Factory.initialize(RB.StoryEB, this); // 'this' refers to an element with class="story"
       RB.$(this).addClass('editable');
       RB.$(this).addClass('issue');
     });
