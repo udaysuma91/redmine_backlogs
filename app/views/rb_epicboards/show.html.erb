@@ -40,7 +40,7 @@
 
   <table id="stories" class="board" cellspacing="0">
     <%- @epics.each do |epic| %>
-    <tr id="swimlane-<%= epic.id %>" class="story-swimlane">
+    <tr id="swimlane-<%= epic.id %>" class="story-swimlane" _rb_parent_id="<%= epic.id %>">
       <td>
         <div class="epic primary <%= mark_if_closed(epic) %>" <%= build_inline_style(epic) %>>
           <div class="id story_tooltip">
@@ -64,7 +64,7 @@
         </div>
       </td>
       <%- @columns.each do |col| %>
-      <td class="swimlane list" id="<%= epic.id %>_<%= col[:sprint].id %>">
+      <td class="swimlane list" id="<%= epic.id %>_<%= col[:sprint].id %>" _rb_type="<%= col[:type] %>" _rb_sprint_id="<%= col[:sprint].id %>">
         <%=
          list = col[:stories].select{|s| s.parent_id == epic.id}
          render :partial => "rb_stories/story_eb", :collection => list, :as => :story
@@ -74,7 +74,7 @@
     </tr>
     <%- end %>
 
-    <tr id="unassigned_stories">
+    <tr id="unassigned_stories" _rb_parent_id="">
       <td><div class="label_sprint_impediments primary">
             <span class="add_new">
               <%= image_tag("add.png", :alt => "+") %>
@@ -82,7 +82,7 @@
             <%= l(:backlogs_stories_in_no_epic) %>
       </div></td>
       <%- @columns.each do |col| %>
-      <td class="swimlane list" id="impcell_<%= col[:sprint].id %>">
+      <td class="swimlane list" id="impcell_<%= col[:sprint].id %> _rb_type="<%= col[:type] %>" _rb_sprint_id="<%= col[:sprint].id %>">
         <%=
          list = col[:stories].select{|s| s.parent_id.nil?} #FIXME test for tracker not for parent nil
          render :partial => "rb_stories/story_eb", :collection => list, :as => :story

@@ -11,15 +11,18 @@ class RbEpicboardsController < RbApplicationController
   def show
     cls = RbStory
     product_backlog_stories = cls.product_backlog(@project)
-    @product_backlog = { :sprint => FakeProductBacklog.new, :stories => product_backlog_stories||[] }
+    @product_backlog = { :sprint => FakeProductBacklog.new,
+      :type => 'productbacklog', :stories => product_backlog_stories||[] }
 
     sprints = @project.open_shared_sprints
     sprints_backlog_storie_of = cls.backlogs_by_sprint(@project, sprints)
-    @sprint_backlogs = sprints.map{ |s| { :sprint => s, :stories => sprints_backlog_storie_of[s.id]||[] } }
+    @sprint_backlogs = sprints.map{ |s| { :sprint => s,
+      :type => 'sprint', :stories => sprints_backlog_storie_of[s.id]||[] } }
 
     releases = @project.open_releases_by_date
     releases_backlog_storie_of = cls.backlogs_by_release(@project, releases)
-    @release_backlogs = releases.map{ |r| { :sprint => r, :stories => releases_backlog_storie_of[r.id]||[] } }
+    @release_backlogs = releases.map{ |r| { :sprint => r,
+      :type => 'release', :stories => releases_backlog_storie_of[r.id]||[] } }
 
     #This project
     #@epics = RbEpic.in_projects([@project]).epics.visible.order(:position)||[]

@@ -64,13 +64,31 @@ RB.StoryEB = RB.Object.create(RB.Issue, {
     var url;
     var nxt = this.$.next();
     var project = j.parents('tr').find('.story .project .v');
-    var cellID = j.parents('td').first().attr('id').split("_");
+    var parentId = j.parents('tr').first().attr('_rb_parent_id');
+
+    var vtype = j.parents('td').first().attr('_rb_type');
+    var vid = j.parents('td').first().attr('_rb_sprint_id');
 
     var data = j.find('.editor').serialize() +
                "&view=story_eb"+
-               "&parent_issue_id=" + cellID[0] +
+               "&parent_issue_id=" + parentId +
                "&next=" + (nxt.length==1 ? nxt.data('this').getID() : '') +
                (this.isNew() ? "" : "&id=" + j.children('.id').text());
+    switch (vtype) {
+      case 'sprint':
+        data += '&fixed_version_id='+vid;
+        break;
+      case 'release':
+        data += '&release_id='+vid;
+        data += "&fixed_version_id=''";
+        break
+      case 'productbacklog':
+        data += "&release_id=";
+        data += "&fixed_version_id=";
+        break
+      default:
+        break
+    }
 
     if( this.isNew() ){
       url = RB.urlFor( 'create_story' );
