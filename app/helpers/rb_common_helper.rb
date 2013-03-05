@@ -155,7 +155,7 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
   end
 
   def release_burndown_to_csv(release)
-    ic = Iconv.new(l(:general_csv_encoding), 'UTF-8')
+    ic = Iconv.new(l(:general_csv_encoding), 'UTF-8') #FIXME-ruby2 Iconv deprecated
 
     # FIXME decimal_separator is not used, instead a hardcoded s/\./,/g is done
     # below to make (German) Excel happy
