@@ -119,6 +119,14 @@ class RbRelease < ActiveRecord::Base
   scope :closed, :conditions => {:status => 'closed'}
   scope :visible, lambda {|*args| { :include => :project,
                                     :conditions => Project.allowed_to_condition(args.first || User.current, :view_releases) } }
+  def self.by_date_clause
+    dir = Backlogs.setting[:sprint_sort_order] == 'desc' ? 'DESC' : 'ASC'
+    "CASE #{table_name}.release_start_date WHEN NULL THEN 1 ELSE 0 END #{dir},
+     #{table_name}.release_start_date #{dir},
+     CASE #{table_name}.release_end_date WHEN NULL THEN 1 ELSE 0 END #{dir},
+     #{table_name}.release_end_date #{dir}"
+  end
+  scope :by_date, order(by_date_clause)
 
 
   include Backlogs::ActiveRecord::Attributes

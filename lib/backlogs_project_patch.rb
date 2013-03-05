@@ -234,10 +234,8 @@ module Backlogs
       end
 
       def open_releases_by_date
-        dir = Backlogs.setting[:sprint_sort_order] == 'desc' ? 'DESC' : 'ASC'
         (Backlogs.setting[:sharing_enabled] ? shared_releases : releases).
-          visible.open. #FIXME implement RbRelease::by_date scope
-          order("#{RbRelease.table_name}.release_start_date #{dir}, #{RbRelease.table_name}.release_end_date #{dir}")
+          visible.open.by_date
       end
 
       def shared_sprints
