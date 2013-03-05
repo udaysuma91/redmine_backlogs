@@ -9,7 +9,7 @@ class RbServerVariablesController < RbApplicationController
     @context = params[:context]
     respond_to do |format|
       format.html { render_404 }
-      format.js { render :file => 'rb_server_variables/show.js.erb', :layout => false }
+      format.js { render :file => 'rb_server_variables/show', :handlers => [:erb], :formats => [:js], :layout => false }
     end
   end
 
