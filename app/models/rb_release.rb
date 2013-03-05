@@ -115,10 +115,11 @@ class RbRelease < ActiveRecord::Base
   validates_length_of :name, :maximum => 64
   validate :dates_valid?
 
-  scope :open, :conditions => {:status => 'open'}
-  scope :closed, :conditions => {:status => 'closed'}
-  scope :visible, lambda {|*args| { :include => :project,
-                                    :conditions => Project.allowed_to_condition(args.first || User.current, :view_releases) } }
+  scope :open, where(:status => 'open')
+  scope :closed, where(:status => 'closed')
+  scope :visible, lambda {|*args|
+    includes(:project).where(Project.allowed_to_condition(args.first || User.current, :view_releases))
+  }
   def self.by_date_clause
     dir = Backlogs.setting[:sprint_sort_order] == 'desc' ? 'DESC' : 'ASC'
     "CASE #{table_name}.release_start_date WHEN NULL THEN 1 ELSE 0 END #{dir},
@@ -212,7 +213,7 @@ class RbRelease < ActiveRecord::Base
 
   def shared_to_projects(scope_project)
     projects = []
-    Project.visible.find(:all, :order => 'lft').each{|_project| #exhaustive search FIXME (pa sharing)
+    Project.visible.order(:lft).each{|_project| #exhaustive search FIXME (pa sharing)
       projects << _project unless (_project.shared_releases.collect{|v| v.id} & [id]).empty?
     }
     projects
@@ -233,7 +234,7 @@ class RbRelease < ActiveRecord::Base
         release.project.versions.select{ |v| v.due_date && (v.due_date>=release.release_start_date && v.due_date<=release.release_end_date)
         }.each do |version|
           #each sprint that lies within the release
-          version.fixed_issues.where('tracker_id in (?)', RbStory.trackers).each { |issue|
+          version.fixed_issues.where(:tracker_id => RbStory.trackers).each { |issue|
             #each issue in that version which is a story and does not belong to a release, yet
             if issue.release_id.nil?
               issue.release = release;
