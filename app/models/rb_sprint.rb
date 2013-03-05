@@ -29,7 +29,7 @@ class RbSprint < Version
   #return array of projects where this sprint is visible
   def shared_to_projects(scope_project)
     projects = []
-    Project.visible.find(:all, :order => 'lft').each{|_project| #exhaustive search FIXME (pa sharing)
+    Project.visible.order(:lft).each{|_project| #exhaustive search FIXME (pa sharing)
       projects << _project unless (_project.shared_versions.collect{|v| v.id} & [id]).empty?
     }
     projects
