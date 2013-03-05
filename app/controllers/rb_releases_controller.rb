@@ -1,5 +1,4 @@
 include RbCommonHelper
-include RbFormHelper
 include ProjectsHelper
 
 # Responsible for exposing release CRUD.
