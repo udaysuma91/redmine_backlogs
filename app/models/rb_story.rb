@@ -40,13 +40,13 @@ class RbStory < Issue
 
   public
 
+  #returns an ActiveRecord Relation
   def self.find_options(options)
     project = options.delete(:project)
     if project.nil?
       project_id = nil
     elsif project.is_a?(Integer)
       project_id = project
-      project = nil
     else
       project_id = project.id
     end
@@ -63,6 +63,7 @@ class RbStory < Issue
     end
   end
 
+  #returns an ActiveRecord Relation which has the proper scope for this instance
   def list_with_gaps_scope
     self.class.find_options({
       :project => self.project_id,
@@ -70,6 +71,7 @@ class RbStory < Issue
       :release => self.release_id}) unless self.new_record?
   end
 
+  #returns an ActiveRecord Relation
   def self.backlog(project_id, sprint_id, release_id)
     self.visible.order("#{self.table_name}.position").
       find_options({
@@ -79,16 +81,19 @@ class RbStory < Issue
       })
   end
 
+  #returns an ActiveRecord Relation
   def self.product_backlog(project, limit=nil)
     query = RbStory.backlog(project.id, nil, nil)
     query = query.limit(limit) if limit
     query
   end
 
+  #returns an ActiveRecord Relation
   def self.sprint_backlog(sprint)
     return RbStory.backlog(sprint.project.id, sprint.id, nil)
   end
 
+  #returns an ActiveRecord Relation
   def self.release_backlog(release)
     return RbStory.backlog(release.project.id, nil, release.id)
   end
