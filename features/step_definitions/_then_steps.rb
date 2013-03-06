@@ -137,7 +137,7 @@ end
 
 Then /^the (\d+)(?:st|nd|rd|th) story in (.+) should be (.+)$/ do |position, backlog, subject|
   sprint = (backlog == 'the product backlog' ? nil : Version.find_by_name(backlog))
-  story = RbStory.find_by_rank(position.to_i, RbStory.find_options(:project => @project, :sprint => sprint))
+  story = RbStory.find_options(:project => @project, :sprint => sprint).find_by_rank(position.to_i)
 
   story.should_not be_nil
   story.subject.should == subject

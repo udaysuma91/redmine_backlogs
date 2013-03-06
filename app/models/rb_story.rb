@@ -8,56 +8,39 @@ class RbStory < Issue
     option = option.collect{|s| s.is_a?(Integer) ? s : s.id} if option
   end
 
-  def self.__find_options_add_permissions(options)
-    permission = options.delete(:permission)
-    permission = false if permission.nil?
-
-    options[:conditions] ||= []
-    if permission
-      if Issue.respond_to? :visible_condition
-        visible = Issue.visible_condition(User.current, :project => project || Project.find(project_id))
-      else
-    	  visible = Project.allowed_to_condition(User.current, :view_issues)
-      end
-      Backlogs::ActiveRecord.add_condition(options, visible)
-    end
-  end
-
   def self.__find_options_sprint_condition(project_id, sprint_ids)
     if Backlogs.settings[:sharing_enabled]
-      ["
+      where("
         tracker_id in (?)
-        and fixed_version_id IN (?)", self.trackers, sprint_ids]
+        and fixed_version_id IN (?)", self.trackers, sprint_ids)
     else
-      ["
+      where("
         project_id = ?
         and tracker_id in (?)
-        and fixed_version_id IN (?)", project_id, self.trackers, sprint_ids]
+        and fixed_version_id IN (?)", project_id, self.trackers, sprint_ids)
     end
   end
 
   def self.__find_options_release_condition(project_id, release_ids)
-    ["
+    where("
       project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
       and tracker_id in (?)
       and fixed_version_id is NULL
-      and release_id in (?)", self.trackers, release_ids]
+      and release_id in (?)", self.trackers, release_ids)
   end
 
   def self.__find_options_pbl_condition(project_id)
-    ["
+    where("
       project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
       and tracker_id in (?)
       and release_id is NULL
       and fixed_version_id is NULL
-      and is_closed = ?", self.trackers, false]
+      and is_closed = ?", self.trackers, false)
   end
 
   public
 
   def self.find_options(options)
-    options = options.dup
-
     project = options.delete(:project)
     if project.nil?
       project_id = nil
@@ -68,27 +51,24 @@ class RbStory < Issue
       project_id = project.id
     end
 
-    self.__find_options_add_permissions(options)
-
     sprint_ids = self.__find_options_normalize_option(options.delete(:sprint))
     release_ids = self.__find_options_normalize_option(options.delete(:release))
 
     if sprint_ids
-      Backlogs::ActiveRecord.add_condition(options, self.__find_options_sprint_condition(project_id, sprint_ids))
+      self.__find_options_sprint_condition(project_id, sprint_ids)
     elsif release_ids
-      Backlogs::ActiveRecord.add_condition(options, self.__find_options_release_condition(project_id, release_ids))
+      self.__find_options_release_condition(project_id, release_ids)
     else #product backlog
-      Backlogs::ActiveRecord.add_condition(options, self.__find_options_pbl_condition(project_id))
-      options[:joins] ||= []
-      options[:joins] [options[:joins]] unless options[:joins].is_a?(Array)
-      options[:joins] << :status
-      options[:joins] << :project
+      self.__find_options_pbl_condition(project_id).joins(:status, :project)
     end
-
-    options
   end
 
-  scope :backlog_scope, lambda{|opts| RbStory.find_options(opts) }
+  def list_with_gaps_scope
+    self.class.find_options({
+      :project => self.project_id,
+      :sprint => self.fixed_version_id,
+      :release => self.release_id}) unless self.new_record?
+  end
 
   def self.inject_lower_higher
     prev = nil
@@ -102,44 +82,45 @@ class RbStory < Issue
     }
   end
 
-  def self.backlog(project_id, sprint_id, release_id, options={})
+  def self.backlog(project_id, sprint_id, release_id)
     self.visible.order("#{self.table_name}.position").
-      backlog_scope(
-        options.merge({
-          :project => project_id,
-          :sprint => sprint_id,
-          :release => release_id
-      }))
+      find_options({
+        :project => project_id,
+        :sprint => sprint_id,
+        :release => release_id
+      })
   end
 
   def self.product_backlog(project, limit=nil)
-    return RbStory.backlog(project.id, nil, nil, :limit => limit)
+    query = RbStory.backlog(project.id, nil, nil)
+    query = query.limit(limit) if limit
+    query
   end
 
-  def self.sprint_backlog(sprint, options={})
-    return RbStory.backlog(sprint.project.id, sprint.id, nil, options)
+  def self.sprint_backlog(sprint)
+    return RbStory.backlog(sprint.project.id, sprint.id, nil)
   end
 
-  def self.release_backlog(release, options={})
-    return RbStory.backlog(release.project.id, nil, release.id, options)
+  def self.release_backlog(release)
+    return RbStory.backlog(release.project.id, nil, release.id)
   end
 
-  def self.backlogs_by_sprint(project, sprints, options={})
+  def self.backlogs_by_sprint(project, sprints)
     #make separate queries for each sprint to get higher/lower item right
     return [] unless sprints
     sprints.map do |s|
       { :sprint => s,
-        :stories => RbStory.backlog(project.id, s.id, nil, options)
+        :stories => RbStory.backlog(project.id, s.id, nil)
       }
     end
   end
 
-  def self.backlogs_by_release(project, releases, options={})
+  def self.backlogs_by_release(project, releases)
     #make separate queries for each release to get higher/lower item right
     return [] unless releases
     releases.map do |r|
       { :release => r,
-        :stories => RbStory.backlog(project.id, nil, r.id, options)
+        :stories => RbStory.backlog(project.id, nil, r.id)
       }
     end
   end
@@ -170,11 +151,11 @@ class RbStory < Issue
     sprints = project.open_shared_sprints.map{|s|s.id}
     releases = project.open_releases_by_date.map{|s|s.id}
     #following will execute 3 queries and join it as array
-    self.backlog_scope( {:project => project_id, :sprint => nil, :release => nil } ).
+    self.find_options( {:project => project_id, :sprint => nil, :release => nil } ).
           updated_since(since) |
-      self.backlog_scope( {:project => project_id, :sprint => sprints, :release => nil } ).
+      self.find_options( {:project => project_id, :sprint => sprints, :release => nil } ).
           updated_since(since) |
-      self.backlog_scope( {:project => project_id, :sprint => nil, :release => releases } ).
+      self.find_options( {:project => project_id, :sprint => nil, :release => releases } ).
           updated_since(since)
   end
 
@@ -348,15 +329,6 @@ class RbStory < Issue
       end
     }
     return bd
-  end
-
-  def list_with_gaps_scope_condition(options={})
-    return options if self.new_record?
-    self.class.find_options(options.dup.merge({
-      :project => self.project_id,
-      :sprint => self.fixed_version_id,
-      :release => self.release_id
-    }))
   end
 
   def story_follow_task_state

@@ -62,8 +62,16 @@ module Backlogs
               #{options[:spacing]}
             end
 
-            def self.find_by_rank(r, options)
-              self.find(:first, options.merge(:order => '#{self.table_name}.position', :limit => 1, :offset => r - 1))
+            #used for testing only
+            def self.find_by_rank(r)
+              order('#{self.table_name}.position').offset(r - 1).first
+            end
+
+            def self.list_prev_next(position, direction)
+              raise "#{self}: cannot request \#{direction} for nil position" unless position
+              where("#{self.table_name}.position \#{direction == :prev ? '<' : '>'} ?", position).
+                order("#{self.table_name}.position \#{direction == :prev ? 'desc' : 'asc'}").
+                first
             end
 
             before_create  :move_to_#{options[:default]}
@@ -94,25 +102,24 @@ module Backlogs
           return self.class.find_by_position(self.class.maximum(:position, options))
         end
 
-        def higher_item(options={})
-          @higher_item ||= list_prev_next(:prev, self.list_with_gaps_scope_condition(options))
+        def higher_item
+          @higher_item ||= self.list_with_gaps_scope.list_prev_next(self.position, :prev)
         end
         attr_writer :higher_item
 
-        def lower_item(options={})
-          @lower_item ||= list_prev_next(:next, self.list_with_gaps_scope_condition(options))
+        def lower_item
+          @lower_item ||= self.list_with_gaps_scope.list_prev_next(self.position, :next)
         end
         attr_writer :lower_item
 
         # higher_item and lower_item use this scope condition to determine neighbours
         # to be overloaded
-        def list_with_gaps_scope_condition(options={})
-          options
+        def list_with_gaps_scope
+          self.class #actually not a scope/relation, but it quacks like an initial scope. self.class.scoped is bound to be dropped in Rails4
         end
 
         def rank
-          @rank ||= self.class.
-            scoped(self.list_with_gaps_scope_condition).
+          @rank ||= self.list_with_gaps_scope.
             where(["#{self.class.table_name}.position <= ?", self.position]).
             count
         end
@@ -157,12 +164,12 @@ module Backlogs
       private
 
       #higher item is the one with lower position. self is visually displayed below its higher item.
-      def higher_item_unscoped(options = {})
-        @higher_item_unscoped ||= list_prev_next(:prev, options)
+      def higher_item_unscoped
+        @higher_item_unscoped ||= list_prev_next(:prev)
       end
 
-      def lower_item_unscoped(options = {})
-        @lower_item_unscoped ||= list_prev_next(:next, options)
+      def lower_item_unscoped
+        @lower_item_unscoped ||= list_prev_next(:next)
       end
 
       def list_commit
@@ -170,13 +177,9 @@ module Backlogs
         #FIXME now the cached lower/higher_item are wrong during this request. So are those from our old and new peers.
       end
 
-      def list_prev_next(dir, options)
+      def list_prev_next(dir)
         return nil if self.new_record?
-        raise "#{self.class}##{self.id}: cannot request #{dir} for nil position" unless self.position
-        options = options.dup
-        Backlogs::ActiveRecord.add_condition(options, ["#{self.class.table_name}.position #{dir == :prev ? '<' : '>'} ?", self.position])
-        options[:order] = "#{self.class.table_name}.position #{dir == :prev ? 'desc' : 'asc'}"
-        return self.class.find(:first, options)
+        self.class.list_prev_next(self.position, dir)
       end
 
     end
