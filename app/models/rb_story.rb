@@ -70,18 +70,6 @@ class RbStory < Issue
       :release => self.release_id}) unless self.new_record?
   end
 
-  def self.inject_lower_higher
-    prev = nil
-    i = 1
-    all.map {|story|
-      #optimization: set virtual attributes to avoid hundreds of sql queries
-      # this requires that the scope is clean - meaning exactly ONE backlog is queried here.
-      prev.higher_item = story if prev
-      story.lower_item = prev
-      prev = story
-    }
-  end
-
   def self.backlog(project_id, sprint_id, release_id)
     self.visible.order("#{self.table_name}.position").
       find_options({
