@@ -41,9 +41,7 @@ class RbTaskboardsController < RbApplicationController
     if @sprint.stories.size == 0
       @last_updated = nil
     else
-      @last_updated = RbTask.find(:first,
-                        :conditions => ['tracker_id = ? and fixed_version_id = ?', RbTask.tracker, @sprint.stories[0].fixed_version_id],
-                        :order      => "updated_on DESC")
+      @last_updated = RbTask.where(['tracker_id = ? and fixed_version_id = ?', RbTask.tracker, @sprint.stories[0].fixed_version_id]).order("updated_on DESC").first
     end
 
     respond_to do |format|
