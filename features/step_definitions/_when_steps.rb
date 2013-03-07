@@ -44,8 +44,8 @@ When /^I (try to )?create the sprint$/ do |attempt|
 end
 
 When /^I (try to )?move the story named (.+) above (.+)$/ do |attempt, story_subject, next_subject|
-  story = RbStory.find(:first, :conditions => ["subject=?", story_subject])
-  nxt  = RbStory.find(:first, :conditions => ["subject=?", next_subject])
+  story = RbStory.where(:subject => story_subject).first
+  nxt  = RbStory.where(:subject => next_subject).first
   
   attributes = story.attributes
   attributes[:next]             = nxt.id
@@ -180,7 +180,7 @@ When /^I view the master backlog$/ do
 end
 
 When /^I view the stories of (.+) in the issues tab/ do |sprint_name|
-  sprint = RbSprint.find(:first, :conditions => ["name=?", sprint_name])
+  sprint = RbSprint.where(:name => sprint_name).first
   visit url_for(:controller => :rb_queries, :action => :show, :project_id => sprint.project_id, :sprint_id => sprint.id, :only_path => true)
 end
 
