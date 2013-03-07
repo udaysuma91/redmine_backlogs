@@ -197,7 +197,7 @@ def login_as(user, password)
   fill_in 'username', :with => user
   fill_in 'password', :with => password
   page.find(:xpath, '//input[@name="login"]').click
-  @user = User.find(:first, :conditions => "login='"+user+"'")
+  @user = User.where(:login => user).first
 end
 
 def login_as_product_owner
