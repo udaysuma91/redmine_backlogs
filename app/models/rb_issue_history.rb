@@ -28,7 +28,7 @@ class RbIssueHistory < ActiveRecord::Base
 
   def self.statuses
     Hash.new{|h, k|
-      s = IssueStatus.find_by_id(k.to_i)
+      s = IssueStatus.find(k.to_i)
       if s.nil?
         s = IssueStatus.default
         puts "IssueStatus #{k.inspect} not found, using default #{s.id} instead"
@@ -98,7 +98,7 @@ class RbIssueHistory < ActiveRecord::Base
   end
 
   def self.rebuild_issue(issue, status=nil)
-    rb = RbIssueHistory.find_or_initialize_by_issue_id(issue.id)
+    rb = RbIssueHistory.where(:issue_id => issue.id).first_or_initialize
 
     rb.history = [{:date => issue.created_on.to_date - 1, :origin => :rebuild}]
 
@@ -286,7 +286,7 @@ class RbIssueHistory < ActiveRecord::Base
 
     if rb.history.detect{|h| h[:tracker] == :story }
       rb.history.collect{|h| h[:sprint] }.compact.uniq.each{|sprint_id|
-        sprint = RbSprint.find_by_id(sprint_id)
+        sprint = RbSprint.find(sprint_id.to_i)
         next unless sprint
         sprint.burndown.touch!(issue.id)
       }
@@ -299,7 +299,7 @@ class RbIssueHistory < ActiveRecord::Base
     status = self.statuses
 
     issues = Issue.count
-    Issue.find(:all, :order => 'root_id asc, lft desc').each_with_index{|issue, n|
+    Issue.order('root_id asc, lft desc').all.each_with_index{|issue, n|
       puts "#{issue.id.to_s.rjust(6, ' ')} (#{(n+1).to_s.rjust(6, ' ')}/#{issues})..."
       RbIssueHistory.rebuild_issue(issue, status)
     }
@@ -345,7 +345,7 @@ class RbIssueHistory < ActiveRecord::Base
 
   def touch_sprint
     self.history.select{|h| h[:sprint]}.uniq{|h| "#{h[:sprint]}::#{h[:tracker]}"}.each{|h|
-      sprint = RbSprint.find_by_id(h[:sprint])
+      sprint = RbSprint.find(h[:sprint].to_i)
       next unless sprint
       sprint.burndown.touch!(h[:tracker] == :story ? self.issue.id : nil)
     }
