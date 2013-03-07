@@ -22,7 +22,7 @@ end
 
 Then /^(.+) should be in the (\d+)(?:st|nd|rd|th) position of the sprint named (.+)$/ do |story_subject, position, sprint_name|
   position = position.to_i
-  story = RbStory.find(:first, :conditions => ["subject=? and name=?", story_subject, sprint_name], :joins => :fixed_version)
+  story = RbStory.where("subject=? and name=?", story_subject, sprint_name).joins(:fixed_version).first
   story.rank.should == position.to_i
 end
 
@@ -66,7 +66,7 @@ end
 
 Then /^show me the list of shared sprints$/ do
   header = [['id', 3], ['name', 18], ['project id', 5], ['sprint_start_date', 18], ['effective_date', 18], ['updated_on', 20]]
-  sprints = @project.shared_versions.scoped(:conditions => {:status => ['open', 'locked']}, :order => 'sprint_start_date ASC, effective_date ASC').collect{|v| v.becomes(RbSprint) } 
+  sprints = @project.shared_versions.where(:status => ['open', 'locked']).order('sprint_start_date ASC, effective_date ASC').collect{|v| v.becomes(RbSprint) } 
   data = sprints.collect{|sprint| [sprint.id, sprint.name, sprint.project_id, sprint.start_date, sprint.effective_date, sprint.updated_on] }
 
   show_table("Sprints", header, data)
@@ -144,7 +144,7 @@ Then /^the (\d+)(?:st|nd|rd|th) story in (.+) should be (.+)$/ do |position, bac
 end
 
 Then /^the (\d+)(?:st|nd|rd|th) task for (.+) should be (.+)$/ do |position, story_subject, task_subject|
-  story = RbStory.find(:first, :conditions => ["subject=?", story_subject])
+  story = RbStory.where(:subject => story_subject).first
   story.should_not be_nil
   story.children.length.should be >= position.to_i
   story.children[position.to_i - 1].subject.should == task_subject
@@ -173,7 +173,7 @@ Then /^The last_update information should be near (.+)$/ do |t|
 end
 
 Then /^the sprint named (.+) should have (\d+) impediments? named (.+)$/ do |sprint_name, count, impediment_subject|
-  sprint = RbSprint.find(:all, :conditions => { :name => sprint_name })
+  sprint = RbSprint.where(:name => sprint_name)
   sprint.length.should == 1
   sprint = sprint.first
 
@@ -222,7 +222,7 @@ Then /^the status of the story should be set as (.+)$/ do |status|
 end
 
 Then /^the story named (.+) should have (\d+) task named (.+)$/ do |story_subject, count, task_subject|
-  stories = RbStory.find(:all, :conditions => { :subject => story_subject })
+  stories = RbStory.where(:subject => story_subject)
   stories.length.should == 1
 
   tasks = stories.first.descendants
@@ -247,7 +247,7 @@ Then /^the story should have a (.+) of (.+)$/ do |attribute, value|
   @story.reload
   if attribute=="tracker"
     attribute="tracker_id"
-    value = Tracker.find(:first, :conditions => ["name=?", value]).id
+    value = Tracker.where(:name => value).first.id
   end
   @story[attribute].should == value
 end
@@ -353,7 +353,7 @@ Then /^show me the journal for (.+)$/ do |subject|
 end
 
 Then /^show me the story burndown for (.+)$/ do |story|
-  story = RbStory.find(:first, :conditions => ['subject = ?', story])
+  story = RbStory.where(:subject => story).first
   bd = story.burndown
   header = ['day'] + bd.keys.sort{|a, b| a.to_s <=> b.to_s}
   bd['day'] = current_sprint(:keep).days
@@ -367,15 +367,15 @@ Then /^task (.+) should have a total time spent of (\d+) hours$/ do |subject,val
 end
 
 Then /^sprint (.+) should contain (.+)$/ do |sprint_name, story_subject|
-  story = RbStory.find(:first, :conditions => ["subject=? and name=?", story_subject, sprint_name], :joins => :fixed_version)
+  story = RbStory.where("subject=? and name=?", story_subject, sprint_name).joins(:fixed_version).first
   story.should_not be_nil
 end
 
 Then /^the story named (.+) should have a task named (.+)$/ do |story_subject, task_subject|
-  stories = RbStory.find(:all, :conditions => { :subject => story_subject })
+  stories = RbStory.where(:subject => story_subject)
   stories.length.should == 1
 
-  tasks = RbTask.find(:all, :conditions => { :subject => task_subject, :parent_id => stories.first.id })
+  tasks = RbTask.where(:subject => task_subject, :parent_id => stories.first.id)
   tasks.length.should == 1
 end
 
