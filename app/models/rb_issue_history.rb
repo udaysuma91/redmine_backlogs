@@ -147,7 +147,7 @@ class RbIssueHistory < ActiveRecord::Base
     }
 
     if ActiveRecord::Base.connection.tables.include?('rb_journals')
-      RbJournal.all(:conditions => ['issue_id=?', issue.id], :order => 'timestamp asc').each{|j|
+      RbJournal.where(:issue_id => issue.id).order(:timestamp).each{|j|
         date = j.timestamp.to_date
         full_journal[date] ||= {}
         case j.property
@@ -185,7 +185,7 @@ class RbIssueHistory < ActiveRecord::Base
     }
 
     # Wouldn't be needed if redmine just created journals for update_parent_properties
-    subissues = Issue.find(:all, :conditions => ['parent_id = ?', issue.id]).to_a
+    subissues = Issue.where(:parent_id => issue.id).to_a
     subhists = []
     subdates = []
     subissues.each{|i|
