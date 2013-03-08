@@ -22,6 +22,8 @@ module Backlogs
         before_save :backlogs_before_save
         after_save  :backlogs_after_save
 
+        serialize :release_burndown_cache, Hash
+
         include Backlogs::ActiveRecord::Attributes
       end
     end
@@ -121,6 +123,9 @@ module Backlogs
 
         # scrub position from the journal by copying the new value to the old
         @attributes_before_change['position'] = self.position if @attributes_before_change
+
+        # expire our fragment of release burndown
+        self.release_burndown_cache = nil
 
         @backlogs_new_record = self.new_record?
 

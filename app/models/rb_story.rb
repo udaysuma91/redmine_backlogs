@@ -262,6 +262,7 @@ class RbStory < Issue
   #  :backlog_points :added_points :closed_points
 #FIXME is it better to let the story fetch days directly from RbRelease?
   def release_burndown_data(days,release_burndown_id)
+    return self.release_burndown_cache unless self.release_burndown_cache.empty?
     return nil unless self.is_story?
 
     baseline = [0] * days.size
@@ -336,6 +337,8 @@ class RbStory < Issue
     rl[:backlog_points] = series.series(:backlog_points)
     rl[:added_points] = series.series(:added_points)
     rl[:closed_points] = series.series(:closed_points)
+    self.release_burndown_cache = rl
+    self.class.where(:id => self.id).update_all(:release_burndown_cache => rl.to_yaml)
     return rl
   end
 

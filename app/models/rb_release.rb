@@ -44,7 +44,7 @@ class ReleaseBurndown
 
     # Go through each story in the release
     release.stories_all_time.each{|story|
-      series.add(story.release_burndown_data(@days,release.id))
+      series.add(story.becomes(RbStory).release_burndown_data(@days,release.id))
     }
 
     # Series collected, now format data for jqplot
@@ -118,7 +118,7 @@ class RbRelease < ActiveRecord::Base
   unloadable
 
   belongs_to :project, :inverse_of => :releases
-  has_many :issues, :class_name => 'RbStory', :foreign_key => 'release_id', :dependent => :nullify
+  has_many :issues, :foreign_key => 'release_id', :dependent => :nullify
 
   validates_presence_of :project_id, :name, :release_start_date, :release_end_date
   validates_inclusion_of :status, :in => RELEASE_STATUSES
@@ -150,7 +150,7 @@ class RbRelease < ActiveRecord::Base
 
   # Returns current stories + stories previously scheduled for this release
   def stories_all_time
-    missing_stories = RbStory.joins(:journals => :details).where(
+    missing_stories = Issue.joins(:journals => :details).where(
             "(release_id != ? or release_id IS NULL) and
             journal_details.property ='attr' and
             journal_details.prop_key = 'release_id' and
@@ -195,11 +195,11 @@ class RbRelease < ActiveRecord::Base
   end
 
   def has_open_stories?
-    stories.open.size > 0
+    issues.open.size > 0
   end
 
   def has_burndown?
-    return self.stories.size > 0
+    return self.issues.size > 0
   end
 
   def burndown
