@@ -95,7 +95,7 @@ if (!RB.constants) {
  An approximation would be all projects which all visible sprints are shared in plus self_and_descendants.
  Most simple way: use all projects the user can see, trading some bytes of bandwidth against many server cycles of comparison and filtering.
 =end
-    project_versions = Hash[Project.visible.find(:all).map{|project|
+    project_versions = Hash[Project.visible.all.map{|project|
       [
         project.id.to_s,
         project.open_shared_sprints.collect{|v| v.id.to_s }
@@ -106,7 +106,7 @@ if (!RB.constants) {
  a release can contain stories of all projects which it is visible
  but droppables are only self_and_descendants of the current view to avoid user confusion by vanishing stories
 =end
-    project_releases = Hash[Project.visible.find(:all).map{|project|
+    project_releases = Hash[Project.visible.all.map{|project|
       [
         project.id.to_s,
         project.shared_releases.open.visible.reject{|r|
