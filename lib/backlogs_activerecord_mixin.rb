@@ -80,11 +80,11 @@ module Backlogs
         end
 
         def first(options = {})
-          return self.class.find_by_position(self.class.minimum(:position, options))
+          return self.class.where(:position => self.class.minimum(:position, options)).first
         end
 
         def last(options = {})
-          return self.class.find_by_position(self.class.maximum(:position, options))
+          return self.class.where(:position => self.class.maximum(:position, options)).first
         end
 
         def higher_item
