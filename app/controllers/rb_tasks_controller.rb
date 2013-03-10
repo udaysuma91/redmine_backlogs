@@ -23,7 +23,7 @@ class RbTasksController < RbApplicationController
   end
 
   def update
-    @task = RbTask.find_by_id(params[:id])
+    @task = RbTask.find(params[:id].to_i)
     @settings = Backlogs.settings
     result = @task.update_with_relationships(params)
     status = (result ? 200 : 400)
