@@ -62,9 +62,9 @@ def current_sprint(name = nil)
       raise "Unexpected command #{name.inspect}"
     end
   elsif name.is_a?(String)
-    @sprint =  RbSprint.find_by_name(name)
+    @sprint =  RbSprint.where(:name => name).first
   elsif name.nil?
-    @sprint = @sprint ? RbSprint.find_by_id(@sprint.id) : nil
+    @sprint = @sprint ? RbSprint.find(@sprint.id) : nil
   else
     raise "Unexpected #{name.class}"
   end
@@ -163,7 +163,7 @@ end
 
 def initialize_task_params(story_id)
   params = HashWithIndifferentAccess.new(RbTask.new.attributes)
-  params['project_id'] = RbStory.find_by_id(story_id).project_id
+  params['project_id'] = RbStory.find(story_id).project_id
   params['tracker_id'] = RbTask.tracker
   params['author_id']  = @user.id
   params['parent_issue_id'] = story_id
@@ -172,7 +172,7 @@ def initialize_task_params(story_id)
 end
 
 def sprint_id_from_name(name)
-  sprint = RbSprint.find_by_name(name)
+  sprint = RbSprint.where(:name => name).first
   raise "No sprint by name #{name}" unless sprint
   return sprint.id
 end

@@ -17,7 +17,7 @@ end
 #   before_story_name: name|nil (optional) of the story in the target sprint where to position the source
 def drag_story(story_name, target_sprint_name, before_story_name)
   @last_drag_and_drop = {}
-  story = RbStory.find_by_subject(story_name.strip)
+  story = RbStory.where(:subject => story_name.strip).first
   story.should_not be_nil
   @last_drag_and_drop[:version_id_before] = story.fixed_version_id
   @last_drag_and_drop[:position_before] = story.position
