@@ -62,8 +62,8 @@ end
 
 When /^I (try to )?move the story named (.+) to the (\d+)(?:st|nd|rd|th) position of the sprint named (.+)$/ do |attempt, story_subject, position, sprint_name|
   position = position.to_i
-  story = RbStory.find_by_subject(story_subject)
-  sprint = RbSprint.find_by_name(sprint_name)
+  story = RbStory.where(:subject => story_subject).first
+  sprint = RbSprint.where(:name => sprint_name).first
   story.fixed_version = sprint
   
   attributes = story.attributes
@@ -228,9 +228,9 @@ When /^I drag task (.+) to the state (.+) in the row of (.+)$/ do |task, state, 
 end
 
 When /^I create an impediment named (.+) which blocks (.+?)(?: and (.+))?$/ do |impediment_name, blocked_name, blocked2_name|
-  blocked = Issue.find_by_subject(blocked_name)
+  blocked = Issue.where(:subject => blocked_name).first
   blocked_list = [blocked.id.to_s]
-  blocked2 = Issue.find_by_subject(blocked2_name) if blocked2_name != ''
+  blocked2 = Issue.where(:subject => blocked2_name).first if blocked2_name != ''
   blocked_list << blocked2.id.to_s if blocked2
   page.find("#impediments span.add_new").click
   with_scope('#task_editor') do
@@ -245,10 +245,10 @@ When /^I create an impediment named (.+) which blocks (.+?)(?: and (.+))?$/ do |
 end
 
 When /^I update the status of task (.+?) to (.+?)$/ do |task, state|
-  task = RbTask.find_by_subject(task)
+  task = RbTask.where(:subject => task).first
   task.should_not be_nil
   @task_params = HashWithIndifferentAccess.new(task.attributes)
-  state = IssueStatus.find_by_name(state)
+  state = IssueStatus.where(:name => state).first
   @task_params[:status_id] = state.id
   page.driver.post(
                       url_for(:controller => :rb_tasks,
@@ -262,13 +262,13 @@ end
 
 # Low level tests on higher_item and lower_item, should be rspec tests
 When /^I call move_after\("([^"]*)"\) on "([^"]*)"$/ do |arg, obj|
-  obj = RbStory.find_by_subject(obj)
-  arg = (arg=="nil") ? nil : RbStory.find_by_subject(arg)
+  obj = RbStory.where(:subject => obj).first
+  arg = (arg=="nil") ? nil : RbStory.where(:subject => arg).first
   obj.move_after(arg)
 end
 When /^I call move_before\("([^"]*)"\) on "([^"]*)"$/ do |arg, obj|
-  obj = RbStory.find_by_subject(obj)
-  arg = (arg=="nil") ? nil : RbStory.find_by_subject(arg)
+  obj = RbStory.where(:subject => obj).first
+  arg = (arg=="nil") ? nil : RbStory.where(:subject => arg).first
   obj.move_before(arg)
 end
 
