@@ -46,18 +46,18 @@ namespace :redmine do
         Backlogs.setting[:card_spec] = BacklogsPrintableCards::CardPageLayout.available[0]
       end
 
-      trackers = Tracker.find(:all)
+      trackers = Tracker.all
 
       if ENV['story_trackers'] && ENV['story_trackers'] != ''
         trackers =  ENV['story_trackers'].split(',')
         trackers.each{|name|
-          if ! Tracker.find(:first, :conditions => ["name=?", name])
+          if ! Tracker.where(:name => name).first
             puts "Creating story tracker '#{name}'"
             tracker = Tracker.new(:name => name)
             tracker.save!
           end
         }
-        Backlogs.setting[:story_trackers] = trackers.collect{|n| Tracker.find_by_name(n).id }
+        Backlogs.setting[:story_trackers] = trackers.collect{|n| Tracker.where(:name => n).first.id }
       else
         if RbStory.trackers.length == 0
           puts "Configuring story and task trackers..."
@@ -98,12 +98,12 @@ namespace :redmine do
       end
 
       if ENV['task_tracker'] && ENV['task_tracker'] != ''
-        if ! Tracker.find(:first, :conditions => ["name=?", ENV['task_tracker']])
+        if ! Tracker.where(:name => ENV['task_tracker']).first
           puts "Creating task tracker '#{ENV['task_tracker']}'"
           tracker = Tracker.new(:name => ENV['task_tracker'])
           tracker.save!
         end
-        Backlogs.setting[:task_tracker] = Tracker.find_by_name(ENV['task_tracker']).id
+        Backlogs.setting[:task_tracker] = Tracker.where(:name => ENV['task_tracker']).first.id
       else
         if !RbTask.tracker
           # Check if there is at least one tracker available
@@ -179,7 +179,7 @@ namespace :redmine do
         print "Please type the tracker's name: "
         STDOUT.flush
         name = STDIN.gets.chomp!
-        if Tracker.find(:first, :conditions => "name='#{name}'")
+        if Tracker.where(:name => name).first
           puts "Ooops! That name is already taken."
           next
         end
