@@ -10,7 +10,7 @@ class RbTaskboardsController < RbApplicationController
     @settings = Backlogs.settings
 
     ## determine status columns to show
-    tracker = Tracker.find_by_id(RbTask.tracker)
+    tracker = Tracker.find(RbTask.tracker)
     statuses = tracker.issue_statuses
     # disable columns by default
     if User.current.admin?
