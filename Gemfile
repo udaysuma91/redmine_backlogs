@@ -19,12 +19,12 @@ group :test do
   gem 'chronic'
   gem 'ZenTest', "=4.5.0" # 4.6.0 has a nasty bug that breaks autotest
   gem 'autotest-rails'
-  gem 'capybara' unless chiliproject
+  gem 'capybara', "~> 1.1" if ENV['IN_RBL_TESTENV'] == 'true' # redmine 2.3 conflicts
+  gem "poltergeist", "~>1.0"
   gem 'cucumber-rails'
   gem "culerity"
   gem "database_cleaner"
   gem "gherkin", "~> 2.6"
-  gem "poltergeist", "~>0.6.0"
   gem "redgreen" if RUBY_VERSION < "1.9"
   gem "rspec", '~>2.11.0'
   gem "rspec-rails", '~> 2.11.0'
