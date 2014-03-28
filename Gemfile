@@ -26,7 +26,7 @@ else
 gem "nokogiri"
 end
 gem "open-uri-cached"
-gem "prawn"
+gem "prawn", "< 1.0.0"
 gem 'json'
 gem "system_timer" if RUBY_VERSION =~ /^1\.8\./ && RUBY_PLATFORM =~ /darwin|linux/
 
