@@ -70,7 +70,7 @@ namespace :redmine do
             tracker.save!
             init_tracker_workflow(tracker)
             puts "Current default projects tracker ids #{Setting.default_projects_tracker_ids} "
-            Setting.default_projects_tracker_ids = Setting.default_projects_tracker_ids ? [tracker.id.to_s] : Setting.default_projects_tracker_ids + [tracker.id.to_s]
+            Setting.default_projects_tracker_ids = Setting.default_projects_tracker_ids ? Setting.default_projects_tracker_ids + [tracker.id.to_s] : [tracker.id.to_s]
           end
         }
         Backlogs.setting[:epic_trackers] = trackers.collect{|n| Tracker.find_by_name(n).id }
@@ -122,7 +122,7 @@ namespace :redmine do
             tracker = Tracker.new(:name => name, :default_status => default_status)
             tracker.save!
             init_tracker_workflow(tracker)
-            Setting.default_projects_tracker_ids = Setting.default_projects_tracker_ids + [tracker.id.to_s]
+            Setting.default_projects_tracker_ids = Setting.default_projects_tracker_ids ? Setting.default_projects_tracker_ids + [tracker.id.to_s] : [tracker.id.to_s]
           end
         }
         Backlogs.setting[:story_trackers] = trackers.collect{|n| Tracker.find_by_name(n).id }
@@ -172,7 +172,7 @@ namespace :redmine do
           tracker = Tracker.new(:name => ENV['task_tracker'], :default_status => default_status)
           tracker.save!
           init_tracker_workflow(tracker)
-          Setting.default_projects_tracker_ids = Setting.default_projects_tracker_ids + [tracker.id.to_s]
+          Setting.default_projects_tracker_ids = Setting.default_projects_tracker_ids ? Setting.default_projects_tracker_ids + [tracker.id.to_s] : [tracker.id.to_s]
         end
         Backlogs.setting[:task_tracker] = Tracker.find_by_name(ENV['task_tracker']).id
       else
