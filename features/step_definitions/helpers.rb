@@ -1,6 +1,5 @@
 require 'timecop'
 require 'chronic'
-#require 'cucumber/ast/background'
 require 'benchmark'
 
 class Time
@@ -9,44 +8,6 @@ class Time
     tz.local(self.year, self.month, self.day, self.hour, self.min, self.sec)
   end
 end
-
-#module Cucumber
-#  module Ast
-#    class Background #:nodoc:
-#      alias_method :accept_org, :accept
-#
-#      def accept(visitor)
-#        #cache_file = self.feature.file + '.background'
-#        #return backlogs_load(cache_file) if File.exist?(cache_file) && File.mtime(cache_file) > File.mtime(self.feature.file)
-#        total = Benchmark.measure{ accept_org(visitor) }.total
-#        puts "Background #{File.basename(self.feature.file, File.extname(self.feature.file))}: #{total}s"
-#        #backlogs_dump(cache_file) if !File.exist?(cache_file) || File.mtime(cache_file) < File.mtime(self.feature.file)
-#      end
-#
-#      def backlogs_dump(filename)
-#        skip_tables = ["schema_info"]
-#        dump = {}
-#        (ActiveRecord::Base.connection.tables - skip_tables).each{|table_name|
-#          dump[table_name] = ActiveRecord::Base.connection.select_all("select * from #{table_name}")
-#        }
-#        File.open(filename, 'w'){|file| file.write(dump.to_yaml)}
-#      end
-#
-#      def backlogs_load(filename)
-#        dump = YAML::load_file(filename)
-#        dump.each_pair{|table_name, rows|
-#          ActiveRecord::Base.connection.execute("delete from #{table_name}")
-#          next unless rows.size > 0
-#          columns = rows[0].keys
-#          sql = "insert into #{table_name} (#{columns.join(',')}) values (#{columns.collect{|c| '%s'}.join(',')})"
-#          rows.each{|row|
-#            ActiveRecord::Base.connection.execute(sql % columns.collect{|c| ActiveRecord::Base::sanitize(row[c])})
-#          }
-#        }
-#      end
-#    end
-#  end
-#end
 
 def get_project(identifier)
   Project.find(identifier)
