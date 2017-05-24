@@ -1,6 +1,6 @@
 require 'timecop'
 require 'chronic'
-require 'cucumber/ast/background'
+#require 'cucumber/ast/background'
 require 'benchmark'
 
 class Time
