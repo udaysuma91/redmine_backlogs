@@ -24,10 +24,27 @@ module Backlogs
         return tabs
       end
 
+      # Returns a set of options for a select field, grouped by project.
+      # override so we also see team of sprint/version.
+      def version_options_for_select(versions, selected=nil)
+        puts "===================================== we komen in de nieuwe functie :)"
+        grouped = Hash.new {|h,k| h[k] = []}
+        versions.each do |version|
+          grouped[version.project.name] << [version.name_team, version.id]
+        end
+
+        selected = selected.is_a?(Version) ? selected.id : selected
+        if grouped.keys.size > 1
+          grouped_options_for_select(grouped, selected)
+        else
+          options_for_select((grouped.values.first || []), selected)
+        end
+      end
+
     end
 
   end
 end
 
-ProjectsHelper.send(:include, Backlogs::ProjectsHelperPatch) unless ProjectsHelper.included_modules.include? Backlogs::ProjectsHelperPatch
+ProjectsHelper.send(:prepend, Backlogs::ProjectsHelperPatch) unless ProjectsHelper.included_modules.include? Backlogs::ProjectsHelperPatch
 
