@@ -162,9 +162,11 @@ else
 #    end
 #  end
 
-    rb_common_routes rb
+  rb_common_routes rb
 
   resources :genericboards, :controller => :rb_genericboards_admin, :via => [:get]
+  
+  resources :issue_release, :controller => :rb_issue_release
   
   resources :task, :except => :index, :controller => :rb_tasks
   rb_match rb, 'tasks/:story_id', :to => 'rb_tasks#index', :via => [:get]

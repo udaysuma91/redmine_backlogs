@@ -285,6 +285,19 @@ module BacklogsPlugin
           return ''
         end
       end
+      
+      def view_issues_show_description_bottom(context)
+        issue, controller = context[:issue], context[:controller]
+
+        #context[:release_note] = issue.release_note ||
+        #  issue.build_release_note
+        context[:issue_release] = RbIssueRelease.new
+        controller.render_to_string(
+          { :partial =>
+              'hooks/rb_view_issues_show_description_bottom',
+            :locals => context }
+        )
+      end
 
       def view_versions_show_bottom(context={ })
         begin

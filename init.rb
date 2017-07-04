@@ -116,7 +116,8 @@ Redmine::Plugin.register :redmine_backlogs do
                                         :rb_stories          => [:index, :show, :tooltip],
                                         :rb_server_variables => [:project, :sprint, :index],
                                         :rb_burndown_charts  => [:embedded, :show, :print],
-                                        :rb_updated_items    => :show
+                                        :rb_updated_items    => :show,
+                                        :rb_issue_release    => [:index, :show, :new, :create, :edit, :update, :destroy]
                                       }
 
     permission :view_taskboards,      {
