@@ -268,6 +268,11 @@ module Backlogs
         write_attribute(:rbteam_id, tid)
       end
 
+      def releases
+        @Releases = RbRelease.joins(:rb_issue_release).where(:rb_issue_releases => {:issue_id => self.id}).to_a
+        puts "Releases: #{@Releases}"
+      end
+
     end
   end
 end

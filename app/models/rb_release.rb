@@ -165,6 +165,8 @@ class RbRelease < ActiveRecord::Base
   has_many :issues, :class_name => 'RbStory', :foreign_key => 'release_id', :dependent => :nullify
   has_many :rb_release_burnchart_day_cache, :dependent => :delete_all, :foreign_key => 'release_id'
 
+  has_many :rb_issue_release, :class_name => 'RbIssueRelease', :foreign_key => 'release_id', :dependent => :delete_all
+
   attr_accessible :project_id, :name, :release_start_date, :release_end_date, :status
   attr_accessible :project, :description, :planned_velocity, :sharing
 

@@ -22,6 +22,8 @@
 <% end %>
 </table>
 </form>
+<% else %>
+<p>No releases</p>
 <% end %>
 
 <%= form_for :issue_release, {
@@ -32,9 +34,9 @@
                } do |f| %>
 
   <p>
-    <%= f.hidden_field 'issue_id', :value => issue.id %>
-    <%= f.select :release_id, release_options_for_select(issue.assignable_releases, issue.release)  %>
+    <%= f.hidden_field 'issue_id', :value => @issue.id %>
+    <%= f.select :release_id, release_options_for_select(@issue.assignable_releases, nil)  %>
     <%= submit_tag l(:button_add) %>
-    <%= link_to_function l(:button_cancel), '$("#new-relation-form").hide();'%>
+    <%= link_to_function l(:button_cancel), '$("#new-issue-release-form").hide();'%>
   </p>
 <% end %>

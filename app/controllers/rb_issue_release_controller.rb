@@ -13,6 +13,8 @@ include RbCommonHelper
 # Responsible for exposing issue-release CRUD. It SHOULD NOT be used
 # for display
 class RbIssueReleaseController < RbApplicationController
+  before_action :find_issue, :authorize, :only => [:index, :create, :new]
+  before_action :find_release, :only => [:show, :update, :destroy]
 
   def index
     # should not be hit
@@ -21,7 +23,6 @@ class RbIssueReleaseController < RbApplicationController
   def create
     # create a new relation with a release
     @IssueRelease = RbIssueRelease.new
-#    @relation.issue = @issue
     @IssueRelease.safe_attributes = params[:issue_release]
     @IssueRelease.init_journals(User.current)
     saved = @IssueRelease.save
@@ -29,7 +30,7 @@ class RbIssueReleaseController < RbApplicationController
     respond_to do |format|
       format.html { redirect_to issue_path(@issue) }
       format.js {
-        @IssueReleases = @issue.reload.issue_releases.select {|ir| ir.issue(@issue) && ir.issue(@issue).visible? }
+        @Releases = @issue.reload.releases.select {|ir| ir.issue(@issue) && ir.issue(@issue).visible? }
       }
     end
   end
@@ -55,4 +56,18 @@ class RbIssueReleaseController < RbApplicationController
     # delete the relation to the release
   end
   
+  private
+  
+  def find_issue
+    @issue = Issue.find(params[:issue_release][:issue_id])
+    @project = @issue.project
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+  
+  def find_relation
+    @relation = IssueRelation.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
 end
