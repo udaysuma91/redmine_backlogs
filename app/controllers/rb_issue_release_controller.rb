@@ -14,7 +14,7 @@ include RbCommonHelper
 # for display
 class RbIssueReleaseController < RbApplicationController
   before_action :find_issue, :authorize, :only => [:index, :create, :new]
-  before_action :find_release, :only => [:show, :update, :destroy]
+  before_action :find_issue_release, :only => [:show, :update, :destroy]
 
   def index
     # should not be hit
@@ -30,13 +30,13 @@ class RbIssueReleaseController < RbApplicationController
     respond_to do |format|
       format.html { redirect_to issue_path(@issue) }
       format.js {
-        @Releases = @issue.reload.releases
+        @IssueReleases = @issue.reload.issue_releases
       }
     end
   end
   
   def new
-    @issue_release = RbIssueRelease.new
+    @IssueRelease = RbIssueRelease.new
     # should not be hit
   end
   
@@ -54,6 +54,13 @@ class RbIssueReleaseController < RbApplicationController
   
   def destroy
     # delete the relation to the release
+    @IssueRelease.init_journals(User.current)
+    @IssueRelease.destroy
+
+    respond_to do |format|
+      format.html { redirect_to issue_path(@relation.issue_from) }
+      format.js
+    end
   end
   
   private
@@ -65,8 +72,8 @@ class RbIssueReleaseController < RbApplicationController
     render_404
   end
   
-  def find_relation
-    @relation = IssueRelation.find(params[:id])
+  def find_issue_release
+    @IssueRelease = RbIssueRelease.find(params[:issue_release_id])
   rescue ActiveRecord::RecordNotFound
     render_404
   end

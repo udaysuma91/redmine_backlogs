@@ -282,3 +282,4 @@ en:
   backlogs_estimated_hours_per_point_explanation: "If not empty or zero, the estimated hours will be populated with the amount of story points multiplied by this value."
   label_completed_sprints: "Completed sprints"
   label_issue_release: "Releases"
+  label_issue_release_delete: "Delete relation to release"

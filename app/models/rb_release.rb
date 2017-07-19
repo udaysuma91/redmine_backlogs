@@ -198,6 +198,10 @@ class RbRelease < ActiveRecord::Base
     errors.add(:base, "release_end_after_start") if self.release_start_date >= self.release_end_date if self.release_start_date and self.release_end_date
   end
 
+  def overdue?
+    release_end_date < User.current.today && !closed?
+  end
+
   def stories #compat
     issues
   end
@@ -279,6 +283,14 @@ class RbRelease < ActiveRecord::Base
 
   def today
     ReleaseBurndownDay.where(release_id: self, day: Date.today).first
+  end
+
+  # Returns a string of css classes that apply to the release
+  def css_classes
+    s = "release"
+    s << ' closed' if closed?
+    s << ' overdue' if overdue?
+    s
   end
 
   def remaining_story_points #FIXME merge bohansen_release_chart removed this

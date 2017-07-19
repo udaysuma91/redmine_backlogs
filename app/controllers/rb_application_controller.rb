@@ -31,7 +31,7 @@ class RbApplicationController < ApplicationController
                  @release_multiview.project
                elsif params[:project_id]
                  Project.find(params[:project_id])
-               elseif params[:issue_release_id]
+               elsif params[:issue_release_id]
                  load_issue_release
                  @issue_release.issue.project
                else

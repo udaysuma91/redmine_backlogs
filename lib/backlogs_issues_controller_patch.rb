@@ -49,6 +49,10 @@ module Backlogs
       def Releases(releases)
         @Releases = releases
       end
+      
+      def IssueReleases(issueReleases)
+        @IssueReleases = issueReleases
+      end
     end
   end
 end

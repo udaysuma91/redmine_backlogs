@@ -17,6 +17,8 @@ module Backlogs
         has_one :backlogs_history, :class_name => RbIssueHistory, :dependent => :destroy
         has_many :rb_release_burnchart_day_cache, :dependent => :delete_all
 
+        belongs_to :rb_issue_release
+        has_many :releases, :class_name => 'RbRelease', :through => :rb_issue_release
 
         validates_inclusion_of :release_relationship, :in => RbStory::RELEASE_RELATIONSHIP
 
@@ -268,8 +270,8 @@ module Backlogs
         write_attribute(:rbteam_id, tid)
       end
 
-      def releases
-        @Releases = RbRelease.joins(:rb_issue_release).where(:rb_issue_releases => {:issue_id => self.id}).to_a
+      def issue_releases
+        @IssueReleases = RbIssueRelease.where(:issue_id => self.id).to_a
       end
 
     end
