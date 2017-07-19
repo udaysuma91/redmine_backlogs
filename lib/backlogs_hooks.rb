@@ -289,9 +289,8 @@ module BacklogsPlugin
       def view_issues_show_description_bottom(context)
         issue, controller = context[:issue], context[:controller]
 
-        @issue = issue
-        @releases = @issue.releases
         context[:issue_release] = RbIssueRelease.new
+        controller.Releases(issue.releases)
         controller.render_to_string(
           { :partial =>
               'hooks/rb_view_issues_show_description_bottom',

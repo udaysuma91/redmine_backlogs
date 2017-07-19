@@ -270,7 +270,6 @@ module Backlogs
 
       def releases
         @Releases = RbRelease.joins(:rb_issue_release).where(:rb_issue_releases => {:issue_id => self.id}).to_a
-        puts "Releases: #{@Releases}"
       end
 
     end

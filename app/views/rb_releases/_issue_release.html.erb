@@ -4,13 +4,14 @@
 
 <p><strong><%=l(:label_issue_release)%></strong></p>
 
-<% if @releases.present? %>
+<% if @Releases.present? %>
 <form>
 <table class="list releases">
-<% @releases.each do |release| %>
-  <td class="release"><%= release.name %></td>
+<% @Releases.each do |release| %>
+  <td class="release"><%= link_to release.name, rb_release_path(release) %></td>
+  <td class="release_end_date"><%= format_date(release.release_end_date) %></td>
   <td class="buttons"><%= link_to(l(:label_issue_release_delete),
-                                  release_path(release),
+                                  rb_issue_release_path(release),
                                   :remote => true,
                                   :method => :delete,
                                   :data => {:confirm => l(:text_are_you_sure)},

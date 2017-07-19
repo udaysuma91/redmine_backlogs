@@ -30,7 +30,7 @@ class RbIssueReleaseController < RbApplicationController
     respond_to do |format|
       format.html { redirect_to issue_path(@issue) }
       format.js {
-        @Releases = @issue.reload.releases.select {|ir| ir.issue(@issue) && ir.issue(@issue).visible? }
+        @Releases = @issue.reload.releases
       }
     end
   end

@@ -31,6 +31,9 @@ class RbApplicationController < ApplicationController
                  @release_multiview.project
                elsif params[:project_id]
                  Project.find(params[:project_id])
+               elseif params[:issue_release_id]
+                 load_issue_release
+                 @issue_release.issue.project
                else
                  raise "Cannot determine project (#{params.inspect})"
                end
@@ -68,5 +71,9 @@ class RbApplicationController < ApplicationController
                       nil
                     end
 
+  end
+  
+  def load_issue_release
+    @issue_release = RbIssueRelease.find(params[:issue_release_id])
   end
 end
