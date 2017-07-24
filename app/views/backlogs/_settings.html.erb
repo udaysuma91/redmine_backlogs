@@ -161,6 +161,24 @@
   </p>
 
   <p>
+    <%= label_tag("settings_use_one_product_backlog", l(:backlogs_use_one_product_backlog)) %>
+    <%= check_box_tag("settings[use_one_product_backlog]", 'enabled',
+                      Backlogs.setting[:use_one_product_backlog]) %>
+    <em class="info"><%= l(:backlogs_use_one_product_backlog_explanation) %></em>
+  </p>
+  <p>
+    <%= label_tag("settings_issue_release_relation", l(:backlogs_issue_release_relation)) %>
+    <label class="block">
+    <%= radio_button_tag("settings[issue_release_relation]", 'single',
+        Backlogs.setting[:issue_release_relation] == 'single' ) %><%= l(:backlogs_issue_release_relation_single) %>
+    </label>
+    <label class="block">
+    <%= radio_button_tag("settings[issue_release_relation]", 'multiple',
+        Backlogs.setting[:issue_release_relation] == 'multiple' ) %><%= l(:backlogs_issue_release_relation_multiple) %>
+    </label>
+  </p>
+
+  <p>
     <%= label_tag("settings_scrum_stats_menu_position", l(:backlogs_scrum_stats_menu_position)) %>
     <label class="inline"><%= radio_button_tag("settings[scrum_stats_menu_position]", 'top', Backlogs.setting[:scrum_stats_menu_position].nil? || Backlogs.setting[:scrum_stats_menu_position] == 'top') %><%= l(:backlogs_scrum_stats_menu_top) %></label>
     <label class="inline"><%= radio_button_tag("settings[scrum_stats_menu_position]", 'application', Backlogs.setting[:scrum_stats_menu_position] == 'application') %><%= l(:backlogs_scrum_stats_menu_application) %></label>

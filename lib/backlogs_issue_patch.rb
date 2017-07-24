@@ -274,6 +274,22 @@ module Backlogs
         @IssueReleases = RbIssueRelease.where(:issue_id => self.id).to_a
       end
 
+      # Called after a release relation is added
+      def release_added(release)
+        if current_journal
+          current_journal.journalize_release(release, :added)
+          current_journal.save
+        end
+      end
+    
+      # Called after a release relation is removed
+      def release_removed(release)
+        if current_journal
+          current_journal.journalize_release(release, :removed)
+          current_journal.save
+        end
+      end
+
     end
   end
 end

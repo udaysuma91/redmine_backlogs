@@ -283,3 +283,6 @@ en:
   label_completed_sprints: "Completed sprints"
   label_issue_release: "Releases"
   label_issue_release_delete: "Delete relation to release"
+  backlogs_issue_release_relation: "Relation between an issue and a release"
+  backlogs_issue_release_relation_single: "Every issue can only be bound to one release"
+  backlogs_issue_release_relation_multiple: "Every issue can be bound to multiple releases"

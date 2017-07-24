@@ -6,12 +6,12 @@
 
 <% if @IssueReleases.present? %>
 <form>
-<table class="list releases">
+<table class="list issues">
 <% @IssueReleases.each do |issuerelease| %>
   <%- release = issuerelease.release %>
   <tr class="release <%= release.css_classes %>" id="issue_release-<%= issuerelease.id %>">
-    <td class="release"><%= link_to release.name, rb_release_path(release) %></td>
-    <td class="release_end_date"><%= format_date(release.release_end_date) %></td>
+    <td class="subject"><%= release_link_or_empty(release) %></td>
+    <td class="due_date"><%= format_date(release.release_end_date) %></td>
     <td class="buttons"><%= link_to(l(:label_issue_release_delete),
                                     rb_issue_release_path(issuerelease),
                                     :remote => true,
@@ -25,8 +25,6 @@
 <% end %>
 </table>
 </form>
-<% else %>
-<p>No releases</p>
 <% end %>
 
 <%= form_for :issue_release, {

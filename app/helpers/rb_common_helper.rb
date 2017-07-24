@@ -70,7 +70,7 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
   end
 
   def release_link_or_empty(release)
-    release.new_record? ? "" : link_to(release_display_name(release), {:controller => "rb_releases", :action => "show", :release_id => release})
+    release.new_record? ? "" : link_to(release_display_name(release), rb_release_url(release), :class => release.css_classes)
   end
 
   def release_multiview_link_or_empty(release)
