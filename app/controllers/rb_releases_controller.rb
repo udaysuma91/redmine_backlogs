@@ -41,14 +41,13 @@ class RbReleasesController < RbApplicationController
     if request.post? and @release.update_attributes(release_params)
       flash[:notice] = l(:notice_successful_update)
       redirect_to :controller => 'rb_releases', :action => 'show', :release_id => @release
-#    else
-#      flash[:notice] = l(:notice_unsuccessful_update)
     end
   end
 
   def update
     except = ['id', 'project_id']
     attribs = params.select{|k,v| (!except.include? k) and (RbRelease.column_names.include? k) }
+    attribs = attribs.merge(release_params.select{|k,v| (!except.include? k)}) if params[:release]
     attribs = Hash[*attribs.flatten]
     begin
       result  = @release.update_attributes attribs
@@ -60,7 +59,14 @@ class RbReleasesController < RbApplicationController
     end
 
     respond_to do |format|
-      format.html { render :partial => "release_mbp", :status => (result ? 200 : 400), :locals => { :release => @release, :cls => 'model release' } }
+      format.html {
+        if params[:release]
+          flash[:notice] = l(:notice_successful_update)
+          redirect_to :controller => 'rb_releases', :action => 'show', :release_id => @release
+        else
+          render :partial => "release_mbp", :status => (result ? 200 : 400), :locals => { :release => @release, :cls => 'model release' }
+        end
+      }
     end
   end
 

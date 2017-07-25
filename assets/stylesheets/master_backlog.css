@@ -709,7 +709,8 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 
 #backlogs_container .header .sprint,
-.header .velocity {
+#backlogs_container .header .release,
+#backlogs_container .header .velocity {
 	line-height: 31px
 }
 
