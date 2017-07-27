@@ -14,3 +14,20 @@ div#roadmap .version .sprint-title,
 div#sprint .version .sprint-title {
 	display: inline;
 }
+
+
+div#roadmap .version .team,
+div#sprint .version .team{
+	display: inline;
+	margin-left: 4px;
+    font-size: 10px;
+    font-style: oblique;
+}
+
+div#roadmap .version .team_name,
+div#sprint .version .team_name{
+	display: inline;
+	margin-left: 4px;
+    font-size: 14px;
+    font-style: oblique;
+}

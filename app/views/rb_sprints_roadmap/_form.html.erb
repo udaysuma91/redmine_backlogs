@@ -12,6 +12,7 @@
 	<%= f.text_field(:story_points, :value => format_story_points(@sprint.story_points, ""), :size => 4) %>
 	<em class="info"><%= l(:sprint_story_points) %></em>
 </p>
+<p><%= f.select :rbteam_id, teams_assignable_options_for_select(Group.all, @sprint.rbteam), :include_blank => true %></p>
 <p><%= f.select :sharing, @sprint.allowed_sharings.collect {|v| [format_version_sharing(v), v]} %></p>
 
 <% @sprint.custom_field_values.each do |value| %>

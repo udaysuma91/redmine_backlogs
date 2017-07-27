@@ -285,7 +285,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 .header .name,
 .header .velocity,
 .header .date{
-  height:28px;
+  height:18px;
   white-space: nowrap;
   font-size:12px;
 }
@@ -297,7 +297,16 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   font-weight: bold;
   overflow: hidden;
   float: left;
-  line-height: 28px;
+  line-height: 18px;
+}
+
+#backlogs_container .header .team {
+  padding-left: 8px;
+  font-size: 9px;
+  font-style: oblique;
+  overflow: hidden;
+  float: left;
+  line-height: 12px;
 }
 
 /* backlog header*/
@@ -559,7 +568,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story.editing .status_id{
   margin:0;
-  width:76px;
+  width:78px;
 }
 #backlogs_container .stories .story.editing select.story_points.editor {
   margin:0;
@@ -620,6 +629,10 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   height: 30px;
   z-index: 1;
   line-height: 16px;
+}
+
+#backlogs_container .editors .assigned_to_id { /* last: display editor fields. */
+  width: 123px;
 }
 
 #helpers{
