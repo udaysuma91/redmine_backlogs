@@ -9,10 +9,6 @@
 <p><%= f.date_field :sprint_start_date, :size => 10 %><%= calendar_for('rb_sprint_sprint_start_date') %></p>
 <p><%= f.date_field :effective_date, :size => 10 %><%= calendar_for('rb_sprint_effective_date') %></p>
 <p>
-	<%= f.select :release_id, release_options_for_select(@sprint.assignable_releases, @sprint.release), :include_blank => true %>
-	<em class="info"><%= l(:sprint_release_relation) %></em>
-</p>
-<p>
 	<%= f.text_field(:story_points, :value => format_story_points(@sprint.story_points, ""), :size => 4) %>
 	<em class="info"><%= l(:sprint_story_points) %></em>
 </p>
