@@ -229,10 +229,15 @@ module Backlogs
         end
       end
 
-      def active_sprint
+      def active_sprint(user = User.current)
         search_date = (Time.zone ? Time.zone : Time).now.strftime('%Y-%m-%d')
-        @active_sprint ||= RbSprint.where("project_id = ? and status = 'open' and not (sprint_start_date is null or effective_date is null) and ? >= sprint_start_date and ? <= effective_date",
-                                          self.id, search_date, search_date).take
+        if user.groups
+          @active_sprint ||= RbSprint.where("project_id = ? and status = 'open' and not (sprint_start_date is null or effective_date is null) and ? >= sprint_start_date and ? <= effective_date",
+                                            self.id, search_date, search_date).where(:rbteam_id => user.groups).take
+        else
+          @active_sprint ||= RbSprint.where("project_id = ? and status = 'open' and not (sprint_start_date is null or effective_date is null) and ? >= sprint_start_date and ? <= effective_date",
+                                            self.id, search_date, search_date).take
+        end
       end
 
       def active_release
