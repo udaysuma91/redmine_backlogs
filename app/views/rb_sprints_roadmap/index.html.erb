@@ -20,7 +20,10 @@
       <h3 class="version">
       	<div class="sprint-title"><%= link_to_sprint sprint, :name => version_anchor(sprint) %></div>
 		<%- if sprint.story_points? %>
-		<div class="story_points">(<%= format_story_points(sprint.story_points) %><%= h l(:label_points_short) %>)</span>
+		<div class="story_points">(<%= format_story_points(sprint.story_points) %><%= h l(:label_points_short) %>)</div>
+		<%- end %>
+		<%- if sprint.rbteam %>
+		<div class="team"><%= h l(:field_rbteam) %><div class="team_name"><%= h sprint.rbteam.name %></div></div>
 		<%- end %>
       </h3>
       <div id=taskboard class="taskboard"><%= link_to(l(:label_task_board), rb_taskboard_path(sprint)) %></div>

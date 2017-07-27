@@ -45,6 +45,9 @@ object_to_prepare.to_prepare do
 
   require_dependency 'backlogs_printable_cards'
   require_dependency 'linear_regression'
+  
+  require_dependency 'backlogs_projects_helper_override'
+  require_dependency 'backlogs_application_helper_override'
 
   Redmine::AccessControl.permission(:manage_versions).actions << "rb_sprints/close_completed"
 end

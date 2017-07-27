@@ -62,7 +62,7 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
   def sprint_link_or_empty(item)
     item_id = item.id.to_s
     text = (item_id.length > 8 ? "#{item_id[0..1]}...#{item_id[-4..-1]}" : item_id)
-    item.new_record? ? "" : link_to(text, {:controller => 'versions', :action => "show", :id => item}, {:target => "_blank", :class => "prevent_edit"})
+    item.new_record? ? "" : link_to(text, {:controller => 'rb_sprints_roadmap', :action => "show", :id => item}, {:target => "_blank", :class => "prevent_edit"})
   end
 
   def release_display_name(release)
@@ -147,6 +147,28 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
     else
       story.status ? story.status.name : ""
     end
+  end
+
+  def format_sprint_name(sprint, options = {})
+    if sprint.project == @project
+      name = sprint.name
+    else
+      name = "#{sprint.project} - #{sprint}"
+    end
+    puts "options: #{options} - team: #{sprint.rbteam}."
+    if options[:team] && sprint.rbteam
+      "#{name} (#{sprint.rbteam})"
+    else
+      name
+    end
+  end
+
+  def link_to_sprint(sprint, options = {})
+    return 'no sprint' unless sprint && sprint.is_a?(Version)
+    nameoptions = {}
+    nameoptions[:team] = options.delete(:team) if options.include?(:team)
+    options = {:title => format_date(sprint.effective_date)}.merge(options)
+    link_to_if sprint.visible?, format_sprint_name(sprint, nameoptions), rb_sprint_path(sprint), options
   end
 
   def sprint_html_id_or_empty(sprint)
