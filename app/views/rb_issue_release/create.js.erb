@@ -1,0 +1,5 @@
+$('#releases').html('<%= escape_javascript(render :partial => 'rb_releases/issue_release') %>');
+<% if @IssueRelease.errors.empty? %>
+  $('#issue_release_release_id').focus();
+<% end %>
+$('#new-issue-release-form').show();

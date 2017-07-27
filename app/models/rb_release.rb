@@ -162,8 +162,11 @@ class RbRelease < ActiveRecord::Base
   unloadable
 
   belongs_to :project, :inverse_of => :releases
-  has_many :issues, :class_name => 'RbStory', :foreign_key => 'release_id', :dependent => :nullify
+  has_many :issues_single, :class_name => 'RbStory', :foreign_key => 'release_id', :dependent => :nullify
   has_many :rb_release_burnchart_day_cache, :dependent => :delete_all, :foreign_key => 'release_id'
+
+  has_many :rb_issue_release, :class_name => 'RbIssueRelease', :foreign_key => 'release_id', :dependent => :delete_all
+  has_many :issues_multiple, :class_name => 'RbStory', :through => :rb_issue_release, :source => :issue
 
   attr_accessible :project_id, :name, :release_start_date, :release_end_date, :status
   attr_accessible :project, :description, :planned_velocity, :sharing
@@ -194,6 +197,18 @@ class RbRelease < ActiveRecord::Base
 
   def dates_valid?
     errors.add(:base, "release_end_after_start") if self.release_start_date >= self.release_end_date if self.release_start_date and self.release_end_date
+  end
+
+  def overdue?
+    release_end_date < User.current.today && !closed?
+  end
+
+  def issues
+    if Backlogs.setting[:issue_release_relation] == 'multiple'
+      issues_multiple
+    else
+      issues_single
+    end
   end
 
   def stories #compat
@@ -277,6 +292,14 @@ class RbRelease < ActiveRecord::Base
 
   def today
     ReleaseBurndownDay.where(release_id: self, day: Date.today).first
+  end
+
+  # Returns a string of css classes that apply to the release
+  def css_classes
+    s = "release"
+    s << ' closed' if closed?
+    s << ' overdue' if overdue?
+    s
   end
 
   def remaining_story_points #FIXME merge bohansen_release_chart removed this

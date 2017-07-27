@@ -17,6 +17,9 @@ class RbApplicationController < ApplicationController
   # Loads the project to be used by the authorize filter to
   # determine if User.current has permission to invoke the method in question.
   def load_project
+    if params[:issue_release] && !params[:issue_release].empty?
+      params[:release_id] = params[:issue_release][:release_id]
+    end
     @project = if params[:sprint_id]
                  load_sprint
                  @sprint.project
@@ -28,6 +31,9 @@ class RbApplicationController < ApplicationController
                  @release_multiview.project
                elsif params[:project_id]
                  Project.find(params[:project_id])
+               elsif params[:issue_release_id]
+                 load_issue_release
+                 @issue_release.issue.project
                else
                  raise "Cannot determine project (#{params.inspect})"
                end
@@ -65,5 +71,9 @@ class RbApplicationController < ApplicationController
                       nil
                     end
 
+  end
+  
+  def load_issue_release
+    @issue_release = RbIssueRelease.find(params[:issue_release_id])
   end
 end

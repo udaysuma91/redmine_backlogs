@@ -29,8 +29,7 @@ class RbSprint < Version
   scope :in_project, lambda {|project| where(:project_id => project) }
 
   safe_attributes 'sprint_start_date',
-      'story_points',
-      'release_id'
+      'story_points'
   
   #depending on sharing mode
   #return array of projects where this sprint is visible

@@ -24,14 +24,6 @@ def rb_common_routes(rb)
                :to => 'rb_releases#index', :via => [:get]
   rb_match rb, 'release/:project_id/new', :to => 'rb_releases#new', :via => [:get]
   rb_match rb, 'release/:project_id/new', :to => 'rb_releases#create', :via => [:post]
-  rb_match rb, 'release/:release_id',
-               :to => 'rb_releases#show', :via => [:get]
-  rb_match rb, 'release/:release_id',
-               :to => 'rb_releases#destroy', :via => [:delete]
-  rb_match rb, 'release/:release_id/edit',
-               :to => 'rb_releases#edit', :via => [:get, :post]
-  rb_match rb, 'release/:release_id/update',
-               :to => 'rb_releases#update', :via => [:put]
   rb_match rb, 'release/:release_id/shapshot',
                :to => 'rb_releases#snapshot', :via => [:get]
 
@@ -162,9 +154,13 @@ else
 #    end
 #  end
 
-    rb_common_routes rb
+  rb_common_routes rb
 
   resources :genericboards, :controller => :rb_genericboards_admin, :via => [:get]
+  
+  resources :release, :controller => :rb_releases, :only => [:show, :destroy, :edit, :update], param: :release_id
+
+  resources :issue_release, :controller => :rb_issue_release, param: :issue_release_id
   
   resources :task, :except => :index, :controller => :rb_tasks
   rb_match rb, 'tasks/:story_id', :to => 'rb_tasks#index', :via => [:get]

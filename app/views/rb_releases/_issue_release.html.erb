@@ -1,0 +1,43 @@
+<div class="contextual">
+<%= toggle_link l(:button_add), 'new-issue-release-form', {:focus => 'release_id'} %>
+</div>
+
+<p><strong><%=l(:label_issue_release)%></strong></p>
+
+<% if @IssueReleases.present? %>
+<form>
+<table class="list issues">
+<% @IssueReleases.each do |issuerelease| %>
+  <%- release = issuerelease.release %>
+  <tr class="release <%= release.css_classes %>" id="issue_release-<%= issuerelease.id %>">
+    <td class="subject"><%= release_link_or_empty(release) %></td>
+    <td class="due_date"><%= format_date(release.release_end_date) %></td>
+    <td class="buttons"><%= link_to(l(:label_issue_release_delete),
+                                    rb_issue_release_path(issuerelease),
+                                    :remote => true,
+                                    :method => :delete,
+                                    :data => {:confirm => l(:text_are_you_sure)},
+                                    :title => l(:label_issue_release_delete),
+                                    :class => 'icon-only icon-link-break'
+                                    ) #if User.current.allowed_to?(:manage_issue_relations, @project)
+                                    %></td>
+  </tr>
+<% end %>
+</table>
+</form>
+<% end %>
+
+<%= form_for :issue_release, {
+                 :remote => true,
+                 :url => rb_issue_release_index_url,
+                 :method => :post,
+                 :html => {:id => 'new-issue-release-form', :style => 'display: none;' }
+               } do |f| %>
+
+  <p>
+    <%= f.hidden_field 'issue_id', :value => @issue.id %>
+    <%= f.select :release_id, release_options_for_select(@issue.assignable_releases, nil)  %>
+    <%= submit_tag l(:button_add) %>
+    <%= link_to_function l(:button_cancel), '$("#new-issue-release-form").hide();'%>
+  </p>
+<% end %>

@@ -45,6 +45,14 @@ module Backlogs
             response.body = jsonp.present? ? "#{jsonp}(#{body.to_json})" : body.to_json
         end
       end
+      
+      def Releases(releases)
+        @Releases = releases
+      end
+      
+      def IssueReleases(issueReleases)
+        @IssueReleases = issueReleases
+      end
     end
   end
 end

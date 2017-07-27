@@ -95,7 +95,7 @@ module BacklogsPlugin
             snippet += '<div class="splitcontentleft">'
             snippet += "<div class=\"backlogs_storypoints attribute\"><div class=\"label\"><span>#{l(:field_story_points)}</span>:</div><div class=\"value\">#{RbStory.find(issue.id).points_display}</div></div>"
 			
-            unless issue.release_id.nil?
+            unless issue.release_id.nil? || Backlogs.setting[:issue_release_relation] == 'multiple'
               release = RbRelease.find(issue.release_id)
               snippet += "<div class=\"backlogs_release attribute\"><div class=\"label\"><span>#{l(:field_release)}</span>:</div><div class=\"value\">#{link_to(release.name, url_for_prefix_in_hooks + url_for({:controller => 'rb_releases', :action => 'show', :release_id => release}))}</div></div>"
             end
@@ -113,7 +113,7 @@ module BacklogsPlugin
                 snippet += "<div class=\"backlogs_remaining_hours attribute\"><div class=\"label\"><span>#{l(:field_remaining_hours)}</span>:</div><div class=\"value\">#{l_hours(issue.remaining_hours)}</div></div>"
               end
             end
-            unless issue.release_id.nil?
+            unless issue.release_id.nil? || Backlogs.setting[:issue_release_relation] == 'multiple'
               relation_translate = l("label_release_relationship_#{RbStory.find(issue.id).release_relationship}")
               snippet += "<div class=\"release_relationship attribute\"><div class=\"label\"><span>#{l(:field_release_relationship)}</span>:</div><div class=\"value\">#{relation_translate}</div></div>"
             end
@@ -161,7 +161,7 @@ module BacklogsPlugin
             end
             snippet += '</p>'
 
-            if issue.safe_attribute?('release_id') && issue.assignable_releases.any?
+            if issue.safe_attribute?('release_id') && issue.assignable_releases.any? && Backlogs.setting[:issue_release_relation] != 'multiple'
               snippet += '<div class="splitcontentleft"><p>'
               snippet += context[:form].select :release_id, release_options_for_select(issue.assignable_releases, issue.release), :include_blank => true
               snippet += '</p></div>'
@@ -226,6 +226,7 @@ module BacklogsPlugin
       end
 
       def view_issues_bulk_edit_details_bottom(context={ })
+        return if Backlogs.setting[:issue_release_relation] == 'multiple'
         issues = context[:issues]
         projects = issues.collect(&:project).compact.uniq
         return if projects.size == 0
@@ -249,6 +250,7 @@ module BacklogsPlugin
       end
 
       def view_issues_context_menu_end(context={ })
+        return if Backlogs.setting[:issue_release_relation] == 'multiple'
         begin
           issues = context[:issues]
           issue = nil
@@ -284,6 +286,20 @@ module BacklogsPlugin
           Rails.logger.error("Exception in Backlogs view_issues_context_menu_end #{e}")#exception(context, e)
           return ''
         end
+      end
+      
+      def view_issues_show_description_bottom(context)
+        issue, controller = context[:issue], context[:controller]
+
+        return if Backlogs.setting[:issue_release_relation] != 'multiple'
+
+        context[:issue_release] = RbIssueRelease.new
+        controller.IssueReleases(issue.issue_releases)
+        controller.render_to_string(
+          { :partial =>
+              'hooks/rb_view_issues_show_description_bottom',
+            :locals => context }
+        )
       end
 
       def view_versions_show_bottom(context={ })
@@ -495,6 +511,24 @@ module BacklogsPlugin
             end
           end
         end
+      end
+      
+      def helper_issues_show_detail_after_setting(context= { })
+        detail = context[:detail]
+        return unless detail.property == "RbRelease"
+        detail.property = "relation" # trick helper to write the 'added release'
+        detail.prop_key = l(:field_release)
+        if detail.value
+          release = RbRelease.find(detail.value)
+          detail.value = release_display_name(release)
+          # not possible because of defect http://www.redmine.org/issues/3672
+          # context[:label].replace release_link_or_empty(release).html_safe
+        end
+        if detail.old_value
+          release = RbRelease.find(detail.old_value)
+          detail.old_value = release_display_name(release)
+        end
+        context[:detail] = detail
       end
 
     end
