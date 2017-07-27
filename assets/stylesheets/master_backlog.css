@@ -285,7 +285,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 .header .name,
 .header .velocity,
 .header .date{
-  height:28px;
+  height:18px;
   white-space: nowrap;
   font-size:12px;
 }
@@ -297,7 +297,16 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   font-weight: bold;
   overflow: hidden;
   float: left;
-  line-height: 28px;
+  line-height: 18px;
+}
+
+#backlogs_container .header .team {
+  padding-left: 8px;
+  font-size: 9px;
+  font-style: oblique;
+  overflow: hidden;
+  float: left;
+  line-height: 12px;
 }
 
 /* backlog header*/
