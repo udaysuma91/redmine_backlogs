@@ -559,7 +559,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story.editing .status_id{
   margin:0;
-  width:76px;
+  width:78px;
 }
 #backlogs_container .stories .story.editing select.story_points.editor {
   margin:0;
@@ -620,6 +620,10 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   height: 30px;
   z-index: 1;
   line-height: 16px;
+}
+
+#backlogs_container .editors .assigned_to_id { /* last: display editor fields. */
+  width: 123px;
 }
 
 #helpers{
