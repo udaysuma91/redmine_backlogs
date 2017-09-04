@@ -518,16 +518,18 @@ module BacklogsPlugin
         return unless detail.property == "RbRelease"
         detail.property = "relation" # trick helper to write the 'added release'
         detail.prop_key = l(:field_release)
-        if detail.value
-          release = RbRelease.find(detail.value)
-          detail.value = release_display_name(release)
+        keyvalue = detail.value ? detail.value : detail.old_value
+        if RbRelease.exists?(keyvalue)
+          release = RbRelease.find(keyvalue)
+          writevalue = release_display_name(release)
           # not possible because of defect http://www.redmine.org/issues/3672
           # context[:label].replace release_link_or_empty(release).html_safe
+        else
+          writevalue = l(:rb_deleted_release)
         end
-        if detail.old_value
-          release = RbRelease.find(detail.old_value)
-          detail.old_value = release_display_name(release)
-        end
+        detail.value = writevalue if detail.value
+        detail.old_value = writevalue if detail.old_value
+        
         context[:detail] = detail
       end
 

@@ -277,3 +277,4 @@ nl:
   backlogs_estimated_hours_per_point: "Geschat aantal uren per story point"
   backlogs_estimated_hours_per_point_explanation: "Als niet leeg of nul, zal geschatte uren worden gevuld met het aantal story points vermenigvuldigd met deze waarde."
   label_completed_sprints: "Voltooide sprints"
+  rb_deleted_release: "Deleted release"
