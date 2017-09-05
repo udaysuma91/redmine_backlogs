@@ -80,7 +80,8 @@ Redmine::Plugin.register :redmine_backlogs do
                          :hide_roadmap              => nil,
                          :use_remaining_hours       => 'enabled',
                          :estimated_hours_per_point => 0.0,
-                         :issue_release_relation    => 'single'
+                         :issue_release_relation    => 'single',
+                         :show_estimated_hours      => 'enabled'
                        },
            :partial => 'backlogs/settings'
 

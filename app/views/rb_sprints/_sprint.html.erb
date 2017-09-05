@@ -5,7 +5,10 @@
   </div>
 
   <div class="fff-wrapmiddle">
-    <div class="fff-middle">
+  	<%- margin = 321 %>
+  	<%- margin -= 42 unless sprint.story_points? %>
+  	<%- margin -= 87 unless Backlogs.setting[:show_estimated_hours] %>
+    <div class="fff-middle" style="margin-right: <%= margin %>px;">
       <div class="name editable" fieldname="name" fieldlabel="<%=l(:field_name)%>"><%= h sprint.name %></div>
       <div class="team start_edit" ><%= h sprint.rbteam %></div>
     </div>
@@ -30,7 +33,9 @@
 	    &nbsp;
 	    <%- end %>
     </div>
+    <%- if Backlogs.setting[:show_estimated_hours] %>
     <div class="sprint_est_h start_edit">(<%= sprint.estimated_hours.to_f %> est. h)</div>
+    <%- end %>
     <div class="velocity story_tooltip" title="<b>Tracker statistics</b><br />"> </div>
     <div class="effective_date start_edit date"><%= sprint.effective_date || l(:label_no_end) %></div>
     <div class="sprint_start_date start_edit date"><%= sprint.sprint_start_date || l(:label_no_start) %></div>

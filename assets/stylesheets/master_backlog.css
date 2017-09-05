@@ -56,13 +56,12 @@
   margin-left: -100%;
 }
 .fff-right{
-  float: left;
+  float: right;
   width: 112px;
   margin-left: -112px;
 }
 
 .header .fff-middle{
-  margin-right: 321px;
   margin-left: 29px;
   overflow: hidden;
 }
@@ -70,7 +69,7 @@
   width: 29px;
 }
 .header .fff-right{
-  width: 320px;
+  width: auto;
   margin-left: -320px;
 }
 /* end fixed-fluid-fixed layout */

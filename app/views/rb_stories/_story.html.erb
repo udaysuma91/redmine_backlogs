@@ -17,10 +17,12 @@
          </div>
      <%end%>
      <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
-     <% if show_category %>
+     <%- if show_category %>
           </div>
-      <% end %>
+     <%- end %>
+     <%- if Backlogs.setting[:show_estimated_hours] %>
      <span class="story_field start_edit">(<%= story.estimated_hours.to_f %> est h, <%= story.priority.name %>)</span>
+     <%- end %>
      <%- if story.assigned_to %>
          <%- if show_assigned_to_full %>
            <div class="assigned_to_full start_edit"> - 

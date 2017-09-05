@@ -210,6 +210,12 @@
   </p>
 
   <p>
+    <%= label_tag("settings_show_estimated_hours", l(:backlogs_show_estimated_hours)) %>
+    <%= check_box_tag("settings[show_estimated_hours]", 'enabled',
+                      Backlogs.setting[:show_estimated_hours]) %>
+  </p>
+
+  <p>
     <%= label_tag("settings_story_points_are_integer", l(:backlogs_story_points_are_integer)) %>
     <%= check_box_tag("settings[story_points_are_integer]", 'enabled',
         Backlogs.setting[:story_points_are_integer]) %>

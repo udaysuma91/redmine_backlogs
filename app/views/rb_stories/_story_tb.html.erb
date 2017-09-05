@@ -3,15 +3,15 @@
     <div class="tooltip_text"></div>
     <%= link_to story.id, {:controller => 'issues', :action => 'show', :id => story.id}, { :target => "_blank" } %>
     <div class="v"><%= story.id %></div>
-    <% if User.current.allowed_to?(:create_tasks, @project) %>
+    <%- if User.current.allowed_to?(:create_tasks, @project) %>
     <span class="add_new">
       <%= image_tag("add.png", :alt => "+") %>
     </span>
-    <% end %>
+    <%- end %>
 	<span class="assignee"><%= assignee_name_or_empty(story) %></span>
-    <% if Backlogs.setting[:use_remaining_hours] %>
+    <%- if Backlogs.setting[:use_remaining_hours] %>
     <span class="remaininghours">(<%= story.remaining_hours.to_f %> <%= l(:label_hours) %>)</span>
-    <% end %>
+    <%- end %>
   </div>
   <div class="assigned_to_id editable story_field" fieldtype="select" style="display: none;" fieldname="assigned_to_id" fieldlabel="<%=l(:field_assigned_to)%>">
     <div class="t"><%= assignee_name_or_empty(story) %></div>
@@ -30,15 +30,15 @@
     <div class="v"><%= status_id_or_default(story) %></div>
   </div>
   <div class="story_points story_points_text story_field"><%= story_points_or_empty(story) %></div>
-  <% if Backlogs.setting[:story_points].blank? %>
+  <%- if Backlogs.setting[:story_points].blank? %>
       <div class="story_points editable story_points_text story_field" style="display: none;" fieldname="story_points" fieldlabel="<%=l(:story_points)%>" fieldtype="input"><%= story_points_or_empty(story) %></div>
-  <% else %>
+  <%- else %>
       <div class="story_points editable story_points_select story_field" style="display: none;" fieldtype="select" fieldname="story_points" fieldlabel="<%=l(:story_points)%>">
-        <% %w(t v).each do |c| %>
+        <%- %w(t v).each do |c| %>
             <div class="<%=h c %>"><%= story_points_or_empty(story) %></div>
-        <% end %>
+        <%- end %>
       </div>
-  <% end %>
+  <%- end %>
   <div class="meta">
     <div class="story_id"><%= id_or_empty(story) %></div>
     <div class="project_id"><%= story.project_id %></div>
