@@ -21,7 +21,7 @@ before_script:
   -U postgres; fi"
 - sh -c "if [ '$DB' = 'postgresql' ]; then psql -c 'create database backlogs;' -U
   postgres; fi"
-- sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS backlogs;';
+- sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS backlogs CHARACTER SET utf8;';
   fi"
 script:
 - export WORKSPACE=`pwd`/workspace
