@@ -37,10 +37,17 @@ class RbApplicationController < ApplicationController
     @settings = Backlogs.settings
 #    make a copy to workaround RuntimeError (can't modify frozen ActionController::Parameters):
     s1 = @settings.dup
-    if s1[:story_trackers].blank? || s1[:task_tracker].blank? || (s1[:scaled_agile_enabled] && (s1[:epic_trackers].blank? || s1[:feature_trackers].blank?))
+    # stupid hack to make it also work for travis
+    story_trackers = s1["story_trackers"] ? s1["story_trackers"] : s1[:story_trackers]
+    task_tracker = s1["task_tracker"] ? s1["task_tracker"] : s1[:task_tracker]
+    scaled_agile_enabled = s1["scaled_agile_enabled"] ? s1["scaled_agile_enabled"] : s1[:scaled_agile_enabled]
+    epic_trackers = s1["epic_trackers"] ? s1["epic_trackers"] : s1[:epic_trackers]
+    feature_trackers = s1["feature_trackers"] ? s1["feature_trackers"] : s1[:feature_trackers]
+    if story_trackers.blank? || task_tracker.blank? || (scaled_agile_enabled && (epic_trackers.blank? || feature_trackers.blank?))
       puts("check_if_plugin_is_configured: no trackers for story or task, or if scaled agile is enabled for epic or feature, halting. " +
         "--#{s1[:story_trackers]}--#{s1[:task_tracker]}--#{s1[:scaled_agile_enabled]}--#{s1[:epic_trackers]}--#{s1[:feature_trackers]} ## " +
-        "--#{s1[:story_trackers].blank?}--#{s1[:task_tracker].blank?}--#{s1[:scaled_agile_enabled]}--#{s1[:epic_trackers].blank?}--#{s1[:feature_trackers].blank?} ##" +
+        "--#{s1["story_trackers"]}--#{s1["task_tracker"]}--#{s1["scaled_agile_enabled"]}--#{s1["epic_trackers"]}--#{s1["feature_trackers"]} ## " +
+        "--#{story_trackers.blank?}--#{task_tracker.blank?}--#{scaled_agile_enabled}--#{epic_trackers.blank?}--#{feature_trackers.blank?} ## " +
         "settings: #{s1}")
       respond_to do |format|
         format.html { render :template => "backlogs/not_configured",  :handlers => [:erb], :formats => [:html] }
