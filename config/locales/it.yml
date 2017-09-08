@@ -1,4 +1,3 @@
----
 it:
   backlogs_active: attivo
   backlogs_any: qualsiasi
@@ -13,13 +12,13 @@ it:
   backlogs_include_sat_and_sun: "Includi sabato e domenica nel Burndown"
   backlogs_new_story_position: "Le storie appena create vanno"
   backlogs_new_story_position_bottom: "alla fine (richiede riavvio)"
-  backlogs_new_story_position_top: "all'inizio"
+  backlogs_new_story_position_top: all'inizio
   backlogs_not_all_themes_are_supported: "Non tutti i temi sono supportati."
   backlogs_pblpage_settings: "Impostazioni pagina Product Backlog"
   backlogs_points_burn_direction: "Points burn up/down"
   backlogs_product_backlog: "Product backlog"
   backlogs_scrum_stats_menu_application: "Menu Applicazione"
-  backlogs_scrum_stats_menu_none: "Nessuno"
+  backlogs_scrum_stats_menu_none: Nessuno
   backlogs_scrum_stats_menu_position: "Posizione del menu Statistiche Scrum"
   backlogs_scrum_stats_menu_top: "Menu superiore"
   backlogs_set_start_and_duedates_from_sprint: "Set story start- and duedate from sprint"
@@ -89,7 +88,6 @@ it:
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Assegnato a"
   field_backlogs_issue_type: "Tipo Backlog"
-  field_base: ""
   field_blocks: Blocca
   field_name: Nome
   field_planned_velocity: "Velocità pianificata"
@@ -180,9 +178,9 @@ it:
   rb_auto_refresh: "Aggiorna automaticamente backlogs/taskboard (secondi)"
   rb_burndown_timezone: "Time zone for burndown day boundary"
   rb_burndown_timezone_explanation: |-
-      Per supportare i team distribuiti, i calcoli per i grafici burndown usano un concetto comune su quando il giorno inizia.
-      La tua timezone è %{user_timezone}, la timezone del server è %{server_timezone} ed i Burndowns usano %{burndown_timezone} per calcolare i grafici.
-      Nota: I dati storici non sono coinvolti nella modifica di questo setting.
+    Per supportare i team distribuiti, i calcoli per i grafici burndown usano un concetto comune su quando il giorno inizia.
+    La tua timezone è %{user_timezone}, la timezone del server è %{server_timezone} ed i Burndowns usano %{burndown_timezone} per calcolare i grafici.
+    Nota: I dati storici non sono coinvolti nella modifica di questo setting.
   rb_label_copy_tasks: "Copia tasks"
   rb_label_copy_tasks_all: Tutti
   rb_label_copy_tasks_none: Nessuno
@@ -211,14 +209,14 @@ it:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Usa campo di testo invece del menu a tendina se vuoto"
   warning_reset_sprint: |
-      STAI PER RESETTARE UNO SPRINT!
+    STAI PER RESETTARE UNO SPRINT!
 
-      Sei sicuro di voler procedere? Resettare lo sprint
-      avrà i seguenti effetti sulle storie ed i task:
+    Sei sicuro di voler procedere? Resettare lo sprint
+    avrà i seguenti effetti sulle storie ed i task:
 
-      * La data di creazione sarà impostata a quella di inizio dello sprint
-      * TUTTE le modifiche alle storie e ai task ad eccezione delle note saranno
-         CANCELLATE
-      * Il valore corrente diventerà quello iniziale per tutte le proprietà di storie 
-         e task
-      * Lo stato sarà impostato a quello predefinito delle segnalazioni
+    * La data di creazione sarà impostata a quella di inizio dello sprint
+    * TUTTE le modifiche alle storie e ai task ad eccezione delle note saranno
+    CANCELLATE
+    * Il valore corrente diventerà quello iniziale per tutte le proprietà di storie
+    e task
+    * Lo stato sarà impostato a quello predefinito delle segnalazioni

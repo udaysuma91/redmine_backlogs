@@ -83,12 +83,25 @@ class RbStory < RbGeneric
     options = options.merge({
       :project => project_id,
       :sprint => sprint_id,
-      :release => release_id
-	  })
-
-    self.visible.
-      order("#{self.table_name}.position").
-      backlog_scope(options)
+    })
+    if Backlogs.setting[:issue_release_relation] == 'multiple' && release_id
+      options = options.merge({
+        :include_releases => true
+      })
+      puts "The options: #{options}."
+      self.visible.
+        joins("INNER JOIN rb_issue_releases ON rb_issue_releases.issue_id = issues.id AND rb_issue_releases.release_id = #{release_id}").
+        order("#{self.table_name}.position").
+        backlog_scope(options)
+    else
+      options = options.merge({
+        :release => release_id
+      })
+  
+      self.visible.
+        order("#{self.table_name}.position").
+        backlog_scope(options)
+    end
   end
 
   def self.product_backlog(project, include_releases=false, limit=nil)

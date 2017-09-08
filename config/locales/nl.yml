@@ -1,4 +1,3 @@
----
 nl:
   backlogs_active: lopend
   backlogs_any: alle
@@ -7,34 +6,39 @@ nl:
   backlogs_burndown_print_width: "Breedte voor afdrukken burndown"
   backlogs_burndown_settings: "Burndown settings"
   backlogs_card_specification: "Label type voor kaartjes"
+  backlogs_default_epic_tracker: "Default epic tracker"
+  backlogs_default_feature_tracker: "Default feature tracker"
   backlogs_default_story_tracker: "Default story tracker"
-  backlogs_general_settings: "General settings"
+  backlogs_feature_tracker: "Feature trackers"
+  backlogs_general_settings: "Generieke instellingen"
   backlogs_impediment: Impediment
   backlogs_include_sat_and_sun: "Zaterdag en zondag opnemen in Burndown"
   backlogs_new_story_position: "Nieuwe stories verschijnen"
   backlogs_new_story_position_bottom: "onderaan (vereist herstart)"
   backlogs_new_story_position_top: bovenaan
-  backlogs_not_all_themes_are_supported: "Not all themes are supported."
-  backlogs_pblpage_settings: "Product backlog page settings"
+  backlogs_not_all_themes_are_supported: "Niet alle thema's worden ondersteund"
+  backlogs_pblpage_settings: "Product backlog pagina instellingen"
   backlogs_points_burn_direction: "Points burn omhoog/omlaag"
   backlogs_product_backlog: "Product backlog"
-  backlogs_scrum_stats_menu_application: "Application menu"
+  backlogs_scaled_agile: "Scaled agile"
+  backlogs_scaled_agile_enabled: "Activeer scaled agile functionaliteit"
+  backlogs_scrum_stats_menu_application: "Applicatie menu"
   backlogs_scrum_stats_menu_none: None
-  backlogs_scrum_stats_menu_position: "Position of Scrum Statistics menu"
+  backlogs_scrum_stats_menu_position: "Positie van Scrum Statistieken menu"
   backlogs_scrum_stats_menu_top: "Top menu"
-  backlogs_set_start_and_duedates_from_sprint: "Set story start- and duedate from sprint"
-  backlogs_sharing_enabled: "Enable sharing"
-  backlogs_sharing_new_sprint: "Share new Sprints"
-  backlogs_sharing_new_sprint_explanation: "Although all possible options are available here, new sprints are shared only according to the users and projects permissions. System shared sprints can only be created by admins, hierarchy and tree shared sprints need permissions on the topmost project."
-  backlogs_sharing_support: "Backlogs sharing"
-  backlogs_show_in_scrum_stats: "Show project in Scrum statistics"
-  backlogs_show_priority: "Show task priority on taskboard"
-  backlogs_show_redmine_std_header: "Show redmine header in backlogs"
-  backlogs_show_stories_from_subprojects_in_backlog: "Show stories from subprojects in backlog"
-  backlogs_sprint_card_settings: "Card printing"
-  backlogs_sprint_sort_order: "Sort Sprints by start date"
-  backlogs_sprint_sort_order_asc: ascending
-  backlogs_sprint_sort_order_desc: descending
+  backlogs_set_start_and_duedates_from_sprint: "Zet start- en einddatum van story gelijk aan sprint"
+  backlogs_sharing_enabled: "Activeer delen"
+  backlogs_sharing_new_sprint: "Deel nieuwe Sprints"
+  backlogs_sharing_new_sprint_explanation: "Hoewel alle mogelijke opties hier getoond worden, zullen sprints gedeeld worden op basis van de gebruiker en project rechten. Sprints gedeeld over het hele systeem kunnen alleen door administratoren worden gemaakt, Sprints gedeeld in de hiërarchie hebben rechten nodig van het hoogste project."
+  backlogs_sharing_support: "Deel Backlogs"
+  backlogs_show_in_scrum_stats: "Toon project in Scrum statistieken"
+  backlogs_show_priority: "Toon taak prioriteit op taakboard"
+  backlogs_show_redmine_std_header: "Toon redmine header in backlogs"
+  backlogs_show_stories_from_subprojects_in_backlog: "Toon stories van subprojecten in backlog"
+  backlogs_sprint_card_settings: "Printen van kaarten"
+  backlogs_sprint_sort_order: "Sorteer Sprints op start datum"
+  backlogs_sprint_sort_order_asc: oplopend
+  backlogs_sprint_sort_order_desc: aflopend
   backlogs_sprints: Sprints
   backlogs_statistics_active: "Project is actief"
   backlogs_statistics_active_failed: "Project is niet actief"
@@ -48,7 +52,7 @@ nl:
   backlogs_statistics_sizing_consistent: "Story sizes zijn niet stabiel ten opzichte van de schattingen"
   backlogs_statistics_sizing_consistent_failed: "Story sizes zijn stabiel ten opzichte van de schattingen"
   backlogs_statistics_sizing_stddev: "Standaard deviatie uren t.o.v. points: %{value} uren"
-  backlogs_statistics_spent_hours_per_point: "%{value} hours spent per accepted point on average"
+  backlogs_statistics_spent_hours_per_point: "%{value} uren gemiddeld besteed per story point"
   backlogs_statistics_sprint_notes_available: "De recent afgesloten sprints hebben retrospective/review verslagen"
   backlogs_statistics_sprint_notes_available_failed: "Recent afgesloten sprints missen retrospective/review verslagen"
   backlogs_statistics_sprints: "Gemeten over %{value} sprints"
@@ -61,13 +65,13 @@ nl:
   backlogs_statistics_yield: "Project heeft een goede gemiddelde opbrengst"
   backlogs_statistics_yield_failed: "Project heeft een lage gemiddelde opbrengst"
   backlogs_story: Story
-  backlogs_story_close_status: "Status to close story automatically"
-  backlogs_story_follow_task_status_close: "Close when all Tasks are closed"
-  backlogs_story_follow_task_status_loose: "Loosely follow Tasks average done ratio"
-  backlogs_story_follow_task_status_nil: Disabled
-  backlogs_story_follows_task_loose_explanation: "Note: all issue statuses require a valid %done between 0 and 100."
-  backlogs_story_follows_task_status: "Story follows Task status"
-  backlogs_story_settings: "Story and Task settings"
+  backlogs_story_close_status: "Wanneer alle taken gesloten zijn, update Story naar:"
+  backlogs_story_follow_task_status_close: "Sluiten wanneer alle taken gesloten zijn"
+  backlogs_story_follow_task_status_loose: "Volg taak gemiddelde voltooid ratio"
+  backlogs_story_follow_task_status_nil: Uitgeschakeld
+  backlogs_story_follows_task_loose_explanation: "Opmerking: alle issue statussen moeten een geldige done ratio hebben van 0 tot 100"
+  backlogs_story_follows_task_status: "Story volgt taak status"
+  backlogs_story_settings: "Story en Taak instellingen"
   backlogs_story_tracker: "Story trackers"
   backlogs_task: Taak
   backlogs_task_tracker: "Taak tracker"
@@ -84,46 +88,53 @@ nl:
   error_no_workflow_for_task_tracker: "Je hebt geen toegang tot de taak tracker. Indien dit een fout is, neem dan contact op met de beheerder om dit te laten corrigeren."
   error_outro: "Verbeter a.u.b de eerdergenoemde problemen voordat u nogmaals verzend."
   error_release_end_after_start: "De einddatum van de release moet na de start datum liggen"
-  error_sprint_end_before_start: "Sprint cannot end before it starts"
+  error_sprint_end_before_start: "Sprint kan niet eindigen voordat deze begonnen is"
   error_taken: "is al in gebruik"
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Toegekend aan"
   field_backlogs_issue_type: "Backlog type"
-  field_base: ""
   field_blocks: Blokkeert
   field_name: Naam
-  field_planned_velocity: "Planned velocity"
+  field_planned_velocity: "Geplande velocity"
   field_position: Positie
   field_priority: Prioriteit
   field_project_id: "Project Id"
+  field_rbteam: "Team"
   field_release: Release
+  field_release_ids: Releases
   field_release_end_date: "Eind datum van de release"
-  field_release_relationship: "Release relationship"
+  field_release_relationship: "Release relatie"
   field_release_start_date: "Start datum release"
   field_remaining_hours: "Resterend (uren)"
+  field_sprint: "Sprint"
   field_story_points: "Story points"
   field_subject: Onderwerp
-  field_task_color: "Task color"
+  field_task_color: "Taak kleur"
+  field_team: "Team"
   field_time_entry_comments: "Tijd registratie commentaar"
   field_time_entry_hours: "Tijd registratie uren"
-  field_time_entry_spend_on: "Tijd registratie spendeer aan"
+  field_time_entry_spend_on: "Tijd registratie datum"
   field_time_entry_user_id: "Tijd registratie gebruiker"
   field_time_entry_activity: "Tijd registratie activiteit"
   field_total_spent_hours: "Totaal besteedde uren"
   field_tracker_id: "Tracker ID"
   field_velocity_based_estimate: "Schatting op basis van velocity"
-  label_all_tasks: "All tasks"
+  field_show_backlog_story_color: "Toon toegewezen aan kleur in backlogs"
+  field_show_assigned_to_full: "Toon volledige naam van toegewezen aan in backlogs"
+  field_show_assigned_to_short: "Toon initialen van toegewezen aan in backlogs"
+  field_show_category: "Toon issue categorie in backlogs"
+  label_all_tasks: "Alle taken"
   label_back_to_project: "Terug naar het project"
   label_backlogs: Backlogs
   label_backlogs_unconfigured: "U heeft Backlogs nog niet geconfigureerd. Gaat u alstublieft naar %{administration} > %{plugins}, en klik dan op de %{configure} link voor deze plugin. Nadat u de configuratie hebt opgeslagen kunt u teruggaan naar deze pagina om de plugin in gebruik te nemen."
   label_burndown: Burndown
   label_chart_options: "Grafiek Opties"
   label_close_completed_sprints: "Sluit gecompleteerde sprints"
-  label_closed_releases: "Closed releases"
+  label_closed_releases: "Gesloten releases"
   label_column_width: "Kolom breedte"
   label_download_sprint: Download
-  label_filter_tasks: "Filter by user"
-  label_filter_tasks_my_tasks: "Filter by user - my tasks"
+  label_filter_tasks: "Filter op gebruiker"
+  label_filter_tasks_my_tasks: "Filter op gebruiker - mijn taken"
   label_hide_completed_sprints: "Verberg gecompleteerde sprints"
   label_hours: uren
   label_hours_remaining: "resterende uren"
@@ -131,16 +142,17 @@ nl:
   label_ideal: ideaal
   label_impediments: Impediments
   label_master_backlog: "Master Backlog"
-  label_my_tasks: "My tasks"
-  label_new_sprint: "New Sprint"
-  label_new_story: "New Story"
-  label_no_data_to_show: "No data to show"
-  label_no_end: "no end"
-  label_no_start: "no start"
+  label_my_tasks: "Mijn taken"
+  label_new_sprint: "Nieuwe Sprint"
+  label_new_story: "Nieuwe Story"
+  label_no_data_to_show: "Geen gegevens om te tonen"
+  label_no_end: "geen einde"
+  label_no_start: "geen begin"
   label_not_prioritized: "geen prioriteit"
   label_points: points
+  label_points_short: pts
   label_points_accepted: "points geaccepteerd"
-  label_points_added: "points added"
+  label_points_added: "points toegevoegd"
   label_points_backlog: "points backlog"
   label_points_burn_down: Omlaag
   label_points_burn_up: Omhoog
@@ -153,16 +165,18 @@ nl:
   label_product_cards: "Product backlog kaarten"
   label_release: Release
   label_release_end_date: "Einddatum release"
+  label_release_multiview: "Release multiview"
+  label_release_multiview_new: "Nieuwe multiview release"
   label_release_new: "Nieuwe release"
   label_release_planned_velocity_end_date: "Planned velocity estimated end date"
   label_release_planning: "Release Planning"
   label_release_plural: Releases
-  label_release_relationship_added: Added
+  label_release_relationship_added: Toegevoegd
   label_release_relationship_auto: Auto
-  label_release_relationship_continued: Continued
-  label_release_relationship_initial: Initial
+  label_release_relationship_continued: Vervolgd
+  label_release_relationship_initial: Initieel
   label_release_start_date: "Start datum release"
-  label_release_trend_end_date: "Trend estimated end date"
+  label_release_trend_end_date: "Trend verwachtte einddatum"
   label_reset: Reset
   label_scrum_statistics: "Scrum statistieken"
   label_select_all: "Selecteer alles"
@@ -171,17 +185,17 @@ nl:
   label_sprint_cards: "Sprint kaarten"
   label_sprint_impediments: "Sprint Impediments"
   label_sprint_name: "Sprint \"%{name}\""
+  label_sprint_close: "Sluit Sprint"
   label_stories: Stories
   label_stories_tasks: Stories/Taken
-  label_task_board: Taakbord
-  label_view_options: "View options"
-  label_webcal: Agenda
+  label_task_board: "Taakbord"
+  label_view_options: "Weergave opties"
+  label_webcal: "Agenda"
   rb_auto_refresh: "Automatische verversing backlogs/taakbord (seconden)"
-  rb_burndown_timezone: "Time zone for burndown day boundary"
+  rb_burndown_timezone: "Time zone voor burndown dag scheiding"
   rb_burndown_timezone_explanation: |-
-      To support distributed teams, calculations for burndown graphs use a common concept of when a day begins.
-      Your user timezone is %{user_timezone}, the server timezone is %{server_timezone} and Burndowns use %{burndown_timezone} to calculate the graphs.
-      Note: Historic data is not affected when changing this option.
+    Om gedistribueerde teams te ondersteunen, wordt een gezamenlijk punt bepaald wanneer een dag begint. Jou gebruikers tijdzone is %{user_timezone}, tijdzone van de server is %{server_timezone} en Burndowns gebruiken %{burndown_timezone} om de grafieken te berekenen.
+    Opmerking: Historische gegevens worden niet beinvloed wanneer deze optie wordt gewijzigd.
   rb_label_copy_tasks: "Kopieer taken"
   rb_label_copy_tasks_all: Alle
   rb_label_copy_tasks_none: Geen
@@ -189,11 +203,11 @@ nl:
   rb_label_link_to_original: "Relateer aan originele story"
   rb_label_timelog_disable: Uitzetten
   rb_label_timelog_enable: Aanzetten
-  rb_project_settings_update_error: "Error while updating settings"
-  rb_project_settings_updated: "Settings updated"
-  rb_release_burnup_enabled: "Enable release burnup chart (EXPERIMENTAL)"
+  rb_project_settings_update_error: "Fout tijdens het bijwerken van de instellingen"
+  rb_project_settings_updated: "Instellingen bijgewerkt"
+  rb_release_burnup_enabled: "Activeer release burnup grafiek (EXPERIMENTEEL)"
   rb_show_burndown_in_sidebar: "Toon burndown grafiek in de issues zijbalk"
-  rb_show_project_name: "Show project name in backlogs"
+  rb_show_project_name: "Toon projectnaam in backlogs"
   rb_task_cards_stories_then_tasks: "Eerst alle stories, dan alle taken"
   rb_task_cards_story_follows_tasks: "Taken gevolgd door hun bijbehorende story"
   rb_task_cards_tasks_follow_story: "Story gevolg door de bijbehorende taken"
@@ -210,15 +224,57 @@ nl:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Gebruik tekst veld in plaats van drop-down lijst indien leeg"
   warning_reset_sprint: |-
-      JE STAAT OP HET PUNT DEZE SPRINT TE HER-INITIALISEREN!
+    JE STAAT OP HET PUNT DEZE SPRINT TE HER-INITIALISEREN!
 
-      Weet je zeker dat je dit wilt doen? Her-initialisatie
-      heeft de volgende gevolgen voor de stories en taken
-      verbonden aan de sprint:
+    Weet je zeker dat je dit wilt doen? Her-initialisatie
+    heeft de volgende gevolgen voor de stories en taken
+    verbonden aan de sprint:
 
-      * Creatie-datum wordt veranderd in de start datum van de sprint
-      * ALLE wijzigingen aan de stories en taken, behalve notities,
-         zullen worden VERWIJDERD
-      * De huidige waarde wordt de startwaarde voor alle
-         eigenschappen van de story/taak
-      * De status wordt teruggezet naar de standaard status
+    * Creatie-datum wordt veranderd in de start datum van de sprint
+    * ALLE wijzigingen aan de stories en taken, behalve notities,
+    zullen worden VERWIJDERD
+    * De huidige waarde wordt de startwaarde voor alle
+    eigenschappen van de story/taak
+    * De status wordt teruggezet naar de standaard status
+  error_cannot_close_sprint_with_open_stories: "Kan een sprint niet sluiten als er nog open stories zijn."
+  label_rb_genericboard: "Bord"
+  label_rb_genericboard_plural: "Borden"
+  label_rb_genericbord_elements: "Elementen"
+  label_rb_genericbord_columns: "Kolom type"
+  label_rb_genericbord_rows: "Rij type"
+  label_rb_genericboard_new: "Nieuw generiek bord"
+  label_rb_genericbord_prefilter: "Filter"
+  label_rb_select_board: "Selecteer bord"
+  label_configure_genericboards: "Generieke borden"
+  backlogs_board_colors: "Backlog bord kleuren (Generieke borden)"
+  backlogs_board_colors_by_type: "Kleur van issues op bord op type"
+  backlogs_board_colors_explanation: "Check om aan te geven dat issues met hun tracker kleur worden weergegeven, indien niet aangegeven worden kleuren bepaald op basis van toegewezen aan."
+  field_include_none_in_cols: "Toon 'None' in kolommen"
+  field_include_none_in_rows: "Toon 'None' in rijen"
+  field_include_closed_elements: "Toon gesloten elementen"
+  field_immutable_positions: "Maak de positie van elementen niet wijzigbaar"
+  field_hide_empty_rows: "Verberg lege rijen"
+  label_rb_genericbord_colfilter: "Kolom filter"
+  label_rb_genericbord_rowfilter: "Rij filter"
+  backlogs_epic: "Epic"
+  label_new_epic: "Nieuw Epic"
+  backlogs_stories: "Stories"
+  backlogs_stories_in_no_epic: "Stories niet gelinkt aan een Epic"
+  backlogs_epic_tracker: "Epic trackers"
+  label_epics: "Epics"
+  backlogs_use_one_product_backlog: "Gebruik maar één product backlog"
+  backlogs_use_one_product_backlog_explanation: "Dit schakelt de weergave van de release backlogs uit op het master backlog. Het gebruik van releases wordt niet uitgeschakeld."
+  backlogs_always_allow_time_fields: "Tijdvelden mogen altijd gevuld worden"
+  label_sprints: "Sprints"
+  field_sprint_start_date: "Sprint start datum"
+  label_sprint: "Sprint"
+  backlogs_show_sprint_as_roadmap: "Toon sprints als Roadmap"
+  backlogs_hide_roadmap: "Verberg het ingebouwde roadmap menu element"
+  backlogs_story_points_are_integer: "Toon story points als integer nummer"
+  sprint_release_relation: "De standaard release waar stories in deze sprint aan gelinkt worden."
+  sprint_story_points: "Het maximum aantal story points dat in deze sprint past"
+  backlogs_use_remaining_hours: "Gebruik resterend aantal uren"
+  backlogs_estimated_hours_per_point: "Geschat aantal uren per story point"
+  backlogs_estimated_hours_per_point_explanation: "Als niet leeg of nul, zal geschatte uren worden gevuld met het aantal story points vermenigvuldigd met deze waarde."
+  label_completed_sprints: "Voltooide sprints"
+  rb_deleted_release: "Deleted release"

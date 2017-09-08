@@ -35,6 +35,11 @@ class RbSprintsRoadmapController < RbApplicationController
         project_ids = @with_subprojects ? @project.self_and_descendants.collect(&:id) : [@project.id]
 
         sprints = @project.open_shared_sprints
+        unless params[:completed]
+          @completed_sprints = @project.closed_shared_sprints
+        else
+          sprints += @project.closed_shared_sprints
+        end
         
         @stories_by_sprint = {}
         if @selected_tracker_ids.any? && sprints.any?

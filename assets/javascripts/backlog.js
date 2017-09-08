@@ -286,11 +286,11 @@ RB.Backlog = RB.Object.create({
   },
 
   isSprintBacklog: function(){
-    return RB.$(this.el).find('.sprint').length == 1; // return true if backlog has an element with class="sprint"
+    return RB.$(this.el).find('.sprint').length > 0; // return true if backlog has an element with class="sprint"
   },
     
   isReleaseBacklog: function(){
-    return RB.$(this.el).find('.release').length == 1; // return true if backlog has an element with class="release"
+    return RB.$(this.el).find('.release').length > 0; // return true if backlog has an element with class="release"
   },
     
   newStory: function(project_id) {

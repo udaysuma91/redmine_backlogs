@@ -1,4 +1,3 @@
----
 es:
   backlogs_active: activo
   backlogs_any: cualquiera
@@ -89,7 +88,6 @@ es:
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Asignado a"
   field_backlogs_issue_type: "Tipo de backlog"
-  field_base: ""
   field_blocks: Bloques
   field_name: Nombre
   field_planned_velocity: "Velocidad prevista"
@@ -177,9 +175,9 @@ es:
   rb_auto_refresh: "Autorefrescar backlogs/tablero de tareas (segundos)"
   rb_burndown_timezone: "Zona horaria para el límite diario del Burndown"
   rb_burndown_timezone_explanation: |-
-      Para soportar equipos distribuidos, los cálculos para las gráficas del Burndown usan un concepto común de cuando comienza el día.
-      La zona horaria de su usuario es %{user_timezone}, la zona horaria del servidor es %{server_timezone} y los Burndowns usan %{burndown_timezone} para calcular las gráficas.
-      Nota: los datos históricos no son afectados al cambiar esta opción.
+    Para soportar equipos distribuidos, los cálculos para las gráficas del Burndown usan un concepto común de cuando comienza el día.
+    La zona horaria de su usuario es %{user_timezone}, la zona horaria del servidor es %{server_timezone} y los Burndowns usan %{burndown_timezone} para calcular las gráficas.
+    Nota: los datos históricos no son afectados al cambiar esta opción.
   rb_label_copy_tasks: "Copiar tareas"
   rb_label_copy_tasks_all: Todos
   rb_label_copy_tasks_none: Ninguno
@@ -208,14 +206,14 @@ es:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Use un campo de texto en lugar de la lista desplegable si está vacío"
   warning_reset_sprint: |-
-      ¡Está a punto de reiniciar este SPRINT!
+    ¡Está a punto de reiniciar este SPRINT!
 
-      ¿Está seguro de que desea hacer esto? Reiniciar el sprint
-      tendrá los siguientes efectos sobre las historias y las tareas
+    ¿Está seguro de que desea hacer esto? Reiniciar el sprint
+    tendrá los siguientes efectos sobre las historias y las tareas
 
-      * La fecha de creación será establecida en la fecha inicial del sprint
-      * TODAS las modificaciones de las historias y las tareas excepto
-         las notas serán ELMINADAS
-      * El valor actual será el valor inicial para todas
-         propiedades de las historias o tareas
-      * El estado se establecerá en el valor por defecto de la petición.
+    * La fecha de creación será establecida en la fecha inicial del sprint
+    * TODAS las modificaciones de las historias y las tareas excepto
+    las notas serán ELMINADAS
+    * El valor actual será el valor inicial para todas
+    propiedades de las historias o tareas
+    * El estado se establecerá en el valor por defecto de la petición.

@@ -35,6 +35,7 @@ module Backlogs
     module InstanceMethods
       def joins_for_order_statement_with_backlogs_issue_type(order_options)
         joins = joins_for_order_statement_without_backlogs_issue_type(order_options)
+        return joins if Backlogs.setting[:issue_release_relation] == 'multiple'
         if order_options
           if order_options.include?("#{RbRelease.table_name}")
             joins = "" if joins.nil?
@@ -68,7 +69,8 @@ module Backlogs
                              }
         end
 
-        if project
+        #TODO: Make search for Release in multirelease possible
+        if project && Backlogs.setting[:issue_release_relation] != 'multiple'
           backlogs_filters["release_id"] = {
             :type => :list_optional,
             :name => l(:field_release),
@@ -89,7 +91,7 @@ module Backlogs
         @available_columns << QueryColumn.new(:velocity_based_estimate)
         @available_columns << QueryColumn.new(:position, :sortable => "#{Issue.table_name}.position")
         @available_columns << QueryColumn.new(:remaining_hours, :sortable => "#{Issue.table_name}.remaining_hours")
-        @available_columns << QueryColumn.new(:release, :sortable => "#{RbRelease.table_name}.name", :groupable => true)
+        @available_columns << QueryColumn.new(:release, :sortable => "#{RbRelease.table_name}.name", :groupable => true) if Backlogs.setting[:issue_release_relation] != 'multiple'
         @available_columns << QueryColumn.new(:backlogs_issue_type)
       end
 

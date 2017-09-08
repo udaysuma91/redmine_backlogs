@@ -28,6 +28,7 @@ object_to_prepare.to_prepare do
   require_dependency 'backlogs_issue_query_patch'
   require_dependency 'backlogs_issue_patch'
   require_dependency 'backlogs_issue_status_patch'
+  require_dependency 'backlogs_journal_patch'
   require_dependency 'backlogs_tracker_patch'
   require_dependency 'backlogs_version_patch'
   require_dependency 'backlogs_project_patch'
@@ -44,6 +45,9 @@ object_to_prepare.to_prepare do
 
   require_dependency 'backlogs_printable_cards'
   require_dependency 'linear_regression'
+  
+  require_dependency 'backlogs_projects_helper_override'
+  require_dependency 'backlogs_application_helper_override'
 
   Redmine::AccessControl.permission(:manage_versions).actions << "rb_sprints/close_completed"
 end
@@ -76,7 +80,9 @@ Redmine::Plugin.register :redmine_backlogs do
                          :show_sprint_as_roadmap    => 'enabled',
                          :hide_roadmap              => nil,
                          :use_remaining_hours       => 'enabled',
-                         :estimated_hours_per_point => 0.0
+                         :estimated_hours_per_point => 0.0,
+                         :issue_release_relation    => 'single',
+                         :show_estimated_hours      => 'enabled'
                        },
            :partial => 'backlogs/settings'
 
@@ -117,7 +123,8 @@ Redmine::Plugin.register :redmine_backlogs do
                                         :rb_stories          => [:index, :show, :tooltip],
                                         :rb_server_variables => [:project, :sprint, :index],
                                         :rb_burndown_charts  => [:embedded, :show, :print],
-                                        :rb_updated_items    => :show
+                                        :rb_updated_items    => :show,
+                                        :rb_issue_release    => [:index, :show, :new, :create, :edit, :update, :destroy]
                                       }
 
     permission :view_taskboards,      {

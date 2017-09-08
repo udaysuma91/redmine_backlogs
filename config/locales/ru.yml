@@ -1,4 +1,3 @@
----
 ru:
   backlogs_active: активный
   backlogs_any: любой
@@ -33,8 +32,8 @@ ru:
   backlogs_show_stories_from_subprojects_in_backlog: "Показывать в бэклоге истории из подпроектов"
   backlogs_sprint_card_settings: "Печать карт спринта"
   backlogs_sprint_sort_order: "Сортировать спринты по дате начала"
-  backlogs_sprint_sort_order_asc: "по возрастанию"
-  backlogs_sprint_sort_order_desc: "по убыванию"
+  backlogs_sprint_sort_order_asc: по возрастанию
+  backlogs_sprint_sort_order_desc: по убыванию
   backlogs_sprints: Спринты
   backlogs_statistics_active: "В проекте есть активность"
   backlogs_statistics_active_failed: "В проекте нет активности"
@@ -87,9 +86,8 @@ ru:
   error_sprint_end_before_start: "Спринт не может заканчиваться до того, как начинается"
   error_taken: "уже используется"
   event_sprint_summary: "%{project}: %{summary}"
-  field_assigned_to: Назначена
+  field_assigned_to: "Назначена"
   field_backlogs_issue_type: "Тип бэклога"
-  field_base: ""
   field_blocks: Блокировки
   field_name: Название
   field_planned_velocity: "Planned velocity"
@@ -115,7 +113,7 @@ ru:
   label_back_to_project: "Назад на страницу проекта"
   label_backlogs: Бэклоги
   label_backlogs_unconfigured: "Вы еще не настроили модуль Бэклогов. Пожалуйста, передите в %{administration} > %{plugins}, затем кликните по ссылке %{configure} для этого плагина. Как только вы все настроите, возвращайтесь на эту страницу, чтобы начать использовать инструменты."
-  label_burndown: "График выполнения"
+  label_burndown: График выполнения
   label_chart_options: "Настройки графика"
   label_close_completed_sprints: "Закрыть выполненные спринты"
   label_closed_releases: "Закрытые релизы"
@@ -127,9 +125,9 @@ ru:
   label_hours: часы
   label_hours_remaining: "осталось часов"
   label_hours_required_burn_rate: "требуемая скорость выполнения (часов в день)"
-  label_ideal: "идеальное выполнение"
+  label_ideal: идеальное выполнение
   label_impediments: Задержки
-  label_master_backlog: Бэклоги
+  label_master_backlog: "Бэклоги"
   label_my_tasks: "Мои задачи"
   label_new_sprint: "Новый спринт"
   label_new_story: "Новая история"
@@ -141,7 +139,7 @@ ru:
   label_points_accepted: "баллов принято"
   label_points_added: "баллов добавлено"
   label_points_backlog: "баллов в бэклоге"
-  label_points_burn_down: "Осталось выполнить"
+  label_points_burn_down: Осталось выполнить
   label_points_burn_up: Выполнено
   label_points_committed: "баллов запланировано"
   label_points_required_burn_rate: "требуемая скорость выполнения (в баллах)"
@@ -163,7 +161,7 @@ ru:
   label_release_start_date: "Дата начала релиза"
   label_release_trend_end_date: "Trend estimated end date"
   label_reset: Сбросить
-  label_scrum_statistics: Скрам-статистика
+  label_scrum_statistics: "Скрам-статистика"
   label_select_all: "Выбрать все"
   label_show_completed_sprints: "Показать выполненные спринты"
   label_sprint_backlog: "бэклог спринта"
@@ -178,9 +176,9 @@ ru:
   rb_auto_refresh: "Автоматически обновлять бэклоги / доску задач (в секундах)"
   rb_burndown_timezone: "Часовой пояс для границы дня выполнения"
   rb_burndown_timezone_explanation: |-
-      Чтобы поддерживать команды из разных стран, расчеты для графиков выполнения используют общую концепцию начала дня.
-      Ваш часовой пояс %{user_timezone}, часовой пояс сервера %{server_timezone}, а для расчета графика выполнения используется часовой пояс %{burndown_timezone}.
-      Примечание: Имеющаяся информация не меняется при изменении этой настройки.
+    Чтобы поддерживать команды из разных стран, расчеты для графиков выполнения используют общую концепцию начала дня.
+    Ваш часовой пояс %{user_timezone}, часовой пояс сервера %{server_timezone}, а для расчета графика выполнения используется часовой пояс %{burndown_timezone}.
+    Примечание: Имеющаяся информация не меняется при изменении этой настройки.
   rb_label_copy_tasks: "Копировать задачи"
   rb_label_copy_tasks_all: Все
   rb_label_copy_tasks_none: Никакие
@@ -209,6 +207,6 @@ ru:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Если список пуст, будет использовано текстовое поле"
   warning_reset_sprint: |-
-      ВЫ СОБИРАЕТЕСЬ СБРОСИТЬ СПРИНТ!
-      Вы уверены, что хотите это сделать? Сброс спринта повлияет на истории и задачи следующим образом:
-      * Дата создания будет приравнена к начальной дате спринта * Все изменения в задачах и историях кроме комментариев будут УДАЛЕНЫ * Текущее значение всех свойств историй / задач станет начальным * Состояние получит значение по умолчанию
+    ВЫ СОБИРАЕТЕСЬ СБРОСИТЬ СПРИНТ!
+    Вы уверены, что хотите это сделать? Сброс спринта повлияет на истории и задачи следующим образом:
+    * Дата создания будет приравнена к начальной дате спринта * Все изменения в задачах и историях кроме комментариев будут УДАЛЕНЫ * Текущее значение всех свойств историй / задач станет начальным * Состояние получит значение по умолчанию

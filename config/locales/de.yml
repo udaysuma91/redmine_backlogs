@@ -1,16 +1,14 @@
----
 de:
   backlogs_active: aktiv
   backlogs_any: beliebig
   backlogs_auto_assign_task: "Task automatisch dem aktuellen Benutzer zuweisen"
   backlogs_burndown_print_height: "Burndown Druck Höhe"
   backlogs_burndown_print_width: "Burndown Druck Breite"
-  backlogs_burndown_settings: Burndown
+  backlogs_burndown_settings: "Burndown"
   backlogs_card_specification: "Etikettenart für den Kartendruck"
   backlogs_default_epic_tracker: "Standard Epic tracker"
   backlogs_default_feature_tracker: "Standard Feature tracker"
   backlogs_default_story_tracker: "Standard Story Tracker"
-  backlogs_epic_tracker: "Epic Tracker"
   backlogs_feature_tracker: "Feature Tracker"
   backlogs_general_settings: "Allgemeine Einstellungen"
   backlogs_impediment: Hindernis
@@ -24,10 +22,10 @@ de:
   backlogs_product_backlog: "Produkt Backlog"
   backlogs_scaled_agile: "Scaled agile"
   backlogs_scaled_agile_enabled: "Enable scaled agile features"
-  backlogs_scrum_stats_menu_application: Applikationsmenü
+  backlogs_scrum_stats_menu_application: "Applikationsmenü"
   backlogs_scrum_stats_menu_none: deaktiviert
   backlogs_scrum_stats_menu_position: "Position des Scrum Statistik Menü"
-  backlogs_scrum_stats_menu_top: Hauptmenu
+  backlogs_scrum_stats_menu_top: "Hauptmenu"
   backlogs_set_start_and_duedates_from_sprint: "Setze Start- und Endedatum von Stories von Sprintdaten"
   backlogs_sharing_enabled: "Sharing aktivieren"
   backlogs_sharing_new_sprint: "Neue Sprints teilen"
@@ -95,7 +93,6 @@ de:
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Zugeordnet zu"
   field_backlogs_issue_type: "Backlog Typ"
-  field_base: ""
   field_blocks: blockiert
   field_name: Name
   field_planned_velocity: "Planned velocity"
@@ -108,7 +105,7 @@ de:
   field_release_relationship: "Release relationship"
   field_release_start_date: "Release Startdatum"
   field_remaining_hours: "Restaufwand (Stunden)"
-  field_story_points: Storypunkte
+  field_story_points: "Storypunkte"
   field_subject: Thema
   field_task_color: "Task color"
   field_team: "Team"
@@ -123,10 +120,10 @@ de:
   label_backlogs: Backlogs
   label_backlogs_unconfigured: "Sie haben noch keine Backlogs konfiguriert. Bitte gehen Sie auf %{administration} > %{plugins}, klicken Sie dann auf den %{configure} Link für dieses Plugin. Kommen Sie hierher zurück, sobald sie die Felder konfiguriert haben."
   label_burndown: Burndown
-  label_chart_options: Chart-Optionen
+  label_chart_options: "Chart-Optionen"
   label_close_completed_sprints: "Schließe abgeschlossene Sprints"
   label_closed_releases: "Abgeschlossene Releases"
-  label_column_width: Spaltenbreite
+  label_column_width: "Spaltenbreite"
   label_download_sprint: Download
   label_filter_tasks: "Filter nach Benutzer"
   label_filter_tasks_my_tasks: "Filter nach Benutzer - meine Aufgaben"
@@ -161,7 +158,7 @@ de:
   label_release_end_date: "Release Abgabedatum"
   label_release_new: "Neues Release"
   label_release_planned_velocity_end_date: "Planned velocity estimated end date"
-  label_release_planning: Release-Planung
+  label_release_planning: "Release-Planung"
   label_release_plural: Releases
   label_release_relationship_added: Added
   label_release_relationship_auto: Auto
@@ -179,15 +176,15 @@ de:
   label_sprint_name: "Sprint \"%{name}\""
   label_stories: Stories
   label_stories_tasks: Stories/Aufgaben
-  label_task_board: Aufgabenliste
-  label_view_options: Darstellungsoptionen
+  label_task_board: "Aufgabenliste"
+  label_view_options: "Darstellungsoptionen"
   label_webcal: "Webkalender Feed"
   rb_auto_refresh: "Autom. Aktualisierung backlogs/taskboard (in Sekunden)"
   rb_burndown_timezone: "Zeitzone für Burndown Tagesgrenze"
   rb_burndown_timezone_explanation: |-
-      Um verteilte Teams zu unterstütyen, berechnet Backlogs die burndown Graphen in einer gemeinsam vereinbarten Zeitzone.
-      Deine Benutzer-Zeitzone ist %{user_timezone}, die des Servers ist %{server_timezone} und Burndown Graphen nutzen %{burndown_timezone} zur berechnung der Tagesgrenze.
-      Achtung: Vergangene Daten werden nicht beeinflusst, wenn man diese Einstellung ändert.
+    Um verteilte Teams zu unterstütyen, berechnet Backlogs die burndown Graphen in einer gemeinsam vereinbarten Zeitzone.
+    Deine Benutzer-Zeitzone ist %{user_timezone}, die des Servers ist %{server_timezone} und Burndown Graphen nutzen %{burndown_timezone} zur berechnung der Tagesgrenze.
+    Achtung: Vergangene Daten werden nicht beeinflusst, wenn man diese Einstellung ändert.
   rb_label_copy_tasks: "Aufgaben kopieren"
   rb_label_copy_tasks_all: Alle
   rb_label_copy_tasks_none: Keine
@@ -215,4 +212,6 @@ de:
   today_not_in_release_warning: "Warnung: Das gewählte Datum liegt nicht innerhalb der Releasegrenze."
   todo_issue_summary: "%{type}: {summary}"
   use_free_text_if_empty: "Textfeld falls Dropdown Box is leer"
-  warning_reset_sprint: "|- SIE SIND DABEI DEN SPRINT ZURÜCKZUSETZEN! Sind sie sicher? Das Zurücksetzen des Sprint hat folgende Auswirkungen auf die Stories und Tasks: * Erfassungsdatum wird auf das Startdatum des Sprint gesetzt * Alle Anpassungen an Stories und Tasks (ausgenommen der Notizen) werden GELÖSCHT * Alle aktuellen Werte der Stories/Tasks werden auf die  initialen Werte zurückgesetzt * Der Status wird auf den Standardwert zurückgesetzt"
+  warning_reset_sprint: |-
+    |- SIE SIND DABEI DEN SPRINT ZURÜCKZUSETZEN! Sind sie sicher? Das Zurücksetzen des Sprint hat folgende Auswirkungen auf die Stories und Tasks: * Erfassungsdatum wird auf das Startdatum des Sprint gesetzt * Alle Anpassungen an Stories und Tasks (ausgenommen der Notizen) werden GELÖSCHT * Alle aktuellen Werte der Stories/Tasks werden auf die  initialen Werte zurückgesetzt * Der Status wird auf den Standardwert zurückgesetzt
+  backlogs_epic_tracker: "Epic Tracker"

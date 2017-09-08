@@ -70,6 +70,8 @@ class RbStoriesController < RbApplicationController
 
     status = (result ? 200 : 400)
 
+    @roles = User.current.admin ? Role.all : User.current.roles_for_project(@project)
+
     if params[:view] == "taskboard"
       respond_to do |format|
         format.html { render :partial => "story_tb", :collection => [story], :as => :story }

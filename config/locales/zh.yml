@@ -1,30 +1,29 @@
----
 zh:
   backlogs_active: 活跃
   backlogs_any: 所有
-  backlogs_auto_assign_task: 将任务自动分配给当前用户
-  backlogs_burndown_print_height: 燃尽图打印高度
-  backlogs_burndown_print_width: 燃尽图打印宽度
-  backlogs_burndown_settings: 燃尽图配置
-  backlogs_card_specification: 卡片类型
+  backlogs_auto_assign_task: "将任务自动分配给当前用户"
+  backlogs_burndown_print_height: "燃尽图打印高度"
+  backlogs_burndown_print_width: "燃尽图打印宽度"
+  backlogs_burndown_settings: "燃尽图配置"
+  backlogs_card_specification: "卡片类型"
   backlogs_default_story_tracker: "Default story tracker"
-  backlogs_general_settings: 通用配置
+  backlogs_general_settings: "通用配置"
   backlogs_impediment: Impediment
-  backlogs_include_sat_and_sun: 燃尽图包含周六和周日
-  backlogs_new_story_position: 新故事位置
+  backlogs_include_sat_and_sun: "燃尽图包含周六和周日"
+  backlogs_new_story_position: "新故事位置"
   backlogs_new_story_position_bottom: "新故事底部 (需要重启)"
-  backlogs_new_story_position_top: "新故事顶部 (需要重启)"
-  backlogs_not_all_themes_are_supported: 无法支持全部主题
-  backlogs_pblpage_settings: 产品条目页配置
-  backlogs_points_burn_direction: 点数消耗
-  backlogs_product_backlog: 产品条目
-  backlogs_scrum_stats_menu_application: 应用菜单
+  backlogs_new_story_position_top: 新故事顶部 (需要重启)
+  backlogs_not_all_themes_are_supported: "无法支持全部主题"
+  backlogs_pblpage_settings: "产品条目页配置"
+  backlogs_points_burn_direction: "点数消耗"
+  backlogs_product_backlog: "产品条目"
+  backlogs_scrum_stats_menu_application: "应用菜单"
   backlogs_scrum_stats_menu_none: None
   backlogs_scrum_stats_menu_position: "Scrum 统计菜单"
-  backlogs_scrum_stats_menu_top: 顶部菜单
-  backlogs_set_start_and_duedates_from_sprint: 设置故事开始日期和冲刺完成日期
-  backlogs_sharing_enabled: 启用共享
-  backlogs_sharing_new_sprint: 共享新冲刺
+  backlogs_scrum_stats_menu_top: "顶部菜单"
+  backlogs_set_start_and_duedates_from_sprint: "设置故事开始日期和冲刺完成日期"
+  backlogs_sharing_enabled: "启用共享"
+  backlogs_sharing_new_sprint: "共享新冲刺"
   backlogs_sharing_new_sprint_explanation: "Although all possible options are available here, new sprints are shared only according to the users and projects permissions. System shared sprints can only be created by admins, hierarchy and tree shared sprints need permissions on the topmost project."
   backlogs_sharing_support: "Backlogs sharing"
   backlogs_show_in_scrum_stats: "Show project in Scrum statistics"
@@ -68,11 +67,11 @@ zh:
   backlogs_story_follows_task_loose_explanation: "Note: all issue statuses require a valid %done between 0 and 100."
   backlogs_story_follows_task_status: "Story follows Task status"
   backlogs_story_settings: "Story and Task settings"
-  backlogs_story_tracker: 故事跟踪
+  backlogs_story_tracker: "故事跟踪"
   backlogs_task: 任务
-  backlogs_task_tracker: 任务跟踪
-  backlogs_wiki_template: 冲刺的wiki页面的模板
-  button_edit_wiki: 编辑wiki页面
+  backlogs_task_tracker: "任务跟踪"
+  backlogs_wiki_template: "冲刺的wiki页面的模板"
+  button_edit_wiki: "编辑wiki页面"
   comma_delimited_numbers: "Comma delimited numbers"
   current_open_story_points: "Current open story points:"
   error_blank: "[[cannot be blank]]"
@@ -80,18 +79,17 @@ zh:
   error_inclusion: "is not included in the list"
   error_intro_plural: "遇到了这些错误:"
   error_intro_singular: "遇到了这个错误:"
-  error_must_have_comma_delimited_list: 多个任务(或故事)的ID间，必须使用逗号进行分隔
+  error_must_have_comma_delimited_list: "多个任务(或故事)的ID间，必须使用逗号进行分隔"
   error_no_workflow_for_task_tracker: "You do not have access to the task tracker. If you believe this is an error, please have your administrator update the workflow."
-  error_outro: 在再次提交之前，请先更正以上的错误。
+  error_outro: "在再次提交之前，请先更正以上的错误。"
   error_release_end_after_start: "Release end date has to be after start date"
   error_sprint_end_before_start: "Sprint cannot end before it starts"
   error_taken: "is already in use"
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Assigned To"
-  field_backlogs_issue_type: Backlog类型
-  field_base: ""
-  field_blocks: "[[Blocks]]"
-  field_name: "[[Name]]"
+  field_backlogs_issue_type: "Backlog类型"
+  field_blocks: '[[Blocks]]'
+  field_name: '[[Name]]'
   field_planned_velocity: "Planned velocity"
   field_position: 位置
   field_priority: Priority
@@ -101,21 +99,21 @@ zh:
   field_release_relationship: "Release relationship"
   field_release_start_date: "Release start date"
   field_remaining_hours: "Remaining (hours)"
-  field_story_points: 故事点数
-  field_subject: "[[Subject]]"
+  field_story_points: "故事点数"
+  field_subject: '[[Subject]]'
   field_task_color: "Task color"
   field_time_entry_comments: "Time Entry Comments"
   field_time_entry_hours: "Time Entry Hours"
   field_time_entry_spend_on: "Time Entry Spend on"
   field_time_entry_user_id: "Time Entry User Id"
   field_tracker_id: "[[Tracker ID]]"
-  field_velocity_based_estimate: 速度计量单位
+  field_velocity_based_estimate: "速度计量单位"
   label_all_tasks: "All tasks"
-  label_back_to_project: 返回项目页
+  label_back_to_project: "返回项目页"
   label_backlogs: Backlogs
   label_backlogs_unconfigured: "您尚未设置Bcaklogs，请到{{administration}} > {{plugins}},然后点击这个插件的{{configure}}设置连接。当您完成设置后，返回此页，开始使用这个工具。"
   label_burndown: 燃尽
-  label_chart_options: 表单选项
+  label_chart_options: "表单选项"
   label_close_completed_sprints: "Close completed Sprints"
   label_closed_releases: "Closed releases"
   label_column_width: "Column width"
@@ -128,14 +126,14 @@ zh:
   label_hours_required_burn_rate: "required burn rate (hours)"
   label_ideal: ideal
   label_impediments: Impediments
-  label_master_backlog: Backlog控制板
+  label_master_backlog: "Backlog控制板"
   label_my_tasks: "My tasks"
   label_new_sprint: "New Sprint"
   label_new_story: "New Story"
   label_no_data_to_show: "No data to show"
   label_no_end: "no end"
   label_no_start: "no start"
-  label_not_prioritized: 未授予优先级
+  label_not_prioritized: "未授予优先级"
   label_points: 点
   label_points_accepted: "points accepted"
   label_points_added: "points added"
@@ -163,27 +161,27 @@ zh:
   label_release_trend_end_date: "Trend estimated end date"
   label_reset: Reset
   label_scrum_statistics: "Scrum 统计"
-  label_select_all: 全选
+  label_select_all: "全选"
   label_show_completed_sprints: "Show Completed Sprints"
   label_sprint_backlog: "冲刺 backlog"
   label_sprint_cards: "[[Sprint cards]]"
-  label_sprint_impediments: 冲刺障碍
+  label_sprint_impediments: "冲刺障碍"
   label_sprint_name: "冲刺 \"{{name}}\""
   label_stories: 任务
   label_stories_tasks: 故事/任务
-  label_task_board: 任务板
+  label_task_board: "任务板"
   label_view_options: "View options"
   label_webcal: "[[Webcal Feed]]"
   rb_auto_refresh: "Auto-refresh backlogs/taskboard (seconds)"
   rb_burndown_timezone: "Time zone for burndown day boundary"
   rb_burndown_timezone_explanation: |-
-      To support distributed teams, calculations for burndown graphs use a common concept of when a day begins.
-      Your user timezone is %{user_timezone}, the server timezone is %{server_timezone} and Burndowns use %{burndown_timezone} to calculate the graphs.
-      Note: Historic data is not affected when changing this option.
+    To support distributed teams, calculations for burndown graphs use a common concept of when a day begins.
+    Your user timezone is %{user_timezone}, the server timezone is %{server_timezone} and Burndowns use %{burndown_timezone} to calculate the graphs.
+    Note: Historic data is not affected when changing this option.
   rb_label_copy_tasks: "[[Copy tasks]]"
-  rb_label_copy_tasks_all: "[[All]]"
-  rb_label_copy_tasks_none: "[[None]]"
-  rb_label_copy_tasks_open: "[[Open]]"
+  rb_label_copy_tasks_all: '[[All]]'
+  rb_label_copy_tasks_none: '[[None]]'
+  rb_label_copy_tasks_open: '[[Open]]'
   rb_label_link_to_original: "[[Include link to original story]]"
   rb_label_timelog_disable: Disable
   rb_label_timelog_enable: Enable
@@ -208,14 +206,14 @@ zh:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Use text field instead of dropdown if empty"
   warning_reset_sprint: |-
-      YOU ARE ABOUT TO RESET THIS SPRINT!
+    YOU ARE ABOUT TO RESET THIS SPRINT!
 
-      Are you sure you want to do this? Resetting the sprint
-      will have the following effects on stories and tasks:
+    Are you sure you want to do this? Resetting the sprint
+    will have the following effects on stories and tasks:
 
-      * Creation date will be set to the sprint start date
-      * ALL modifications to the stories and tasks except notes
-         will be DELETED
-      * The current value will become the initial value for all
-         story/task properties
-      * State will be set to the default issue state
+    * Creation date will be set to the sprint start date
+    * ALL modifications to the stories and tasks except notes
+    will be DELETED
+    * The current value will become the initial value for all
+    story/task properties
+    * State will be set to the default issue state

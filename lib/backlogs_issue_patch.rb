@@ -17,6 +17,8 @@ module Backlogs
         has_one :backlogs_history, :class_name => RbIssueHistory, :dependent => :destroy
         has_many :rb_release_burnchart_day_cache, :dependent => :delete_all
 
+        belongs_to :rb_issue_release
+        has_many :releases, :class_name => 'RbRelease', :through => :rb_issue_release
 
         validates_inclusion_of :release_relationship, :in => RbStory::RELEASE_RELATIONSHIP
 
@@ -129,7 +131,7 @@ module Backlogs
           end
 
           if self.is_story?
-            if Backlogs.setting[:estimated_hours_per_point].to_f > 0 && self.story_points > 0
+            if Backlogs.setting[:estimated_hours_per_point].to_f > 0 && self.story_points? && self.story_points > 0
               self.estimated_hours = Backlogs.setting[:estimated_hours_per_point].to_f * self.story_points
             end
           end
@@ -266,6 +268,26 @@ module Backlogs
 
       def rbteam_id=(tid)
         write_attribute(:rbteam_id, tid)
+      end
+
+      def issue_releases
+        @IssueReleases = RbIssueRelease.where(:issue_id => self.id).to_a
+      end
+
+      # Called after a release relation is added
+      def release_added(release)
+        if current_journal
+          current_journal.journalize_release(release, :added)
+          current_journal.save
+        end
+      end
+    
+      # Called after a release relation is removed
+      def release_removed(release)
+        if current_journal
+          current_journal.journalize_release(release, :removed)
+          current_journal.save
+        end
       end
 
     end

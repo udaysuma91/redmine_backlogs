@@ -1,7 +1,7 @@
 <li class="model story fff-wrapper <%= mark_if_closed(story) %> tracker<%= story ? story.tracker_id : '' %>" id="<%= story_html_id_or_empty(story) %>">
-  <%- task_color = nil %>
-  <%- if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? %>
-	  <%- task_color = story.assigned_to.backlogs_preference[:task_color] %>
+  <%- story_color = nil %>
+  <%- if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? && story.assigned_to.is_a?(User) %>
+	  <%- story_color = story.assigned_to.backlogs_preference[:task_color] %>
   <%- end %>
   <%- show_assigned_to_full = User.current.backlogs_preference[:show_assigned_to_full] == '1' %>
   <%- show_assigned_to_short = User.current.backlogs_preference[:show_assigned_to_short] == '1' %>
@@ -17,32 +17,34 @@
          </div>
      <%end%>
      <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
-     <% if show_category %>
+     <%- if show_category %>
           </div>
-      <% end %>
-     <span class="story_field">(<%= story.estimated_hours.to_f %> est h, <%= story.priority.name %>)</span>
+     <%- end %>
+     <%- if Backlogs.setting[:show_estimated_hours] %>
+     <span class="story_field start_edit">(<%= story.estimated_hours.to_f %> est h, <%= story.priority.name %>)</span>
+     <%- end %>
      <%- if story.assigned_to %>
          <%- if show_assigned_to_full %>
-           <span class="assigned_to_full"> - 
-           <%- if task_color %>
-           		<span  class="assigned_to_color" style="background-color: <%= task_color %>; border-color: <%= task_color %>;">
+           <div class="assigned_to_full start_edit"> - 
+           <%- if story_color %>
+           		<span class="assigned_to_color" style="background-color: <%= story_color %>; border-color: <%= story_color %>;">
            <%- end %>
 				<%= story.assigned_to%>
-           <%- if task_color %>
+           <%- if story_color %>
 				</span>
 		   <%- end %>
-		   </span>
+		   </div>
          <%- end %>
          <%- if show_assigned_to_short %>
-			<span class = "assigned_to_short"> - 
-	        <%- if task_color %>
-           		<span  class="assigned_to_color" style="background-color: <%= task_color %>; border-color: <%= task_color %>;">
+			<div class="assigned_to_short start_edit"> - 
+	        <%- if story_color %>
+           		<span class="assigned_to_color" style="background-color: <%= story_color %>; border-color: <%= story_color %>;">
            <%- end %>
-           <%= story.assigned_to.lastname[0]%>. <%= story.assigned_to.firstname[0]%>.
-           <%- if task_color %>
+           <%= story.assigned_to.firstname[0]%>. <%= story.assigned_to.lastname[0]%>.
+           <%- if story_color %>
 				</span>
 		   <%- end %>
-		   </span>
+		   </div>
          <%- end %>
      <%- end %>
   </div>
@@ -57,8 +59,8 @@
   </div>
 
   <% if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? && !show_assigned_to_full && !show_assigned_to_short %>
-    <% task_color = story.assigned_to.backlogs_preference[:task_color] %>
-    <div title="<%= story.assigned_to %>" class="assigned_to_color" style="background-color: <%= task_color %>; border-color: <%= task_color %>;"></div>
+    <!-- just show a color dot of the assigned to user -->
+    <div title="<%= story.assigned_to %>" class="assigned_to_color bar start_edit" style="background-color: <%= story_color %>; border-color: <%= story_color %>;"></div>
   <%end%>
 
   <div class="project editable story_field" fieldtype="select" fieldname="project_id" fieldlabel="<%=l(:field_project_id)%>">
@@ -72,6 +74,10 @@
   </div>
  </div>
  <div class="fff-right">
+   <div class="assigned_to_id editable story_field" fieldtype="select" style="display: none;" fieldname="assigned_to_id" fieldlabel="<%=l(:field_assigned_to)%>">
+     <div class="t"><%= assignee_name_or_empty(story) %></div>
+     <div class="v"><%= assignee_id_or_empty(story) %></div>
+   </div>
   <div class="status_id editable story_field" fieldtype="select" fieldname="status_id" fieldlabel="<%=l(:field_status_id)%>">
     <div class="t"><%= status_label_or_default(story) %></div>
     <div class="v"><%= status_id_or_default(story) %></div>

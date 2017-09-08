@@ -1,5 +1,4 @@
----
-pl-PL:
+pl_PL:
   backlogs_active: aktywny
   backlogs_any: każdy
   backlogs_auto_assign_task: "Automatycznie przypisz zadanie do biezącego użytkowina"
@@ -89,7 +88,6 @@ pl-PL:
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Przypisany do"
   field_backlogs_issue_type: "Typ backlog"
-  field_base: ""
   field_blocks: Blocks
   field_name: Name
   field_planned_velocity: "Planned velocity"
@@ -150,7 +148,7 @@ pl-PL:
   label_product_backlog: "product backlog"
   label_product_cards: "Karty Product backlog"
   label_release: Release
-  label_release_end_date: field_release_start_date
+  label_release_end_date: "field_release_start_date"
   label_release_new: "Nowy release"
   label_release_planned_velocity_end_date: "Planned velocity estimated end date"
   label_release_planning: "Release Planning"
@@ -159,7 +157,7 @@ pl-PL:
   label_release_relationship_auto: Auto
   label_release_relationship_continued: Continued
   label_release_relationship_initial: Initial
-  label_release_start_date: field_release_start_date
+  label_release_start_date: "field_release_start_date"
   label_release_trend_end_date: "Trend estimated end date"
   label_reset: Reset
   label_scrum_statistics: "Statystyki Scrum"
@@ -177,9 +175,9 @@ pl-PL:
   rb_auto_refresh: "Auto-refresh backlogs/taskboard (seconds)"
   rb_burndown_timezone: "Time zone for burndown day boundary"
   rb_burndown_timezone_explanation: |-
-      To support distributed teams, calculations for burndown graphs use a common concept of when a day begins.
-      Your user timezone is %{user_timezone}, the server timezone is %{server_timezone} and Burndowns use %{burndown_timezone} to calculate the graphs.
-      Note: Historic data is not affected when changing this option.
+    To support distributed teams, calculations for burndown graphs use a common concept of when a day begins.
+    Your user timezone is %{user_timezone}, the server timezone is %{server_timezone} and Burndowns use %{burndown_timezone} to calculate the graphs.
+    Note: Historic data is not affected when changing this option.
   rb_label_copy_tasks: "Copy tasks"
   rb_label_copy_tasks_all: All
   rb_label_copy_tasks_none: None
@@ -208,14 +206,14 @@ pl-PL:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Use text field instead of dropdown if empty"
   warning_reset_sprint: |-
-      YOU ARE ABOUT TO RESET THIS SPRINT!
+    YOU ARE ABOUT TO RESET THIS SPRINT!
 
-      Are you sure you want to do this? Resetting the sprint
-      will have the following effects on stories and tasks:
+    Are you sure you want to do this? Resetting the sprint
+    will have the following effects on stories and tasks:
 
-      * Creation date will be set to the sprint start date
-      * ALL modifications to the stories and tasks except notes
-         will be DELETED
-      * The current value will become the initial value for all
-         story/task properties
-      * State will be set to the default issue state
+    * Creation date will be set to the sprint start date
+    * ALL modifications to the stories and tasks except notes
+    will be DELETED
+    * The current value will become the initial value for all
+    story/task properties
+    * State will be set to the default issue state

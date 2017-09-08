@@ -30,7 +30,7 @@ class RbSprint < Version
 
   safe_attributes 'sprint_start_date',
       'story_points',
-      'release_id'
+      'rbteam_id'
   
   #depending on sharing mode
   #return array of projects where this sprint is visible

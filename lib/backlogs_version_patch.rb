@@ -10,6 +10,8 @@ module Backlogs
         unloadable
 
         has_one :sprint_burndown, :class_name => RbSprintBurndown, :dependent => :destroy
+        belongs_to :release, :class_name => 'RbRelease', :foreign_key => 'release_id'
+        belongs_to :rbteam, :class_name => 'Group', :foreign_key => 'rbteam_id'
 
         after_save :clear_burndown
 
@@ -47,6 +49,21 @@ module Backlogs
 
       def assignable_releases
         RbRelease.open
+      end
+
+      def rbteam
+        Group.find(rbteam_id)
+      rescue
+        nil
+      end
+
+      def rbteam_id=(tid)
+        write_attribute(:rbteam_id, tid)
+      end
+
+      def name_team
+        return name unless rbteam
+        return "#{name} (#{rbteam.name})"
       end
 
     end

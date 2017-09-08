@@ -109,6 +109,14 @@
     <%- sprint_backlog = { :sprint => sprint, :stories => nil } -%>
     <%= render :partial => "backlog", :object => sprint_backlog %>
   </div>
-<%= render :partial => "rb_stories/helpers" %>
-<div id="last_updated"><%= date_string_with_milliseconds(@last_update, 0.001) %></div>
+  
+  <%= render :partial => "rb_stories/helpers" %>
+
+  <div id="last_updated"><%= date_string_with_milliseconds(@last_update, 0.001) %></div>
+
+  <select class="assigned_to_id template" id="assigned_to_id_options">
+    <option value="" > </option>
+    <%= users_assignable_options_for_select(@project.assignable_users) %>
+  </select>
+
 <%- end %>

@@ -1,4 +1,3 @@
----
 tr:
   backlogs_active: aktif
   backlogs_any: hiçbir
@@ -89,7 +88,6 @@ tr:
   event_sprint_summary: "%{project}: %{summary}"
   field_assigned_to: "Atanan"
   field_backlogs_issue_type: "Birikmiş iş tipi"
-  field_base: ""
   field_blocks: Blok
   field_name: Ad
   field_planned_velocity: "Planlanan hız"
@@ -180,9 +178,9 @@ tr:
   rb_auto_refresh: "Birikmiş işleri/görev panosunu otomatik yenile (saniye)"
   rb_burndown_timezone: "burndown gün sınırı için zaman dilimi"
   rb_burndown_timezone_explanation: |-
-      Dağıtık takımları desteklemek için burndown grafikleri günün ne zaman başladığını ortak bir kavram ile belirler.
-      Kullanıcı saat diliminiz %{user_timezone}, sunucunun kullandığı zaman dilimi %{server_timezone} ve burndown
-      Not: Bu ​​seçeneği değiştirirken tarihi veriler etkilenmez.
+    Dağıtık takımları desteklemek için burndown grafikleri günün ne zaman başladığını ortak bir kavram ile belirler.
+    Kullanıcı saat diliminiz %{user_timezone}, sunucunun kullandığı zaman dilimi %{server_timezone} ve burndown
+    Not: Bu ​​seçeneği değiştirirken tarihi veriler etkilenmez.
   rb_label_copy_tasks: "Görevi kopyala"
   rb_label_copy_tasks_all: Tümü
   rb_label_copy_tasks_none: Hiçbiri
@@ -211,14 +209,14 @@ tr:
   todo_issue_summary: "%{type}: %{summary}"
   use_free_text_if_empty: "Boş ise açılan metin alanını kullan"
   warning_reset_sprint: |
-      BU SPRINTI SIFIRLAMAK ÜZERESİNİZ!
+    BU SPRINTI SIFIRLAMAK ÜZERESİNİZ!
 
-      Bunu yapmak istediğinizden emin misiniz? Sprinti sıfırlamak, öyküler ve görevleri
-      aşağıda belirtilen şekilde etkileyecektir:
+    Bunu yapmak istediğinizden emin misiniz? Sprinti sıfırlamak, öyküler ve görevleri
+    aşağıda belirtilen şekilde etkileyecektir:
 
-      * Oluşturma tarihi sprint başlangıç tarihine ayarlanacak
-      * Öyküler ve görevlere notlar haricinde yapılan bütün değişiklikler
-         SİLİNECEK
-      * Bütün öykü/görev özelliklerinin güncel değerleri
-         başlangıç değerleri olacak
-      * Durum, öntanımlı iş durumuna ayarlanacak
+    * Oluşturma tarihi sprint başlangıç tarihine ayarlanacak
+    * Öyküler ve görevlere notlar haricinde yapılan bütün değişiklikler
+    SİLİNECEK
+    * Bütün öykü/görev özelliklerinin güncel değerleri
+    başlangıç değerleri olacak
+    * Durum, öntanımlı iş durumuna ayarlanacak

@@ -48,6 +48,10 @@
     if (state=='close') RB.$('#settings_story_close_status_id').parent().show();
     if (state=='loose') RB.$("#settings_story_follow_task_status_explanation").show();
   }
+  
+  function select_one_product_backlog() {
+  	RB.$('#settings_use_one_product_backlog').attr("checked", true);
+  }
 
   RB.$(document).ready(function() {
     RB.$("#settings_task_tracker").change(function() { enable_apply(); });
@@ -57,6 +61,7 @@
     RB.$("#settings_story_follow_task_status_loose").change(function(){update_storystate('loose');});
     RB.$("#settings_story_follow_task_status_close").change(function(){update_storystate('close');});
     RB.$("#settings_story_follow_task_status_nil").change(function(){update_storystate();});
+    RB.$("#settings_issue_release_relation_multiple").change(function(){select_one_product_backlog();});
     enable_apply();
     update_storystate();
   });
@@ -154,6 +159,19 @@
   </p>
 
   <p>
+    <%= label_tag("settings_issue_release_relation", l(:backlogs_issue_release_relation)) %>
+    <label class="block">
+    <%= radio_button_tag("settings[issue_release_relation]", 'single',
+        Backlogs.setting[:issue_release_relation] == 'single' ) %><%= l(:backlogs_issue_release_relation_single) %>
+    </label>
+    <label class="block">
+    <%= radio_button_tag("settings[issue_release_relation]", 'multiple',
+        Backlogs.setting[:issue_release_relation] == 'multiple' ) %><%= l(:backlogs_issue_release_relation_multiple) %>
+    </label>
+    <em class="info"><%= l(:issue_release_relation_force_one_product_backlog) %></em>
+  </p>
+
+  <p>
     <%= label_tag("settings_use_one_product_backlog", l(:backlogs_use_one_product_backlog)) %>
     <%= check_box_tag("settings[use_one_product_backlog]", 'enabled',
                       Backlogs.setting[:use_one_product_backlog]) %>
@@ -189,6 +207,12 @@
     <%= text_field_tag("settings[estimated_hours_per_point]",
                        Backlogs.setting[:estimated_hours_per_point]) %>
     <em class="info"><%= l(:backlogs_estimated_hours_per_point_explanation) %></em>
+  </p>
+
+  <p>
+    <%= label_tag("settings_show_estimated_hours", l(:backlogs_show_estimated_hours)) %>
+    <%= check_box_tag("settings[show_estimated_hours]", 'enabled',
+                      Backlogs.setting[:show_estimated_hours]) %>
   </p>
 
   <p>

@@ -111,6 +111,12 @@ RB.StoryEB = RB.Object.create(RB.Issue, {
       url: url,
       data: data
     };
+  },
+  
+  afterUpdate: function(data, textStatus, xhr){
+  	if (RB.Taskboard && RB.permissions.create_tasks) {
+      RB.$(this.el).find('.add_new').bind('click', RB.Taskboard.handleAddNewTaskClick);
+  	}
   }
 
 });

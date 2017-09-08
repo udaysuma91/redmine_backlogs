@@ -14,6 +14,7 @@ RB.Story = RB.Object.create(RB.Issue, RB.EditableInplace, {
 
     if (RB.permissions.update_stories) {
       j.delegate('.editable', 'click', this.handleClick);
+      j.delegate('.start_edit', 'click', this.handleClick);
     }
   },
 

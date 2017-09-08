@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[redmine-backlogs-fork.locales]
+file_filter = config/locales/<lang>.yml
+source_file = config/locales/en.yml
+source_lang = en
+type = YML
+lang_map = en_GB: en-GB, pl_PL: pl-PL, pt_BR: pt_BR
