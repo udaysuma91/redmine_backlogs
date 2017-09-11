@@ -4,10 +4,10 @@
 #check on the ajax request count of jQuery
 #raise Capybara::TimeoutError after some time (default 5s, here 15s, set in support/setup.rb).
 def wait_for_ajax
-  wait_until { 
+  expect { 
     #wait until all animations are finished AND all ajax requests are finished.
     page.evaluate_script('RB.$(":animated").length') == 0 && page.evaluate_script('RB.$.active') == 0 #jQuery.ajax.active in the next release
-  }
+  }.to become_true
 end
 
 # on the master backlog page drag a story

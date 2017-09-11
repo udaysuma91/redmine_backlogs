@@ -41,7 +41,7 @@ Feature: Shared versions multiple subprojects, one sprint
       And I should see 1 sprint backlogs
       And I should see the backlog of Sprint Sp001
       And I should see 0 stories in the sprint backlog of Sp001
-      And The menu of the product backlog should allow to create a new Story in project p1
+#      And The menu of the product backlog should allow to create a new Story in project p1
       And The menu of the product backlog should allow to create a new Story in project p1s1
       And The menu of the product backlog should allow to create a new Story in project p1s2
       And The menu of the sprint backlog of Sp001 should allow to create a new Story in project p1
