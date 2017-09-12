@@ -78,7 +78,15 @@ module Backlogs
             :order => 21
           }
         end
-        @available_filters = @available_filters.merge(backlogs_filters)
+
+        if (Redmine::VERSION::MAJOR == 3 && Redmine::VERSION::MINOR >= 4)
+          backlogs_filters.each do |field, filter|
+            options = {:type => filter[:type], :name => filter[:name]}
+            add_available_filter(field, options)
+          end
+        else
+          @available_filters = @available_filters.merge(backlogs_filters)
+        end
       end
       
       def available_columns_with_backlogs_issue_type
