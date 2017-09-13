@@ -75,10 +75,19 @@ module Backlogs
             :type => :list_optional,
             :name => l(:field_release),
             :values => RbRelease.where(project_id: project).order('name ASC').collect { |d| [d.name, d.id.to_s]},
-            :order => 21
+            :order => 23
           }
         end
-        @available_filters = @available_filters.merge(backlogs_filters)
+
+        if (Redmine::VERSION::MAJOR == 3 && Redmine::VERSION::MINOR >= 4)
+          backlogs_filters.each do |field, filter|
+            options = {:type => filter[:type], :name => filter[:name], :values => filter[:values]}
+            add_available_filter(field, options)
+          end
+        else
+          @available_filters = @available_filters.merge(backlogs_filters)
+        end
+        @available_filters
       end
       
       def available_columns_with_backlogs_issue_type
