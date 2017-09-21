@@ -545,20 +545,25 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 
 /* In-place Story Editor */
 #backlogs_container .stories .story.editing .editors{
-  display:block;
+  display: inline-grid;
+  grid-template-columns: auto;
+  grid-template-rows: 33% 33% 34%;
+  grid-template-areas: "lefttop middle righttop righttop" "leftbottom middle rightbottom1 rightbottom2" "footer footer footer footer";
 }
+
 #backlogs_container .stories .story.editing .editors label{
   display:none;
 }
 #backlogs_container .stories .story.editing .editor{
   display: block;
   font-family:Verdana, Arial, sans-serif;
+  grid-area: righttop;
 }
 #backlogs_container .stories .story.editing .tracker_id.editor{
   display:block;
   margin:0;
-  max-width:80px;
-  float: left;
+  width: 80px;
+  grid-area: lefttop;
 }
 #backlogs_container .stories .story.editing .subject.editor{
   font-size: 11px;
@@ -567,7 +572,8 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story.editing .status_id{
   margin:0;
-  width:78px;
+  width: 70px;
+  grid-area: rightbottom1;
 }
 #backlogs_container .stories .story.editing select.story_points.editor {
   margin:0;
@@ -575,6 +581,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   height: inherit;
   width: 40px;
   overflow: visible;
+  grid-area: rightbottom2;
 }
 #backlogs_container .stories .story.editing input.story_points.editor {
   display:block;
@@ -584,6 +591,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story.editing .subject.editor {
   white-space: inherit;
+  grid-area: middle;
 }
 
 #backlogs_container .editors .editor { /* last: display editor fields. */
@@ -598,6 +606,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 #backlogs_container .stories .editing .edit-actions {
   clear: both;
   height: 28px;
+  grid-area: footer;
 }
 #backlogs_container .editing .edit-actions a {
   display: block;
@@ -631,7 +640,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 
 #backlogs_container .editors .assigned_to_id { /* last: display editor fields. */
-  width: 123px;
+  width: 110px;
 }
 
 #helpers{
@@ -656,10 +665,9 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story.editing .category_id.editor{
   display:block;
-  left:456px;
   margin:0;
-  top:4px;
-  width:60px;
+  width: 80px;
+  grid-area: leftbottom;
 }
 /* Naive but light handling of colors by user stories tracker */
 
