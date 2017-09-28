@@ -1,4 +1,3 @@
-
 #  sleep is a BAD THING(tm)
 #
 #check on the ajax request count of jQuery
@@ -7,7 +6,7 @@ def wait_for_ajax
   expect { 
     #wait until all animations are finished AND all ajax requests are finished.
     page.evaluate_script('RB.$(":animated").length') == 0 && page.evaluate_script('RB.$.active') == 0 #jQuery.ajax.active in the next release
-  }.to become_true
+  }.to become_truthy
 end
 
 # on the master backlog page drag a story
