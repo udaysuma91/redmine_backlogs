@@ -45,7 +45,7 @@
 </div>
 
 <% if @stories.present? %>
-<%= form_tag({}, {'data-cm-url' => issues_context_menu_path}) do -%>  
+<%= form_tag({}, {'data-cm-url' => issues_context_menu_path}) do -%>
   <table class="list sprint-issues">
     <caption><%= l(:label_related_issues) %></caption>
     <thead>
@@ -75,4 +75,3 @@
 <% html_title @sprint.name %>
 
 </div>
-

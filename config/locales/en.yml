@@ -289,3 +289,4 @@ en:
   issue_release_relation_force_one_product_backlog: "When an issue can be bound to multiple releases, using one product backlog is mandatory."
   rb_deleted_release: "Deleted release"
   backlogs_show_estimated_hours: "Show estimated hours on backlogs"
+  backlogs_show_velocity_based_estimate: "Show velocity based estimate"

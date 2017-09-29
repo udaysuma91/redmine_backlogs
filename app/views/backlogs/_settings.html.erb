@@ -190,6 +190,12 @@
     <%= check_box_tag("settings[use_remaining_hours]", 'enabled',
                       Backlogs.setting[:use_remaining_hours]) %>
   </p>
+
+  <p>
+    <%= label_tag("settings_show_velocity_based_estimate", l(:backlogs_show_velocity_based_estimate)) %>
+    <%= check_box_tag("settings[show_velocity_based_estimate]", 'enabled',
+                      Backlogs.setting[:show_velocity_based_estimate]) %>
+  </p>
 </fieldset>
 
 <fieldset>
