@@ -18,7 +18,7 @@
   </ul>
   <% end %>
 <% end %>
-<%= form_tag({}) do -%>
+<%= form_tag({}, {'data-cm-url' => issues_context_menu_path}) do -%>
 <%- issues.to_a.sort!{|a,b|a.position <=> b.position}
     sum_points = 0.0
 %>
@@ -47,4 +47,4 @@
   </table>
 <% end %>
 </div>
-<%= context_menu issues_context_menu_path %>
+<%= context_menu %>

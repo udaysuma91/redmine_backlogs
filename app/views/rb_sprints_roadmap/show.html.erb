@@ -7,13 +7,13 @@
 </div>
 
 <h2 class="version">
-	<div class="sprint-title"><%= @sprint.name %></div>
-	<%- if @sprint.story_points? %>
-		<div class="story_points">(<%= format_story_points(@sprint.story_points) %><%= h l(:label_points_short) %>)</div>
-	<%- end %>
-	<%- if @sprint.rbteam %>
-		<div class="team"><%= h l(:field_rbteam) %><div class="team_name"><%= h @sprint.rbteam.name %></div></div>
-	<%- end %>
+    <div class="sprint-title"><%= @sprint.name %></div>
+    <%- if @sprint.story_points? %>
+        <div class="story_points">(<%= format_story_points(@sprint.story_points) %><%= h l(:label_points_short) %>)</div>
+    <%- end %>
+    <%- if @sprint.rbteam %>
+        <div class="team"><%= h l(:field_rbteam) %><div class="team_name"><%= h @sprint.rbteam.name %></div></div>
+    <%- end %>
 </h2>
 <div id=taskboard class="taskboard"><%= link_to(l(:label_task_board), rb_taskboard_path(@sprint)) %></div>
 <div id="roadmap" class="<%= @sprint.css_classes %>">
@@ -45,9 +45,9 @@
 </div>
 
 <% if @stories.present? %>
-<%= form_tag({}) do -%>
+<%= form_tag({}, {'data-cm-url' => issues_context_menu_path}) do -%>  
   <table class="list sprint-issues">
-	<caption><%= l(:label_related_issues) %></caption>
+    <caption><%= l(:label_related_issues) %></caption>
     <thead>
       <th></th>
       <th>#</th>
@@ -67,7 +67,7 @@
     <tr><td colspan="3"></td><td><%= @sprint.sprint_points_display('') %></td></tr>
   </table>
 <% end %>
-<%= context_menu issues_context_menu_path %>
+<%= context_menu %>
 <% end %>
 </div>
 <%= call_hook :view_versions_show_bottom, :version => @sprint %>
@@ -75,3 +75,4 @@
 <% html_title @sprint.name %>
 
 </div>
+
