@@ -214,3 +214,10 @@ Redmine::Plugin.register :redmine_backlogs do
   menu :admin_menu, :rb_genericboards_admin, { :controller => :rb_genericboards_admin, :action => :index },
     :caption => :label_configure_genericboards, :if => Proc.new { Backlogs.configured? }
 end
+
+def check_redmine_version_ge(major, minor=nil)
+  return true if (Redmine::VERSION::MAJOR > major)
+  return (Redmine::VERSION::MAJOR == major) unless minor
+  return true if (Redmine::VERSION::MAJOR == major && Redmine::VERSION::MINOR >= minor)
+  return false
+end
