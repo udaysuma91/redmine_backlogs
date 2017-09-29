@@ -39,11 +39,14 @@ RB.Story = RB.Object.create(RB.Issue, RB.EditableInplace, {
   editorDisplayed: function(editor){
     var tracker = editor.find('.tracker_id.editor');
     var status = editor.find('.status_id.editor');
+    var subjectLocation = editor.find('.category_id.editor');
+    if (!subjectLocation.length)
+    	subjectLocation = tracker;
     var self = this;
 
     this.setAllowedStatuses(tracker, status);
     tracker.change(function() { self.setAllowedStatuses(tracker, status); });
-    var l = editor.children(':first').insertAfter(editor.find('.tracker_id.editor'));
+    var l = editor.children(':first').insertAfter(subjectLocation);
     editor.children(':first').insertAfter(l);
     editor.find('.subject.editor').width(this.$.find('.fff-wrapmiddle').width()-200);
     var name = editor.find('.name.editor');

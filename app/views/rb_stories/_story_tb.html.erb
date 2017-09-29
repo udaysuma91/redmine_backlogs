@@ -1,4 +1,5 @@
 <div class="model story <%= mark_scrum_status(story) %>" <%= build_inline_style(story).html_safe %> id="<%= story_html_id_or_empty(story) %>" _view="taskboard">
+  <%- show_category = User.current.backlogs_preference[:show_category] == '1' %>
   <div class="id story_tooltip_ajax">
     <div class="tooltip_text"></div>
     <%= link_to story.id, {:controller => 'issues', :action => 'show', :id => story.id}, { :target => "_blank" } %>
@@ -17,7 +18,18 @@
     <div class="t"><%= assignee_name_or_empty(story) %></div>
     <div class="v"><%= assignee_id_or_empty(story) %></div>
   </div>
-  <div class="subject editable story_field" fieldtype="textarea" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" ><%=h story.subject %></div>
+  <div class="subject">
+  <%- if show_category %>
+  <div class="editable category" fieldtype="select" fieldname="category_id" fieldlabel="<%= l(:field_category_id)%>" style="display: none;">
+    <div class="t" style="display: inline"><%= h story.category.to_s + ' ' if story.category %></div>
+    <div class="v"><%= story.category.id if story.category %></div>
+  </div>
+  <div class="start_edit category" style="display: inline">
+  <%= h story.category.to_s + ' ' if story.category %>
+  </div>
+  <%- end %>
+  <div class="subject editable story_field" fieldtype="textarea" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" style="display: inline"><%=h story.subject %></div>
+  </div>
   <%- if @project != story.project %>
     <div class="project_id">
       <span class="t"><%= h story.project %></span>

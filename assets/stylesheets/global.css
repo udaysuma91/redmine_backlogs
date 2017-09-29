@@ -96,6 +96,11 @@ body.loading #refresh{
 .editors{
   display:none;
 }
+
+.editing .editors {
+  display: block;
+}
+
 .ui-dialog .editor{
   display:block;
 }
@@ -107,6 +112,9 @@ ul.ui-sortable {
   display:none;
 }
 
+.story .category {
+	font-style: italic;
+}
 
 /* drag-drop effect: disabled dropzones are greyed out */
 .rb-sortable-disabled,

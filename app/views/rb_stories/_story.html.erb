@@ -5,17 +5,14 @@
   <%- end %>
   <%- show_assigned_to_full = User.current.backlogs_preference[:show_assigned_to_full] == '1' %>
   <%- show_assigned_to_short = User.current.backlogs_preference[:show_assigned_to_short] == '1' %>
+  <%- show_category = User.current.backlogs_preference[:show_category] == '1' %>
  <div class="fff-wrapmiddle">
    <div class="story_field fff-middle">
-     <% show_category = User.current.backlogs_preference[:show_category] == '1' %>
-     <% if show_category %>
+     <%- if show_category %>
          <% category_style = story.category ? 'display: inline;' : 'display: none;' %>
          <div style="display: inline; white-space: nowrap;">
-         <div class="editable category" fieldtype="select" fieldname="category_id" style="<%= category_style %>">
-           <div class="t" style="display: inline"><%= h story.category.to_s+' - ' if story.category %></div>
-           <div class="v"><%= story.category.id if story.category %></div>
-         </div>
-     <%end%>
+           <div class="category start_edit" style="<%= category_style %>"><%= h story.category.to_s + ' ' if story.category %></div>
+     <%- end %>
      <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
      <%- if show_category %>
           </div>
@@ -58,10 +55,10 @@
     <div class="v"><%= id_or_empty(story) %></div>
   </div>
 
-  <% if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? && !show_assigned_to_full && !show_assigned_to_short %>
+  <%- if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? && !show_assigned_to_full && !show_assigned_to_short %>
     <!-- just show a color dot of the assigned to user -->
     <div title="<%= story.assigned_to %>" class="assigned_to_color bar start_edit" style="background-color: <%= story_color %>; border-color: <%= story_color %>;"></div>
-  <%end%>
+  <%- end %>
 
   <div class="project editable story_field" fieldtype="select" fieldname="project_id" fieldlabel="<%=l(:field_project_id)%>">
     <div class="t"><%= story.project %></div>
@@ -72,6 +69,14 @@
     <div class="t"><%= h tracker_name_or_empty(story) %></div>
     <div class="v"><%= tracker_id_or_empty(story) %></div>
   </div>
+  
+  <%- if show_category %>
+  <div class="editable category" fieldtype="select" fieldname="category_id" style="display: none;">
+    <div class="t" style="display: inline"><%= h story.category.to_s+' - ' if story.category %></div>
+    <div class="v"><%= story.category.id if story.category %></div>
+  </div>
+  <%- end %>
+
  </div>
  <div class="fff-right">
    <div class="assigned_to_id editable story_field" fieldtype="select" style="display: none;" fieldname="assigned_to_id" fieldlabel="<%=l(:field_assigned_to)%>">

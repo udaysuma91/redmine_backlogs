@@ -1,4 +1,4 @@
-if (Redmine::VERSION::MAJOR > 2) || (Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR >= 3)
+if check_redmine_version_ge(2, 3)
   require_dependency 'issue_query'
 else
   require_dependency 'query'
@@ -39,7 +39,7 @@ module Backlogs
         if order_options
           if order_options.include?("#{RbRelease.table_name}")
             joins = "" if joins.nil?
-            if (Redmine::VERSION::MAJOR > 2) || (Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR >= 3)
+            if check_redmine_version_ge(2, 3)
               joins += " LEFT OUTER JOIN #{RbRelease.table_name} ON #{RbRelease.table_name}.id = #{queried_table_name}.release_id"
             else
               joins += " LEFT OUTER JOIN #{RbRelease.table_name} ON #{RbRelease.table_name}.id = #{Issue.table_name}.release_id"
@@ -79,7 +79,7 @@ module Backlogs
           }
         end
 
-        if (Redmine::VERSION::MAJOR == 3 && Redmine::VERSION::MINOR >= 4)
+        if check_redmine_version_ge(3, 4)
           backlogs_filters.each do |field, filter|
             options = {:type => filter[:type], :name => filter[:name], :values => filter[:values]}
             add_available_filter(field, options)
@@ -169,7 +169,7 @@ module Backlogs
   end
 end
 
-if (Redmine::VERSION::MAJOR > 2) || (Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR >= 3)
+if check_redmine_version_ge(2, 3)
   IssueQuery.send(:include, Backlogs::IssueQueryPatch) unless IssueQuery.included_modules.include? Backlogs::IssueQueryPatch
 else
   Query.send(:include, Backlogs::IssueQueryPatch) unless Query.included_modules.include? Backlogs::IssueQueryPatch

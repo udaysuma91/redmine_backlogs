@@ -148,6 +148,16 @@
     <%- end %>
   </select>
   <%- end -%>
+  
+  <%- if User.current.backlogs_preference[:show_category] == '1' %>
+  <select class="category_id helper" id="category_id_options">
+    <option value=""></option>
+    <%- IssueCategory.where(project_id: @project.id).order("name ASC").each do |category| %>
+    <option value="<%= category.id%>"><%=h category.name %></option>
+    <%- end %>
+  </select>
+  <%- end %>
+
 
   <div id="task_template">
     <%= render :partial => "rb_tasks/task", :object => RbTask.new %>

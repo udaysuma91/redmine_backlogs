@@ -7,6 +7,10 @@
 <% if @stories_by_sprint.empty? %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
+  <%- context_menu_param = {} %>
+  <%- if check_redmine_version_ge(3, 4) %>
+  <%-   context_menu_param = {'data-cm-url' => issues_context_menu_path} %>
+  <%- end %>
   <div id="roadmap">
   <%- @stories_by_sprint.each do |sprintpair| %>
   <%- sprint = sprintpair[:sprint] %>
@@ -33,7 +37,7 @@
                :locals => {:content => sprint.wiki_page.content}) if sprint.wiki_page %>
 	<%- puts("indexstories: #{sprintpair[:stories]}") -%>
     <% if (issues = sprintpair[:stories]) && issues.size > 0 %>
-      <%= form_tag({}, {'data-cm-url' => issues_context_menu_path}) do -%>
+      <%= form_tag({}, context_menu_param) do -%>
         <table class="list related-issues">
         <caption><%= l(:label_related_issues) %></caption>
         <% issues.each do |issue| -%>
@@ -109,4 +113,8 @@
 
 <% html_title(l(:label_sprints)) %>
 
+<%- if check_redmine_version_ge(3, 4) %>
 <%= context_menu %>
+<%- else %>
+<%= context_menu issues_context_menu_path %>
+<%- end %>

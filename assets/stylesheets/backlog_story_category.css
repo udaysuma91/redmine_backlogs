@@ -1,13 +1,10 @@
-#backlogs_container .story.editing .editor.tracker_id, #backlogs_container .story.editing .editor.category_id{
+#backlogs_container .story.editing .editor.tracker_id,
+#backlogs_container .story.editing .editor.category_id {
     display: block;
     width: 100px;
     margin-left: -105px;
-    float: left;
-    position: absolute;
 }
 
-#backlogs_container .story.editing .editor.category_id{
-    top: initial;
-    left: initial;
+#backlogs_container .story.editing .editor.category_id {
     margin-top: 32px;
 }
