@@ -117,8 +117,10 @@ module BacklogsPlugin
               relation_translate = l("label_release_relationship_#{RbStory.find(issue.id).release_relationship}")
               snippet += "<div class=\"release_relationship attribute\"><div class=\"label\"><span>#{l(:field_release_relationship)}</span>:</div><div class=\"value\">#{relation_translate}</div></div>"
             end
-            vbe = issue.velocity_based_estimate
-            snippet += "<div class=\"backlogs_velocity_based_estimate attribute\"><div class=\"label\"><span>#{l(:field_velocity_based_estimate)}</span>:</div><div class=\"value\">#{vbe ? vbe.to_s + ' days' : '-'}</div></div>"
+            if Backlogs.setting[:show_velocity_based_estimate]
+              vbe = issue.velocity_based_estimate
+              snippet += "<div class=\"backlogs_velocity_based_estimate attribute\"><div class=\"label\"><span>#{l(:field_velocity_based_estimate)}</span>:</div><div class=\"value\">#{vbe ? vbe.to_s + ' days' : '-'}</div></div>"
+            end
             snippet += '</div>'
             snippet += '</div>'
           end
