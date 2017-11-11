@@ -9,4 +9,7 @@ module RbSprintsRoadmapHelper
     "/rb/taskboards/#{sprint.id}"
   end
   
+  def rb_burndown_path(sprint)
+    "/rb/burndown/#{sprint.id}"
+  end
 end
