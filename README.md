@@ -2,12 +2,15 @@ REDMINE BACKLOGS
 ----------------
 
 A Redmine plugin for agile teams. For more information,
-please visit http://www.redminebacklogs.net
+please visit https://backlogs.github.io/www/
+Note it is the original website and version info does not match.
+The current master version supports Redmine 3.3
+The development version supports Redmine 3.4
 
 PROJECT HEALTH
 --------------
 
-[![Build Status](https://secure.travis-ci.org/backlogs/redmine_backlogs.png?branch=master)](http://travis-ci.org/backlogs/redmine_backlogs)
+[![Build Status](https://secure.travis-ci.org/TheMagician1/redmine_backlogs.png?branch=master)](http://travis-ci.org/TheMagician1/redmine_backlogs)
 [![Code Climate](https://codeclimate.com/github/backlogs/redmine_backlogs.png)](https://codeclimate.com/github/backlogs/redmine_backlogs)
 [![Dependency Status](https://gemnasium.com/backlogs/redmine_backlogs.png)](https://gemnasium.com/backlogs/redmine_backlogs)
 
