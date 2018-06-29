@@ -29,7 +29,7 @@
 
 <%= form_for :issue_release, {
                  :remote => true,
-                 :url => rb_issue_release_index_url,
+                 :url => rb_issue_release_index_path,
                  :method => :post,
                  :html => {:id => 'new-issue-release-form', :style => 'display: none;' }
                } do |f| %>
