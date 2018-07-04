@@ -71,7 +71,7 @@ RB.Model = RB.Object.create({
       close: function(event, ui){ if(event.which==27) self.cancelEdit(); },
       dialogClass: self.getType().toLowerCase() + '_editor_dialog rb_editor_dialog',
       modal: true,
-      position: [pos.left - RB.$(document).scrollLeft(), pos.top - RB.$(document).scrollTop()],
+      /*position: [pos.left - RB.$(document).scrollLeft(), pos.top - RB.$(document).scrollTop()],*/
       resizable: false,
       title: (this.isNew() ? this.newDialogTitle() : this.editDialogTitle())
     });
