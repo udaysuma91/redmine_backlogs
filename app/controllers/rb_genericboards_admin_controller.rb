@@ -51,7 +51,7 @@ class RbGenericboardsAdminController < ApplicationController
     @rb_genericboard.destroy
 
     respond_to do |format|
-      format.html { redirect_to(rb_genericboards_url) }
+      format.html { redirect_to(rb_genericboards_path) }
     end
   end
 

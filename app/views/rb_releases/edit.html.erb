@@ -1,7 +1,7 @@
 <h2><%=l(:label_release)%></h2>
 
 <% rb_labelled_form_for :release, @release,
-     :url => rb_release_url(@release),
+     :url => rb_release_path(@release),
      :html => { :method => :put } do |f| %>
   <%= error_messages_for 'release' %>
   <%= render :partial => 'rb_releases/form', :locals => { :f => f } %>

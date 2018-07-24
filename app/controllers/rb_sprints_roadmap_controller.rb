@@ -86,7 +86,7 @@ class RbSprintsRoadmapController < RbApplicationController
           end
           format.js
           format.api do
-            render :action => 'show', :status => :created, :location => rb_sprint_url(@sprint)
+            render :action => 'show', :status => :created, :location => rb_sprint_path(@sprint)
           end
         end
       else

@@ -200,7 +200,7 @@ class RbGenericboardsController < RbApplicationController
       return
     end
     respond_to do |format|
-      format.html { redirect_back_or_default(project_url(@project)) }
+      format.html { redirect_back_or_default(project_path(@project)) }
     end
   end
 
