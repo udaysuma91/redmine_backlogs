@@ -2,7 +2,7 @@ module RbMasterBacklogsHelper
   unloadable
   include Redmine::I18n
 
-  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => " - High ! ", :Urgent => " - Urgent !! ", :Immediate => " - Immediate !!! "}
+  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => " - !", :Urgent => " - !!", :Immediate => " - !!!"}
 
   def backlog_html_class(backlog)
     is_sprint?(backlog) ? "sprint backlog" : "product backlog"
@@ -63,7 +63,6 @@ module RbMasterBacklogsHelper
 
   def mark_priority_to_stories(story)
     string  = RbMasterBacklogsHelper::PRIORITY_VALUES[(story.priority.name).to_sym]
-    string += "[#{story.assigned_to.firstname} #{story.assigned_to.lastname}]" if story.assigned_to.present? && string.present?
     string
   end
 end
