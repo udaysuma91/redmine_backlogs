@@ -64,7 +64,8 @@ module RbMasterBacklogsHelper
 
   def add_marker_to_stories(story)
     string = ""
-    string += " - S" if is_jss_case_id_present?(story)
+    string += " - R" if story.issue_releases.present?
+    string += string.blank? ? " - S" : "S" if is_jss_case_id_present?(story)
     string += string.blank? ? (RbMasterBacklogsHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) :(RbMasterBacklogsHelper::PRIORITY_VALUES_FOR_OTHER_MARKSER[(story.priority.name).to_sym])
     string
   end
