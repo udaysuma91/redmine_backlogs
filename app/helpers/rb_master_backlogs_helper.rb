@@ -70,7 +70,7 @@ module RbMasterBacklogsHelper
   end
 
   def is_jss_case_id_present?(story)
-    jss_case_id_field = story.custom_field_values.find{|value| value.custom_field_id ==1}
+    jss_case_id_field = story.custom_field_values.find{|value| value.custom_field.name == "JSS Case ID"}
     (jss_case_id_field.present? and jss_case_id_field.value.present?) ? true : false
   end
 end
