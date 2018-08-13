@@ -2,9 +2,6 @@ module RbMasterBacklogsHelper
   unloadable
   include Redmine::I18n
 
-  PRIORITY_VALUES_FOR_OTHER_MARKSER = { :Low => "", :Normal => "", :High => "!", :Urgent => "!!", :Immediate => "!!!"} #incase  where jss caseid present
-  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => " - !", :Urgent => " - !!", :Immediate => " - !!!"} #incase  where jss caseid blank
-
   def backlog_html_class(backlog)
     is_sprint?(backlog) ? "sprint backlog" : "product backlog"
   end
@@ -60,18 +57,5 @@ module RbMasterBacklogsHelper
 
   def stories(backlog)
     backlog[:stories] || backlog.stories
-  end
-
-  def add_marker_to_stories(story)
-    string = ""
-    string += " - R" if story.issue_releases.present?
-    string += string.blank? ? " - S" : "S" if is_jss_case_id_present?(story)
-    string += string.blank? ? (RbMasterBacklogsHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) :(RbMasterBacklogsHelper::PRIORITY_VALUES_FOR_OTHER_MARKSER[(story.priority.name).to_sym])
-    string
-  end
-
-  def is_jss_case_id_present?(story)
-    jss_case_id_field = story.custom_field_values.find{|value| value.custom_field_id ==1}
-    (jss_case_id_field.present? and jss_case_id_field.value.present?) ? true : false
   end
 end

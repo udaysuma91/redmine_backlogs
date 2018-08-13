@@ -7,6 +7,9 @@ module RbCommonHelper
   include CustomFieldsHelper
   include RbPartialsHelper
 
+  PRIORITY_VALUES_WITH_OTHER_MARKER = { :Low => "", :Normal => "", :High => "!", :Urgent => "!!", :Immediate => "!!!"} #incase  where jss caseid present
+  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => " - !", :Urgent => " - !!", :Immediate => " - !!!"} #incase  where jss caseid blank
+
   def assignee_id_or_empty(story)
     story.new_record? ? "" : story.assigned_to_id
   end
@@ -395,6 +398,19 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
 #      Redmine::Utils.relative_url_root #actionpack-3* is not???
 #    end
      '' #Rails4 yet another behavior
+  end
+
+  def add_marker_to_stories(story)
+    string = ""
+    string += " - R" if story.issue_releases.present?
+    string += string.blank? ? " - S" : "S" if is_jss_case_id_present?(story)
+    string += string.blank? ? (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) :(RbCommonHelper::PRIORITY_VALUES_WITH_OTHER_MARKER[(story.priority.name).to_sym])
+    string
+  end
+
+  def is_jss_case_id_present?(story)
+    jss_case_id_field = story.custom_field_values.find{|value| value.custom_field_id ==1}
+    (jss_case_id_field.present? and jss_case_id_field.value.present?) ? true : false
   end
 
 end

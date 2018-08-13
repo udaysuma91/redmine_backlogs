@@ -25,7 +25,7 @@
 </select>
 
 <select class="project_id helper" id="project_id_options">
-  <option value="<%= @project.id %>"><%= @project.name %></option>
+  <option value="<%= @project.id %>" selected="selected"><%= @project.name %></option>
 </select>
 
 <%if User.current.backlogs_preference[:show_category] == '1' %>
