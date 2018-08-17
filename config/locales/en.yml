@@ -290,3 +290,93 @@ en:
   rb_deleted_release: "Deleted release"
   backlogs_show_estimated_hours: "Show estimated hours on backlogs"
   backlogs_show_velocity_based_estimate: "Show velocity based estimate"
+
+
+  ######## release notes #######
+  release_notes:
+    title: "Release note"
+    title_plural: "Release notes"
+
+    release_note: "release note"
+    release_note_plural: "release notes"
+
+    mark_complete: "Release notes complete for this issue?"
+    cant_set_done_if_no_release_notes: "can't be set to %{value} unless release notes have been written"
+
+    generate: "Generate release notes"
+    generate_title: "Manage release notes for version %{version}"
+    show_closed_versions: "Show closed versions"
+
+    progress: "Release notes progress"
+    x_issues_in_total: "%{count} issues in total"
+    x_requiring_release_notes: "%{count} requiring release notes"
+    x_done: "%{count} done"
+    x_done_empty: "%{count} with empty release notes"
+    x_to_go: "%{count} to go"
+    x_not_required: "%{count} not required"
+    x_not_required_cf_none:  "%{count} : set as not required"
+    x_not_required_cf_not_defined:  "%{count} : tracker doesn't need release notes"
+    x_invalid: "%{count} : invalid '%{cf_name}'"
+    x_invalid_nil:  "%{count} : blank or NULL"
+    x_invalid_nil_all:  "all blank or NULL"
+    none_blank:  "No issues having '%{cf_name}' as blank or invalid"
+    all_done: "All done!"
+    percent_done: "%{count}% done"
+    not_started: "Not started"
+
+    no_issues_for_this_version: "No issues need release notes for this version"
+
+    some_issues_not_finished:
+      one: "There is 1 issue which still needs release notes"
+      other: "There are %{count} issues which still need release notes"
+
+    some_issues_invalid_custom_field_value:
+      one: "There is 1 issue which doesn't have a valid value for the release notes custom field"
+      other: "There are %{count} issues which don't have a valid value for the release notes custom field"
+
+    some_issues_done_with_no_release_notes:
+      one: "There is 1 issue which is marked as 'done' but doesn't have any release notes"
+      other: "There are %{count} issues which are marked as 'done' but don't have any release notes"
+
+    raw: "View raw"
+    download: "Download"
+
+    config:
+      issue_custom_field:
+        name: "Issue custom field for release notes"
+        info: "This field is used to check whether release notes for issues have been completed. It should be a list type custom field with three values; indicating that either a) the issue doesn't need release notes, b) that the issue does need release notes and doesn't have them yet, or c) that the release notes for this issue are done."
+      field_value_not_required:
+        name: "Issues which don't need release notes are"
+      field_value_todo:
+        name: "Issues which still need release notes are"
+      field_value_done:
+        name: "Issues with finished release notes are"
+
+    formats:
+      title: "Formats"
+      format: "Format"
+      new: "New format"
+      none: "No release notes formats are currently defined."
+      define_some: "Define some"
+      default_generation_format: "Default generation format"
+      preview: "Preview with a sample version"
+      attributes:
+        name: 'Name'
+        header: 'Header'
+        start: 'Start'
+        each_issue: 'Each issue'
+        end: 'End'
+      explain:
+        header: "Appears at the start of the release notes."
+        start: "Appears once, just after the header. Use for eg. a <ul> tag."
+        each_issue: "Appears once for each issue."
+        end: "Appears once at the end. Use for eg. a </ul> tag."
+      subs:
+        intro: "You can use substitutions like %{this} to display some information in the Header and Each issue fields."
+        header: "Substitutions refer to the version. Recognised values are name, date, id, and description. You can also insert the version's custom values by doing %{cf:custom_field_id}."
+        each_issue: "Substitutions refer to the issue. Recognised values are subject, release_notes, id, tracker, project and category. You can also insert the issue's custom values by doing %{cf:custom_field_id}."
+
+    errors:
+       failed_find_custom_value: "Unable to find the release notes custom value for this issue. Try setting the release notes status manually."
+       failed_save_custom_value_html: "Unable to save release notes custom value for this issue. This is probably a bug. Please <a href=https://github.com/hdgarrood/redmine_release_notes/issues/new>report</a> it."
+       failed_save_journal_entry_html: "Unable to save change in issue history. This is probably a bug. Please <a href=https://github.com/hdgarrood/redmine_release_notes/issues/new>report</a> it."
