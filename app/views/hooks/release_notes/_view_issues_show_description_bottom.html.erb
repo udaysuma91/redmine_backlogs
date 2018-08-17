@@ -1,0 +1,16 @@
+<script>
+  function toggle_release_notes() {
+    $.each(['#release-notes-display', '#release-notes-form'],
+           function(_, selector) {
+             $(selector).toggle()
+           })
+  }
+</script>
+
+<hr />
+
+<div id="release-notes">
+  <%= render :partial => 'issues/release_notes', 
+      :locals => { :release_note => release_note,
+                   :issue => issue } %>
+</div>
