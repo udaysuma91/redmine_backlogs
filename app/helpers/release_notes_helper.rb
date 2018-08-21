@@ -113,10 +113,17 @@ END
     str = "<p>"
     str << l(:label_export_to)
     str << " "
-    str << formats.map { |format|
-      link_to(format.name, generate_release_notes_path(
-        :release_notes_format => format.name))
-    }.join(' | ')
+    if params[:action] == "generate_for_release"
+      str << formats.map { |format|
+        link_to(format.name, generate_release_notes_for_release_path(
+          :release_notes_format => format.name))
+      }.join(' | ')
+    else
+      str << formats.map { |format|
+        link_to(format.name, generate_release_notes_path(
+          :release_notes_format => format.name))
+      }.join(' | ')
+    end
     str << "</p>"
     str.html_safe
   end
