@@ -92,9 +92,17 @@ class ReleaseNotesGenerator
     generate_header << "\n" << generate_release_notes
   end
 
+  def generate_for_release #to generate release on release page
+    generate_header << "\n" << generate_release_notes_for_release
+  end
+
   private
   def generate_header
-    make_substitutions(format.header, values_for_header(version))
+    if version.class == RbRelease
+    make_substitutions(format.header, values_for_header_release(version))
+    else
+      make_substitutions(format.header, values_for_header(version))
+    end
   end
 
   def generate_release_notes
@@ -145,11 +153,47 @@ class ReleaseNotesGenerator
     "cf:#{cv.custom_field_id}"
   end
 
-  # given a string containing placeholders like %{this} and a hash mapping
-  # placeholders to values, substitute placeholders for values
   def make_substitutions(string, subs)
     string.gsub(/%\{.*?\}/) do |match|
       subs[match[2..-2]] || match[2..-2]
     end
   end
+
+  # given a string containing placeholders like %{this} and a hash mapping
+  # placeholders to values, substitute placeholders for values
+
+  #logic to display release notes on release page
+  def generate_release_notes_for_release
+    str = format.start
+    str << "\n"
+    version.issues.release_notes_done.find_each do |issue|
+      str << make_substitutions(format.each_issue, values_for_issue_release(issue))
+      str << "\n"
+    end
+    str << format.end
+  end
+
+  def values_for_issue_release(issue)
+    values = {
+      "subject" => issue.subject,
+      "release_notes" => issue.release_note ? issue.release_note.text : "",
+      "tracker" => issue.tracker.name,
+      "project" => issue.project.name,
+      "category" => issue.category ? issue.category.name : "",
+      "id" => issue.id
+    }
+    values
+  end
+
+  def values_for_header_release(release)
+    values = {
+      "name" => release.name,
+      "start_date" => format_date(release.release_start_date),
+      "end_date" => format_date(release.release_start_date),
+      "id" => release.id,
+      "project_name" => release.project.name
+    }
+    values
+  end
+
 end

@@ -95,6 +95,26 @@ class ReleaseNotesController < ApplicationController
     end
   end
 
+  def generate_for_release #to display relase notes on relase page
+    # for project menu
+    @release = RbRelease.find(params[:id])
+    @project = @release.project
+
+    @format = release_notes_format_from_params
+    (render 'no_formats'; return) unless @format
+
+    # for 'Also available in'
+    @formats = ReleaseNotesFormat.select(:name).all
+    @content = ReleaseNotesGenerator.new(@release, @format).generate_for_release
+
+    if params[:raw]
+      render :text => @content, :content_type => 'text/plain'
+    elsif params[:download]
+      send_data @content, :content_type => 'text/plain',
+        :filename => "release-notes-#{@project.name}-release-#{@release.name}.txt"
+    end
+  end
+
   private
   def find_version
     @version = Version.find(params[:id])
