@@ -1,0 +1,2 @@
+module RbReleasePlanningsHelper
+end

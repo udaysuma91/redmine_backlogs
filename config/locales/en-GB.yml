@@ -150,6 +150,8 @@ en_GB:
   label_release: Release
   label_release_end_date: "field_release_start_date"
   label_release_new: "New release"
+  label_release_plan_new: "Release Planning"
+  release_planning_edit: "Edit"
   label_release_planned_velocity_end_date: "Planned velocity estimated end date"
   label_release_planning: "Release Planning"
   label_release_plural: Releases
