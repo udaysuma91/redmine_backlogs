@@ -1,0 +1,9 @@
+<h2><%=l(:label_release_plan_new)%></h2>
+
+<% rb_labelled_form_for @release_planning, :url => create_release_planing_rb_path(:project_id => @project) do |f| %>
+  <%= error_messages_for 'rb_release_plannings' %>
+  <%= render :partial => 'rb_release_plannings/form', :locals => { :f => f } %>
+  <%= submit_tag "Save" %>
+<% end %>
+
+
