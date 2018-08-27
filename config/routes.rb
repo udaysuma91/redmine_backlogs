@@ -20,8 +20,13 @@ def rb_match(object, path, hash)
 end
 
 def rb_common_routes(rb)
+  #release planning routes
+  rb_match rb, 'release_plannings/:project_id/new', :to => 'rb_release_plannings#new', :via => [:get], :as => :new_release_planing
+  rb_match rb, 'release_plannings/:project_id/create', :to => 'rb_release_plannings#create', :via => [:post], :as => :create_release_planing
+  rb_match rb, 'release_plannings/:project_id/:id/edit', :to => 'rb_release_plannings#edit', :via => [:get], :as => :edit_release_planing
+  rb_match rb, 'release_plannings/:project_id/:id/update', :to => 'rb_release_plannings#update', :via => [:put, :patch], :as => :update_release_planing
   rb_match rb, 'releases/:project_id',
-               :to => 'rb_releases#index', :via => [:get]
+               :to => 'rb_releases#index', :via => [:get], :as => :releases_path
   rb_match rb, 'release/:project_id/new', :to => 'rb_releases#new', :via => [:get]
   rb_match rb, 'release/:project_id/new', :to => 'rb_releases#create', :via => [:post]
   rb_match rb, 'release/:release_id/shapshot',
