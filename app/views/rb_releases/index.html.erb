@@ -14,7 +14,7 @@
 </div>
 <% if release_plan.present? %>
   <h2><%=release_plan.name%></h2>
-  <p><%= (release_plan.description).html_safe %></p>
+  <p> <%=textilizable release_plan.description %></p>
 <%else %>
   <h2><%=l(:label_release_planning)%></h2>
 <% end %>
