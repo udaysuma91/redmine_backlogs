@@ -4,4 +4,5 @@
   <%= error_messages_for 'rb_release_plannings' %>
   <%= render :partial => 'rb_release_plannings/form', :locals => { :f => f } %>
   <%= submit_tag "Save" %>
+  <%= link_to "Cancel", releases_path_rb_path %>
 <% end %>
