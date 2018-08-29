@@ -44,7 +44,7 @@ ApplicationHelper.module_eval do
         if object.custom_field.id == 1 && object.value.present?# && (params[:controller] == "issues" && params[:action] == "show")
           string = ""
           object.value.split(',').each_with_index do |case_id, i|
-            if case_id.include? "CAS-"
+            if case_id.starts_with?("CAS-")
               string+= "<a href='#{object.custom_field.format_store[:url_pattern]}#{case_id}' target='_blank'>#{case_id}</a>"
             else
               string += case_id
