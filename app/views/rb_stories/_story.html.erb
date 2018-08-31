@@ -1,4 +1,4 @@
-<li class="model story fff-wrapper <%= mark_if_closed(story) %> tracker<%= story ? story.tracker_id : '' %>" id="<%= story_html_id_or_empty(story) %>">
+<li class="model story fff-wrapper <%= mark_if_closed(story) %> tracker<%= story ? story.tracker_id : '' %>" id="<%= story_html_id_or_empty(story) %>" for="<%=story.story_points%>" story ="story_<%=story.id%>">
   <%- story_color = nil %>
   <%- if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? && story.assigned_to.is_a?(User) %>
 	  <%- story_color = story.assigned_to.backlogs_preference[:task_color] %>
