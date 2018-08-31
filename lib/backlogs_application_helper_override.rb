@@ -43,13 +43,13 @@ ApplicationHelper.module_eval do
       if object.custom_field
         if object.custom_field.id == 1 && object.value.present?# && (params[:controller] == "issues" && params[:action] == "show")
           string = ""
-          object.value.split(',').each_with_index do |case_id, i|
+          object.value.split(/[\s,]+/).each_with_index do |case_id, i|
             if case_id.starts_with?("CAS-")
               string+= "<a href='#{object.custom_field.format_store[:url_pattern]}#{case_id}' target='_blank'>#{case_id}</a>"
             else
               string += case_id
             end
-            string+= ", " unless i == object.value.split(',').size - 1
+            string+= ", " unless i == object.value.split(/[\s,]+/).size - 1
           end
           f = string.html_safe
         else
