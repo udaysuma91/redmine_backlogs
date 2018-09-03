@@ -7,8 +7,7 @@ module RbCommonHelper
   include CustomFieldsHelper
   include RbPartialsHelper
 
-  PRIORITY_VALUES_WITH_OTHER_MARKER = { :Low => "", :Normal => "", :High => "!", :Urgent => "!!", :Immediate => "!!!"} #incase  where jss caseid present
-  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => " - !", :Urgent => " - !!", :Immediate => " - !!!"} #incase  where jss caseid blank
+  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => "!", :Urgent => "!!", :Immediate => "!!!"}
 
   def assignee_id_or_empty(story)
     story.new_record? ? "" : story.assigned_to_id
@@ -402,9 +401,9 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
 
   def add_marker_to_stories(story)
     string = ""
-    string += " - R" if story.issue_releases.present?
-    string += string.blank? ? " - S" : "S" if is_jss_case_id_present?(story)
-    string += string.blank? ? (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) :(RbCommonHelper::PRIORITY_VALUES_WITH_OTHER_MARKER[(story.priority.name).to_sym])
+    string += "R" if story.issue_releases.present?
+    string += "S" if is_jss_case_id_present?(story)
+    string += (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym])
     string
   end
 

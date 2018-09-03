@@ -13,8 +13,11 @@
          <div style="display: inline; white-space: nowrap;">
            <div class="category start_edit" style="<%= category_style %>"><%= h story.category.to_s + ' ' if story.category %></div>
      <%- end %>
+    <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
     <%- story_mark = add_marker_to_stories(story)%>
-    <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span><span><%=story_mark %></span>
+    <%- if !story_mark.blank? %>
+    <span class="story_mark start_edit">- <%=story_mark %></span>
+    <%- end %>
      <%- if show_category %>
           </div>
      <%- end %>
