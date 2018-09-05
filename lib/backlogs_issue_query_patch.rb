@@ -107,7 +107,7 @@ module Backlogs
         @available_columns << QueryColumn.new(:velocity_based_estimate)
         @available_columns << QueryColumn.new(:position, :sortable => "#{Issue.table_name}.position")
         @available_columns << QueryColumn.new(:remaining_hours, :sortable => "#{Issue.table_name}.remaining_hours")
-        @available_columns << QueryColumn.new(:releases, :sortable => "#{RbRelease.table_name}.name")
+        @available_columns << QueryColumn.new(:releases, :sortable => "#{RbIssueRelease.table_name}.release_id", :groupable => true)
         @available_columns << QueryColumn.new(:release, :sortable => "#{RbRelease.table_name}.name", :groupable => true) if Backlogs.setting[:issue_release_relation] != 'multiple'
         @available_columns << QueryColumn.new(:backlogs_issue_type)
       end
