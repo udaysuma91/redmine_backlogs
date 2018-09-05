@@ -35,12 +35,16 @@ module Backlogs
     module InstanceMethods
       def joins_for_order_statement_with_backlogs_issue_type(order_options)
         joins = joins_for_order_statement_without_backlogs_issue_type(order_options)
-        return joins if Backlogs.setting[:issue_release_relation] == 'multiple'
+        if order_options.include? "releases"
+
+        else
+          return joins if Backlogs.setting[:issue_release_relation] == 'multiple'
+        end
         if order_options
           if order_options.include?("#{RbRelease.table_name}")
             joins = "" if joins.nil?
             if check_redmine_version_ge(2, 3)
-              joins += " LEFT OUTER JOIN #{RbRelease.table_name} ON #{RbRelease.table_name}.id = #{queried_table_name}.release_id"
+              joins += " LEFT OUTER JOIN #{RbIssueRelease.table_name} ON #{RbIssueRelease.table_name}.issue_id = #{queried_table_name}.id"
             else
               joins += " LEFT OUTER JOIN #{RbRelease.table_name} ON #{RbRelease.table_name}.id = #{Issue.table_name}.release_id"
             end
@@ -65,8 +69,11 @@ module Backlogs
                                         :order => 21 },
             "story_points" => { :type => :float,
                                 :name => l(:field_story_points),
-                                :order => 22 }
-                             }
+                                :order => 22 },
+            "releases" => { :type => :list_optional,
+                            :name => l(:field_releases),
+                            :values => lambda { project.releases.collect{|s| [s.name, s.id.to_s] } } }
+                          }
         end
 
         #TODO: Make search for Release in multirelease possible
@@ -100,13 +107,16 @@ module Backlogs
         @available_columns << QueryColumn.new(:velocity_based_estimate)
         @available_columns << QueryColumn.new(:position, :sortable => "#{Issue.table_name}.position")
         @available_columns << QueryColumn.new(:remaining_hours, :sortable => "#{Issue.table_name}.remaining_hours")
+        @available_columns << QueryColumn.new(:releases, :sortable => "#{RbRelease.table_name}.name")
         @available_columns << QueryColumn.new(:release, :sortable => "#{RbRelease.table_name}.name", :groupable => true) if Backlogs.setting[:issue_release_relation] != 'multiple'
         @available_columns << QueryColumn.new(:backlogs_issue_type)
       end
 
       def sql_for_field_with_backlogs_issue_type(field, operator, value, db_table, db_field, is_custom_filter=false)
-        return sql_for_field_without_backlogs_issue_type(field, operator, value, db_table, db_field, is_custom_filter) unless field == "backlogs_issue_type"
-
+        if field == "releases"
+        else
+          return sql_for_field_without_backlogs_issue_type(field, operator, value, db_table, db_field, is_custom_filter) unless field == "backlogs_issue_type"
+        end
         db_table = Issue.table_name
 
         sql = []
@@ -136,13 +146,31 @@ module Backlogs
                               ))"
           end
         }
-
         case operator
           when "="
-            sql = sql.join(" or ")
-
+            if field == "releases"
+              issue_ids = RbIssueRelease.where("release_id IN(?)", value).pluck(:issue_id).uniq
+              sql = queried_class.send(:sanitize_sql_for_conditions, ["#{db_table}.id IN (?)", issue_ids])
+            else
+              sql = sql.join(" or ")
+            end
           when "!"
-            sql = "not (" + sql.join(" or ") + ")"
+            if field == "releases"
+              issue_ids = RbIssueRelease.where("release_id IN(?)", value).pluck(:issue_id).uniq
+              sql = queried_class.send(:sanitize_sql_for_conditions, ["#{db_table}.id NOT IN (?)", issue_ids])
+            else
+              sql = "not (" + sql.join(" or ") + ")"
+            end
+          when "!*"
+            if field == "releases"
+              issue_ids = RbIssueRelease.all.pluck(:issue_id).uniq
+              sql = queried_class.send(:sanitize_sql_for_conditions, ["#{db_table}.id NOT IN (?)", issue_ids])
+            end
+          when "*"
+            if field == "releases"
+              issue_ids = RbIssueRelease.all.pluck(:issue_id).uniq
+              sql = queried_class.send(:sanitize_sql_for_conditions, ["#{db_table}.id IN (?)", issue_ids])
+            end
         end
 
         return sql
