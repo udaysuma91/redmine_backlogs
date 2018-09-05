@@ -35,16 +35,12 @@ module Backlogs
     module InstanceMethods
       def joins_for_order_statement_with_backlogs_issue_type(order_options)
         joins = joins_for_order_statement_without_backlogs_issue_type(order_options)
-        if order_options.include? "releases"
-
-        else
-          return joins if Backlogs.setting[:issue_release_relation] == 'multiple'
-        end
+        return joins if Backlogs.setting[:issue_release_relation] == 'multiple'
         if order_options
           if order_options.include?("#{RbRelease.table_name}")
             joins = "" if joins.nil?
             if check_redmine_version_ge(2, 3)
-              joins += " LEFT OUTER JOIN #{RbIssueRelease.table_name} ON #{RbIssueRelease.table_name}.issue_id = #{queried_table_name}.id"
+              joins += " LEFT OUTER JOIN #{RbRelease.table_name} ON #{RbRelease.table_name}.id = #{queried_table_name}.release_id"
             else
               joins += " LEFT OUTER JOIN #{RbRelease.table_name} ON #{RbRelease.table_name}.id = #{Issue.table_name}.release_id"
             end
@@ -107,7 +103,7 @@ module Backlogs
         @available_columns << QueryColumn.new(:velocity_based_estimate)
         @available_columns << QueryColumn.new(:position, :sortable => "#{Issue.table_name}.position")
         @available_columns << QueryColumn.new(:remaining_hours, :sortable => "#{Issue.table_name}.remaining_hours")
-        @available_columns << QueryColumn.new(:releases, :sortable => "#{RbRelease.table_name}.name")
+        @available_columns << QueryColumn.new(:releases, :sortable => "#{RbIssueRelease.table_name}.release_id")
         @available_columns << QueryColumn.new(:release, :sortable => "#{RbRelease.table_name}.name", :groupable => true) if Backlogs.setting[:issue_release_relation] != 'multiple'
         @available_columns << QueryColumn.new(:backlogs_issue_type)
       end
@@ -163,12 +159,12 @@ module Backlogs
             end
           when "!*"
             if field == "releases"
-              issue_ids = RbIssueRelease.all.pluck(:issue_id).uniq
+              issue_ids = RbIssueRelease.pluck(:issue_id).uniq
               sql = queried_class.send(:sanitize_sql_for_conditions, ["#{db_table}.id NOT IN (?)", issue_ids])
             end
           when "*"
             if field == "releases"
-              issue_ids = RbIssueRelease.all.pluck(:issue_id).uniq
+              issue_ids = RbIssueRelease.pluck(:issue_id).uniq
               sql = queried_class.send(:sanitize_sql_for_conditions, ["#{db_table}.id IN (?)", issue_ids])
             end
         end
