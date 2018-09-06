@@ -7,6 +7,7 @@
     td.selected { font-weight: bold; }
     td.ok { background-color:#00FF00 }
     td.error { background-color:#FF0000 }
+    #configure-release{float:right;font-size: 14px;}
   </style>
 <%- end %>
 
@@ -91,7 +92,10 @@
 <% end %>
 <fieldset>
   <legend><%= l(:backlogs_general_settings) %></legend>
-
+    <span id ="configure-release">
+      <% release_note_plugin = Redmine::Plugin.all.find{|plugin| (plugin.id == :redmine_release_notes)} %>
+      <%= link_to(l(:release_note_configure), plugin_settings_path(release_note_plugin)) if release_note_plugin.present? %>
+    </span>
   <p>
     <%= label_tag("settings_story_trackers", l(:backlogs_story_tracker)) %>
     <%= select_tag("settings[story_trackers]", options_from_collection_for_select(Tracker.all, :id, :name, RbStory.trackers), :multiple => true) %>
