@@ -345,6 +345,29 @@ RB.Backlog = RB.Object.create({
        tracker_summary += '<b>' + t + ':</b> ' + tracker_total[t] + '<br />';
     }
     sprint_points.qtip('option', 'content.text', tracker_summary);
+    this.updateseprator();
+  },
+
+  updateseprator: function(){
+    var capacity = this.$.children().find(".capacity-point").text();
+    if (capacity > 0){
+      var totalpoint = 0.0;
+      var ularea = this.$.children('ul').children('li')
+      ularea.each(function () {
+        $(this).css('border-bottom','#AAAAAA 1px solid');
+      });
+      ularea.each(function () {
+        var storypoint = RB.$(this).data('this').getPoints()
+        var storyid = $(this).attr('story');
+        if (!(storypoint === undefined || storypoint === null || (isNaN(storypoint)))) {
+          totalpoint += parseFloat(storypoint) || 0.0
+          if(capacity < totalpoint && (totalpoint > 0.0)){
+            $( "li#"+storyid).prev().addClass("seperator-point").css('border-bottom','3px solid red');
+            return false;
+          }
+        }
+      });
+    }
   },
 
   showBurndownChart: function(event){
