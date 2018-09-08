@@ -7,3 +7,4 @@ class CreateRbReleasePlannings < ActiveRecord::Migration
     end
   end
 end
+
