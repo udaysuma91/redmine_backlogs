@@ -379,6 +379,27 @@
     <%= check_box_tag("settings[show_project_name]",'enabled',
               Backlogs.setting[:show_project_name]) %>
   </p>
+  <p>
+  	<%= label_tag("settings_show_backlog_story_markers", l(:rb_show_backlog_story_markers))%>
+    <%= check_box_tag("settings[show_backlog_story_markers]",'enabled',
+              Backlogs.setting[:show_backlog_story_markers]) %>
+  </p>
+  <p>
+  	<%= label_tag("settings_show_backlog_story_marker_release", l(:rb_show_backlog_story_marker_release))%>
+    <%= check_box_tag("settings[show_backlog_story_marker_release]",'enabled',
+              Backlogs.setting[:show_backlog_story_marker_release]) %>
+  </p>
+  <p>
+  	<%= label_tag("settings_show_backlog_story_marker_priority", l(:rb_show_backlog_story_marker_priority))%>
+    <%= check_box_tag("settings[show_backlog_story_marker_priority]",'enabled',
+              Backlogs.setting[:show_backlog_story_marker_priority]) %>
+    <em class="info"><%= l(:rb_show_backlog_story_marker_priority_explanation) %></em>
+  </p>
+  <p>
+  	<%= label_tag("settings_show_backlog_story_marker_support_id", l(:rb_show_backlog_story_marker_support))%>
+    <%= select_tag("settings[show_backlog_story_marker_support_id]", options_from_collection_for_select(IssueCustomField.all, :id, :name, Backlogs.setting[:show_backlog_story_marker_support_id]), :include_blank => true) %>
+    <em class="info"><%= l(:rb_show_backlog_story_marker_support_explanation) %></em>
+  </p>
 </fieldset>
 
 <fieldset>

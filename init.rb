@@ -82,7 +82,11 @@ Redmine::Plugin.register :redmine_backlogs do
                          :estimated_hours_per_point    => 0.0,
                          :issue_release_relation       => 'single',
                          :show_estimated_hours         => 'enabled',
-                         :show_velocity_based_estimate => 'enabled'
+                         :show_velocity_based_estimate => 'enabled',
+                         :show_backlog_story_markers           => 'enabled',
+                         :show_backlog_story_marker_release    => 'enabled',
+                         :show_backlog_story_marker_priority   => 'enabled',
+                         :show_backlog_story_marker_support_id => '0'
                        },
            :partial => 'backlogs/settings'
 

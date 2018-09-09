@@ -401,15 +401,15 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
 
   def add_marker_to_stories(story)
     string = ""
-    string += "R" if story.issue_releases.present?
-    string += "S" if is_jss_case_id_present?(story)
-    string += (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym])
+    string += "R" if Backlogs.setting[:show_backlog_story_marker_release] && story.issue_releases.present?
+    string += "S" if is_support_id_present?(story)
+    string += (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) if Backlogs.setting[:show_backlog_story_marker_priority]
     string
   end
 
-  def is_jss_case_id_present?(story)
-    jss_case_id_field = story.custom_field_values.find{|value| value.custom_field_id ==1}
-    (jss_case_id_field.present? and jss_case_id_field.value.present?) ? true : false
+  def is_support_id_present?(story)
+    support_id_field = story.custom_field_values.find{|value| value.custom_field_id == Backlogs.setting[:show_backlog_story_marker_support_id].to_i}
+    (support_id_field.present? and support_id_field.value.present?) ? true : false
   end
 
 end

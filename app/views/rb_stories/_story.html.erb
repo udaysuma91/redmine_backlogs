@@ -14,10 +14,12 @@
            <div class="category start_edit" style="<%= category_style %>"><%= h story.category.to_s + ' ' if story.category %></div>
      <%- end %>
     <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
+    <%- if Backlogs.setting[:show_backlog_story_markers] %>
     <%- story_mark = add_marker_to_stories(story)%>
     <%- if !story_mark.blank? %>
     <span class="story_mark start_edit">- <%=story_mark %></span>
     <%- end %>
+    <% end %>
      <%- if show_category %>
           </div>
      <%- end %>
