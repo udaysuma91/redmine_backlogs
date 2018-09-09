@@ -17,7 +17,7 @@
     <%- if Backlogs.setting[:show_backlog_story_markers] %>
     <%- story_mark = add_marker_to_stories(story)%>
     <%- if !story_mark.blank? %>
-    <span class="story_mark start_edit">- <%=story_mark %></span>
+    <span class="story_mark start_edit">- <%=story_mark.html_safe %></span>
     <%- end %>
     <% end %>
      <%- if show_category %>

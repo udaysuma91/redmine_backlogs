@@ -7,7 +7,12 @@ module RbCommonHelper
   include CustomFieldsHelper
   include RbPartialsHelper
 
-  PRIORITY_VALUES = { :Low => "", :Normal => "", :High => "!", :Urgent => "!!", :Immediate => "!!!"}
+  PRIORITY_VALUES = {
+     :Low => "",
+     :Normal => "",
+     :High => '<span class="fas fa-exclamation"></span>',
+     :Urgent => '<span class="fas fa-exclamation-circle"></span>',
+     :Immediate => '<span class="fas fa-exclamation-triangle"></span>'}
 
   def assignee_id_or_empty(story)
     story.new_record? ? "" : story.assigned_to_id
@@ -401,8 +406,8 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
 
   def add_marker_to_stories(story)
     string = ""
-    string += "R" if Backlogs.setting[:show_backlog_story_marker_release] && story.issue_releases.present?
-    string += "S" if is_support_id_present?(story)
+    string += '<span class="fas fa-compact-disc"></span>' if Backlogs.setting[:show_backlog_story_marker_release] && story.issue_releases.present?
+    string += '<span class="fas fa-user"></span>' if is_support_id_present?(story)
     string += (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) if Backlogs.setting[:show_backlog_story_marker_priority]
     string
   end
