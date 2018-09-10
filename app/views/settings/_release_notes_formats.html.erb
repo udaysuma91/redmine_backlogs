@@ -8,7 +8,7 @@
       <% @formats.each do |format| %>
         <tr class='<%= cycle 'odd', 'even'%>'>
           <td class='name'>
-            <%= link_to h(format.name), edit_release_notes_format_path(format) %>
+            <%= link_to h(format.name), edit_rb_release_notes_format_path(format) %>
           </td>
           <td class='buttons'>
             <%= delete_link format %>
@@ -22,5 +22,5 @@
 <% end %>
 
 <p>
-<%= link_to l('release_notes.formats.new'), new_release_notes_format_path, :class => 'icon icon-add' %>
+<%= link_to l('release_notes.formats.new'), new_rb_release_notes_format_path, :class => 'icon icon-add' %>
 </p>

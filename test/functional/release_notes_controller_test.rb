@@ -50,7 +50,7 @@ class ReleaseNotesControllerTest < ActionController::TestCase
     version = FactoryGirl.create(:version_with_release_notes)
     format = FactoryGirl.create(:release_notes_format)
 
-    Setting.stubs(:plugin_redmine_release_notes).
+    Setting.stubs(:plugin_redmine_backlogs).
       returns(:default_generation_format_id => format.id)
 
     get :generate, :id => version.id
@@ -62,7 +62,7 @@ class ReleaseNotesControllerTest < ActionController::TestCase
     version = FactoryGirl.create(:version_with_release_notes)
     format = FactoryGirl.create(:release_notes_format)
 
-    Setting.stubs(:plugin_redmine_release_notes).
+    Setting.stubs(:plugin_redmine_backlogs).
       returns(:default_generation_format_id => format.id)
 
     get :generate, :id => version.id, :release_notes_format => 'garbage'
@@ -75,7 +75,7 @@ class ReleaseNotesControllerTest < ActionController::TestCase
     format = FactoryGirl.create(:release_notes_format)
 
     # ensure the format is not retrieved from settings
-    Setting.stubs(:plugin_redmine_release_notes).
+    Setting.stubs(:plugin_redmine_backlogs).
       returns(:default_generation_format_id => 0)
 
     get :generate, :id => version.id, :release_notes_format => format.name

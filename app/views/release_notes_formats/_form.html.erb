@@ -1,6 +1,11 @@
 <%= error_messages_for @format %>
 
-<%= form_for(@format, :html => { :id => 'format-form' }) do |f| %>
+<%= form_for(@format,
+             :url => @format.persisted? ?
+               rb_release_notes_format_path(@format) :
+               rb_release_notes_formats_path,
+             :method => @format.persisted? ? :put : :post,
+             :html => {:id => 'format-form'}) do |f| %>
   <div class=splitcontentleft>
   <div class='box tabular'>
     <p>
@@ -19,7 +24,7 @@
 
   </div>
   <%= f.submit(@format.new_record? ? l(:button_create) : l(:button_save)) %>
-  <%= release_notes_preview_link preview_release_notes_format_path,
+  <%= release_notes_preview_link preview_release_notes_format_rb_path,
     'format-form', 'relnotes' %>
   </div>
 

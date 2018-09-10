@@ -33,7 +33,7 @@ module RedmineReleaseNotes
 
         def plugin_redmine_release_notes
           if request.get?
-            @settings = Setting.plugin_redmine_release_notes
+            @settings = Setting.plugin_redmine_backlogs
             @formats = ReleaseNotesFormat.all
             render 'plugin_release_notes'
           elsif request.post?

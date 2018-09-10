@@ -20,7 +20,7 @@ class ReleaseNote < ActiveRecord::Base
 
   # the trackers which can have release notes
   def self.enabled_tracker_ids
-    (Setting.plugin_redmine_release_notes[:enabled_tracker_ids] || []).
+    (Setting.plugin_redmine_backlogs[:enabled_tracker_ids] || []).
       map(&:to_i).
       reject {|i| i == 0}
   end
