@@ -28,38 +28,38 @@ module RedmineReleaseNotes
         def self.release_notes_required
           #done_value = Setting.plugin_redmine_release_notes[:field_value_done]
           #todo_value = Setting.plugin_redmine_release_notes[:field_value_todo]
-          done_value = Setting.plugin_redmine_release_notes["field_value_done"]
-          todo_value = Setting.plugin_redmine_release_notes["field_value_todo"]
+          done_value = Setting.plugin_redmine_backlogs["field_value_done"]
+          todo_value = Setting.plugin_redmine_backlogs["field_value_todo"]
           joins_release_notes.
             where('custom_values.value' => [done_value, todo_value])
         end
 
         # issues which still need release notes
         def self.release_notes_todo
-          todo_value = Setting.plugin_redmine_release_notes["field_value_todo"]
+          todo_value = Setting.plugin_redmine_backlogs["field_value_todo"]
           joins_release_notes.
             where('custom_values.value' => todo_value)
         end
 
         # issues whose release notes are done
         def self.release_notes_done
-          done_value = Setting.plugin_redmine_release_notes["field_value_done"]
+          done_value = Setting.plugin_redmine_backlogs["field_value_done"]
           joins_release_notes.
             where('custom_values.value' => done_value)
         end
 
         # issues whose release notes are done
         def self.release_notes_none
-          none_value = Setting.plugin_redmine_release_notes["field_value_not_required"]
+          none_value = Setting.plugin_redmine_backlogs["field_value_not_required"]
           joins_release_notes.
             where('custom_values.value' => none_value)
         end
 
         # issues whose release notes are invalid
         def self.release_notes_invalid
-          todo_value = Setting.plugin_redmine_release_notes["field_value_todo"]
-          done_value = Setting.plugin_redmine_release_notes["field_value_done"]
-          none_value = Setting.plugin_redmine_release_notes["field_value_not_required"] 
+          todo_value = Setting.plugin_redmine_backlogs["field_value_todo"]
+          done_value = Setting.plugin_redmine_backlogs["field_value_done"]
+          none_value = Setting.plugin_redmine_backlogs["field_value_not_required"]
 
           joins_release_notes.
             where('custom_values.value not in (?)', [done_value, todo_value,none_value])
@@ -71,8 +71,8 @@ module RedmineReleaseNotes
 
         # issues where CF is set to 'none' OR for which custom field is not defined
         def self.release_notes_not_required
-          cf_id = Setting.plugin_redmine_release_notes["issue_custom_field_id"].to_i
-          none_value = Setting.plugin_redmine_release_notes["field_value_not_required"]
+          cf_id = Setting.plugin_redmine_backlogs["issue_custom_field_id"].to_i
+          none_value = Setting.plugin_redmine_backlogs["field_value_not_required"]
 
           conditions = "( custom_values.custom_field_id = #{cf_id}"
           conditions << " AND custom_values.value = '#{connection.quote_string(none_value)}' )"
@@ -103,8 +103,8 @@ module RedmineReleaseNotes
         # can this issue have release notes?
         # true if the issue has the configured custom field for release notes
         def eligible_for_release_notes?
-          #cf_id = Setting.plugin_redmine_release_notes[:issue_custom_field_id].to_i
-          cf_id = Setting.plugin_redmine_release_notes["issue_custom_field_id"].to_i
+          #cf_id = Setting.plugin_redmine_backlogs[:issue_custom_field_id].to_i
+          cf_id = Setting.plugin_redmine_backlogs["issue_custom_field_id"].to_i
           available_custom_fields.include?(CustomField.find(cf_id))
         rescue ActiveRecord::RecordNotFound
           false
@@ -112,7 +112,7 @@ module RedmineReleaseNotes
 
         def release_notes_done?
            cf = release_notes_custom_value
-           done_value = Setting.plugin_redmine_release_notes["field_value_done"]
+           done_value = Setting.plugin_redmine_backlogs["field_value_done"]
            cf.value == done_value unless cf.nil?
         rescue ActiveRecord::RecordNotFound
            false
@@ -121,22 +121,22 @@ module RedmineReleaseNotes
         # returns the CustomValue which describes the release notes status for
         # this issue
         def release_notes_custom_value
-          #cf_id = Setting.plugin_redmine_release_notes[:issue_custom_field_id].to_i
-          cf_id = Setting.plugin_redmine_release_notes["issue_custom_field_id"].to_i
+          #cf_id = Setting.plugin_redmine_backlogs[:issue_custom_field_id].to_i
+          cf_id = Setting.plugin_redmine_backlogs["issue_custom_field_id"].to_i
           custom_values.find_by_custom_field_id(cf_id)
         end
 
         private
         def self.joins_release_notes
           custom_field_id = Setting.
-            plugin_redmine_release_notes["issue_custom_field_id"]
+            plugin_redmine_backlogs["issue_custom_field_id"]
           joins(:custom_values).
             where('custom_values.custom_field_id' => custom_field_id)
         end
 
 	def self.no_cf_defined_condition
           cf_id = Setting.
-            plugin_redmine_release_notes["issue_custom_field_id"].to_i
+            plugin_redmine_backlogs["issue_custom_field_id"].to_i
 
           conditions_b = "NOT EXISTS ("
           conditions_b << "SELECT 1 FROM custom_values"

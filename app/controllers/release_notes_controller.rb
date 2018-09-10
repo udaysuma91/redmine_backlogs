@@ -129,8 +129,8 @@ class ReleaseNotesController < ApplicationController
   end
 
   def update_custom_field(completed)
-    #new_value = Setting.plugin_redmine_release_notes.fetch(completed ? :field_value_done : :field_value_todo)
-    new_value = Setting.plugin_redmine_release_notes.fetch(completed ? "field_value_done" : "field_value_todo") 
+    #new_value = Setting.plugin_redmine_backlogs.fetch(completed ? :field_value_done : :field_value_todo)
+    new_value = Setting.plugin_redmine_backlogs.fetch(completed ? "field_value_done" : "field_value_todo")
     custom_value = @issue.release_notes_custom_value
 
     # TODO: Maybe it would be better to just go ahead and create one, instead
@@ -170,7 +170,7 @@ class ReleaseNotesController < ApplicationController
     end
 
     if format.nil?
-      id = Setting.plugin_redmine_release_notes[:default_generation_format_id]
+      id = Setting.plugin_redmine_backlogs[:default_generation_format_id]
       # dont raise RecordNotFound
       format = ReleaseNotesFormat.find_by_id(id)
     end

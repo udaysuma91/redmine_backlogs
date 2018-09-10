@@ -17,6 +17,7 @@
 class ReleaseNotesFormatsController < ApplicationController
   layout 'admin'
   before_filter :require_admin
+  before_filter :find_backlog_plugin, :only => [:create, :update, :destroy]
 
   def new
     @format = ReleaseNotesFormat.new
@@ -27,7 +28,8 @@ class ReleaseNotesFormatsController < ApplicationController
     @format = ReleaseNotesFormat.new(params[:release_notes_format])
     if @format.save
       flash[:notice] = l(:notice_successful_create)
-      redirect_to release_notes_formats_tab_path
+      redirect_to plugin_settings_path(@backlog_plugin)
+      #redirect_to release_notes_formats_tab_path
     else
       render 'new'
     end
@@ -43,7 +45,7 @@ class ReleaseNotesFormatsController < ApplicationController
     @format = ReleaseNotesFormat.find(params[:id])
     if @format.update_attributes(params[:release_notes_format])
       flash[:notice] = l(:notice_successful_update)
-      redirect_to release_notes_formats_tab_path
+      redirect_to plugin_settings_path(@backlog_plugin)
     else
       render 'edit'
     end
@@ -54,7 +56,7 @@ class ReleaseNotesFormatsController < ApplicationController
     @format = ReleaseNotesFormat.find(params[:id])
     @format.destroy
     flash[:notice] = l(:notice_successful_delete)
-    redirect_to release_notes_formats_tab_path
+    redirect_to plugin_settings_path(@backlog_plugin)
   end
 
   # we only expect this with :format => :js
@@ -65,4 +67,9 @@ class ReleaseNotesFormatsController < ApplicationController
     @text = ReleaseNotesGenerator.new(version, format).generate
     render :text => @text
   end
+
+  def find_backlog_plugin
+    @backlog_plugin = Redmine::Plugin.all.find{|plugin| (plugin.id == :redmine_backlogs)}
+  end
+
 end

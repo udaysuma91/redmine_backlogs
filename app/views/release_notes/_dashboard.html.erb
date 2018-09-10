@@ -1,6 +1,6 @@
 <% stats = version.release_notes_stats %>
-<% cf_none_value =  Setting.plugin_redmine_release_notes[:field_value_not_required] %>
-<% cf_name = CustomField.find_by_id(Setting.plugin_redmine_release_notes["issue_custom_field_id"]).name %> 
+<% cf_none_value =  Setting.plugin_redmine_backlogs[:field_value_not_required] %>
+<% cf_name = CustomField.find_by_id(Setting.plugin_redmine_backlogs["issue_custom_field_id"]).name %>
 
 <fieldset id="release-notes-completion">
   <legend><%= l('release_notes.progress') %></legend>
@@ -42,7 +42,7 @@
 	:locals =>{:version => version, :stats => stats} %></td></tr>
 
     <%# #5 Generate Release notes %>
-    <tr><th class="summary"><%= link_to t('release_notes.generate'), generate_release_notes_path(version) %></td></tr>
+    <tr><th class="summary"><%= link_to t('release_notes.generate'), generate_release_notes_rb_path(version) %></td></tr>
  </tbody>
 </table>
 </fieldset>

@@ -8,7 +8,7 @@ class IssuePatchTest < ActiveSupport::TestCase
   test 'should only be eligible for release notes when project and tracker are setup' do
     # create a tracker which is enabled for release notes
     enabled_tracker = FactoryGirl.create(:tracker)
-    Setting.stubs(:plugin_redmine_release_notes).
+    Setting.stubs(:plugin_redmine_backlogs).
       returns({:enabled_tracker_ids => [enabled_tracker.id]})
     # create a project which is enabled for release notes
     enabled_project = FactoryGirl.create(:project_with_release_notes,

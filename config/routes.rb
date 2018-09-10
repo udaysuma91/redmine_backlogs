@@ -127,6 +127,22 @@ def rb_common_routes(rb)
   rb_match rb, 'projects/:project_id/genericboards/:genericboard_id/update/:id',
           :to => 'rb_genericboards#update', :via => [:post, :put]
 
+  ###### release notes ##############
+  rb_match rb, '/releases/:id/generate_release_notes',
+          :to => 'release_notes#generate_for_release', :via => [:get],
+          :as => :generate_release_notes_for_release
+
+  rb_match rb, '/versions/:id/generate_release_notes',
+          :to => 'release_notes#generate', :via => [:get],
+          :as => :generate_release_notes
+
+  rb_match rb, 'release_notes_formats/preview',
+          :to => 'release_notes_formats#preview', :via => [:patch],
+          :as => :preview_release_notes_format
+
+  rb_match rb, '/projects/:project_id/release_notes',
+          :to => 'release_notes#index', :via => [:get],
+          :as => :release_notes_overview
 end
 
 if Rails::VERSION::MAJOR < 3
@@ -166,6 +182,10 @@ else
   resources :sprint, :controller => :rb_sprints_roadmap, :only => [:show, :destroy, :edit, :update], param: :sprint_id
   
   resources :task, :except => :index, :controller => :rb_tasks
+  # release notes
+  resources :release_notes, :controller => :release_notes, :only => [:create, :update, :destroy]
+  resources :release_notes_formats, :controller => :release_notes_formats, :except => [:index, :show]
+  #
   rb_match rb, 'tasks/:story_id', :to => 'rb_tasks#index', :via => [:get]
 
   rb_match rb, 'taskboards/:sprint_id',
@@ -173,31 +193,4 @@ else
   rb_match rb, 'projects/:project_id/taskboard',
             :to => 'rb_taskboards#current', :via => [:get]
   end
-  #release note plugins routes
-  get '/projects/:project_id/release_notes',
-    :to => 'release_notes#index',
-    :as => :release_notes_overview
-
-  resources :release_notes,
-    :only => [:create, :update, :destroy]
-
-  get "/versions/:id/generate_release_notes",
-    :to => "release_notes#generate",
-    :as => :generate_release_notes
-
-  get "/releases/:id/generate_release_notes",
-    :to => "release_notes#generate_for_release",
-    :as => :generate_release_notes_for_release
-
-
-  patch 'release_notes_formats/preview',
-    :to => 'release_notes_formats#preview',
-    :as => :preview_release_notes_format
-
-  resources :release_notes_formats,
-    :except => [:index, :show]
-
-  get 'settings/plugin/redmine_release_notes?tab=formats',
-    :to => 'settings#plugin',
-    :as => :release_notes_formats_tab
 end

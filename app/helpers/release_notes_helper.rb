@@ -47,7 +47,7 @@ module ReleaseNotesHelper
   def add_release_notes_custom_field_filters(opts, release_notes_value)
     orig_opts = opts.dup
 
-    settings = Setting.plugin_redmine_release_notes
+    settings = Setting.plugin_redmine_backlogs
     custom_field_id = settings[:issue_custom_field_id].to_i
     custom_field = CustomField.find(custom_field_id)
 
@@ -81,7 +81,7 @@ END
   def add_non_eligible_tracker_filters(opts)
     orig_opts = opts.dup
 
-    settings = Setting.plugin_redmine_release_notes
+    settings = Setting.plugin_redmine_backlogs
     custom_field_id = settings[:issue_custom_field_id].to_i
     custom_field = CustomField.find(custom_field_id)
 
@@ -115,12 +115,12 @@ END
     str << " "
     if params[:action] == "generate_for_release"
       str << formats.map { |format|
-        link_to(format.name, generate_release_notes_for_release_path(
+        link_to(format.name, generate_release_notes_for_release_rb_path(
           :release_notes_format => format.name))
       }.join(' | ')
     else
       str << formats.map { |format|
-        link_to(format.name, generate_release_notes_path(
+        link_to(format.name, generate_release_notes_rb_path(
           :release_notes_format => format.name))
       }.join(' | ')
     end
