@@ -174,7 +174,7 @@ See RB.Taskboard.initialize()
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
   border:2px solid #FFFFFF;
-  background-color:#FF8800;
+  background-color: #FF8800;
   color:#FFFFFF;
   position:absolute;
   padding:1em;
@@ -187,7 +187,7 @@ See RB.Taskboard.initialize()
   -webkit-border-radius:10px 10px 10px 10px;
   border-radius:10px 10px 10px 10px;
   border:2px solid #FFFFFF;
-  background-color:#008800;
+  background-color: #008800;
   color:#FFFFFF;
   position:absolute;
   padding:.4em;
@@ -200,7 +200,7 @@ See RB.Taskboard.initialize()
   -webkit-border-radius:10px 10px 10px 10px;
   border-radius:10px 10px 10px 10px;
   border:2px solid #FFFFFF;
-  background-color:#00DD00;
+  background-color: #5FFFFF;
   position:absolute;
   padding:.4em;
   bottom:-5px;
@@ -314,7 +314,7 @@ See RB.Taskboard.initialize()
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
   border:2px solid #FFFFFF;
-  background-color:#0000ee;
+  background-color: #0000ee;
   bottom:10px;
   color:#FFFFFF;
   font-size:9px;
@@ -335,7 +335,7 @@ See RB.Taskboard.initialize()
   -webkit-border-radius:15px 15px 15px 15px;
   border-radius:15px 15px 15px 15px;
   border:2px solid #FFFFFF;
-  background-color:#EE0000;
+  background-color: #EE0000;
   bottom:-5px;
   color:#FFFFFF;
   font-size:9px;

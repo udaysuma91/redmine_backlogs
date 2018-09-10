@@ -304,7 +304,6 @@ en:
   title_marker_release: "Connected to a release"
   title_marker_support: "Related to a support case"
 
-
   ######## release notes #######
   release_notes:
     title: "Release note"
@@ -391,5 +390,5 @@ en:
 
     errors:
        failed_find_custom_value: "Unable to find the release notes custom value for this issue. Try setting the release notes status manually."
-       failed_save_custom_value_html: "Unable to save release notes custom value for this issue. This is probably a bug. Please <a href=https://github.com/hdgarrood/redmine_release_notes/issues/new>report</a> it."
-       failed_save_journal_entry_html: "Unable to save change in issue history. This is probably a bug. Please <a href=https://github.com/hdgarrood/redmine_release_notes/issues/new>report</a> it."
+       failed_save_custom_value_html: "Unable to save release notes custom value for this issue. This is probably a bug."
+       failed_save_journal_entry_html: "Unable to save change in issue history. This is probably a bug."

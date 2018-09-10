@@ -288,3 +288,92 @@ nl:
   rb_show_backlog_story_marker_support_explanation: "Wanneer het geselecteerde veld een waarde heeft, wordt deze indicator getoond."
   title_marker_release: "Verbonden aan een release"
   title_marker_support: "Gerelateerd aan een support case"
+
+  ######## release notes #######
+  release_notes:
+    title: "Release note"
+    title_plural: "Release notes"
+
+    release_note: "release note"
+    release_note_plural: "release notes"
+
+    mark_complete: "Release notes volledig voor deze story?"
+    cant_set_done_if_no_release_notes: "kan niet op %{value} worden gezet tenzij er release notes geschreven zijn"
+
+    generate: "Genereer release notes"
+    generate_title: "Beheer release notes voor sprint %{version}"
+    show_closed_versions: "Toon gesloten sprints"
+
+    progress: "Release notes voortgang"
+    x_issues_in_total: "totaal %{count} stories"
+    x_requiring_release_notes: "%{count} hebben release notes nodig"
+    x_done: "%{count} afgerond"
+    x_done_empty: "%{count} afgerond zonder release notes"
+    x_to_go: "%{count} te gaan"
+    x_not_required: "%{count} niet nodig"
+    x_not_required_cf_none:  "%{count} : gezet op niet nodig"
+    x_not_required_cf_not_defined:  "%{count} : tracker heeft geen release notes"
+    x_invalid: "%{count} : ongeldig '%{cf_name}'"
+    x_invalid_nil:  "%{count} : leeg of NULL"
+    x_invalid_nil_all:  "allen leeg of NULL"
+    none_blank:  "Geen stories met '%{cf_name}' zijn leeg of ongeldig"
+    all_done: "Allen verwerkt!"
+    percent_done: "%{count}% verwerkt"
+    not_started: "Niet begonnen"
+
+    no_issues_for_this_version: "Geen release notes benodigd voor stories van deze sprint"
+
+    some_issues_not_finished:
+      one: "Er is nog 1 story die nog een release note mist"
+      other: "Er zijn nog %{count} stories die nog een release note missen"
+
+    some_issues_invalid_custom_field_value:
+      one: "Er is nog 1 story die geen geldige waarde heeft voor het release note custom field"
+      other: "Er zijn nog %{count} stories die geen geldige waarde hebben voor het release note custom field"
+
+    some_issues_done_with_no_release_notes:
+      one: "Er is 1 story die als 'klaar' gemarkeerd is, maar geen release note heeft"
+      other: "Er zijn %{count} stories die als 'klaar' gemarkeerd zijn, maar geen release notes hebben"
+
+    raw: "Bekijk zonder opmaak"
+    download: "Download"
+
+    config:
+      issue_custom_field:
+        name: "Issue custom field voor release notes"
+        info: "Dit veld wordt gebruikt om te valideren of the release notes afgerond zijn. Het moet een 'list type' custom field zijn met drie waarden; welke aangeven a) dat het issue geen release notes heeft, b) dat het issue release notes nodig heeft en deze nog niet ingevuld zijn, of c) dat de release notes afgerond zijn."
+      field_value_not_required:
+        name: "Issues die geen release notes nodig hebben zijn"
+      field_value_todo:
+        name: "Issues die nog release notes nodig hebben zijn"
+      field_value_done:
+        name: "Issues met afgeronde release notes zijn"
+
+    formats:
+      title: "Formaten"
+      format: "Formaat"
+      new: "Nieuw formaat"
+      none: "Momenteel geen release notes formaten gedefinieerd."
+      define_some: "Definieer iets"
+      default_generation_format: "Standaard generatie formaat"
+      preview: "Voorbeeld met een voorbeeld versie"
+      attributes:
+        name: 'Naam'
+        header: 'Kop'
+        start: 'Start'
+        each_issue: 'Elk issue'
+        end: 'Einde'
+      explain:
+        header: "Komt aan het begin van de release notes."
+        start: "Komt een keer voor, na de kop. Gebruik bijv. een <ul> tag."
+        each_issue: "Wordt voor elk issue gebruikt."
+        end: "Komt een keer voor aan het eind. Gebruik bijv. een </ul> tag."
+      subs:
+        intro: "U kunt vervangingen zoals %{this} om informatie in de Kop en Elk issue veld te kunnen tonen."
+        header: "Vervangingen met waarden uit de version. Recognised values are name, date, id, and description. You can also insert the version's custom values by doing %{cf:custom_field_id}."
+        each_issue: "Vervangingen met waarden uit de story. Recognised values are subject, release_notes, id, tracker, project and category. You can also insert the issue's custom values by doing %{cf:custom_field_id}."
+
+    errors:
+       failed_find_custom_value: "Kan de release notes custom value voor deze story niet vinden. Probeer de release notes status handmatig in te stellen."
+       failed_save_custom_value_html: "Kan de release notes custom value niet opslaan."
+       failed_save_journal_entry_html: "Kan de wijziging niet in de story geschiedenis opslaan."
