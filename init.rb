@@ -56,10 +56,11 @@ end
 
 
 Redmine::Plugin.register :redmine_backlogs do
-  name 'Redmine Backlogs Fork'
-  author "friflaj, Mark Maglana, John Yani, mikoto20000, Frank Blendinger, Bo Hansen, stevel, Patrick Atamaniuk, TheMagician1"
-  description 'A plugin for agile teams'
+  name 'Redmine Backlogs Fork with Release Notes'
+  author "friflaj, Mark Maglana, John Yani, mikoto20000, Frank Blendinger, Bo Hansen, stevel, Patrick Atamaniuk, TheMagician1, Harry Garrood (Release Notes)"
+  description 'A plugin for agile teams including generating releasenotes (merged version 1.3.1)'
   version 'v2.0.2'
+  url 'https://github.com/TheMagician1/redmine_backlogs'
 
   settings :default => {
                          :epic_trackers                => nil,
@@ -85,11 +86,11 @@ Redmine::Plugin.register :redmine_backlogs do
                          :issue_release_relation       => 'single',
                          :show_estimated_hours         => 'enabled',
                          :show_velocity_based_estimate => 'enabled',
-                         :default_generation_format_id => 1,  # release note settings
-                         :issue_custom_field_id => 0,         # release note settings
-                         :field_value_todo => 'Todo',         # release note settings
-                         :field_value_done => 'Done',         # release note settings
-                         :field_value_not_required => 'Not required'  # release note settings
+                         :default_generation_format_id => 1,              # release note settings
+                         :issue_custom_field_id        => 0,              # release note settings
+                         :field_value_todo             => 'Todo',         # release note settings
+                         :field_value_done             => 'Done',         # release note settings
+                         :field_value_not_required     => 'Not required'  # release note settings
                        },
            :partial => 'backlogs/settings'
 
