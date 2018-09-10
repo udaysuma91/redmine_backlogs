@@ -10,9 +10,9 @@ module RbCommonHelper
   PRIORITY_VALUES = {
      :Low => "",
      :Normal => "",
-     :High => '<span class="fas fa-exclamation"></span>',
-     :Urgent => '<span class="fas fa-exclamation-circle"></span>',
-     :Immediate => '<span class="fas fa-exclamation-triangle"></span>'}
+     :High => "fa-exclamation",
+     :Urgent => "fa-exclamation-circle",
+     :Immediate => "fa-exclamation-triangle"}
 
   def assignee_id_or_empty(story)
     story.new_record? ? "" : story.assigned_to_id
@@ -406,9 +406,13 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
 
   def add_marker_to_stories(story)
     string = ""
-    string += '<span class="fas fa-compact-disc"></span>' if Backlogs.setting[:show_backlog_story_marker_release] && story.issue_releases.present?
-    string += '<span class="fas fa-user"></span>' if is_support_id_present?(story)
-    string += (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) if Backlogs.setting[:show_backlog_story_marker_priority]
+    string += '<span class="fas fa-compact-disc release_marker" title="' +
+              l(:title_marker_release) + '"></span>' if Backlogs.setting[:show_backlog_story_marker_release] && story.issue_releases.present?
+    string += '<span class="fas fa-user support_marker" title="' +
+              l(:title_marker_support) + '"></span>' if is_support_id_present?(story)
+    string += '<span class="fas ' + (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) +
+              ' priority_marker ' + story.priority.name + '" title="' +
+              story.priority.name + '"></span>' if Backlogs.setting[:show_backlog_story_marker_priority] && !(RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]).blank?
     string
   end
 

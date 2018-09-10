@@ -446,6 +446,14 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   float: left;
   width:34px;
 }
+
+#backlogs_container .stories .story .priority_marker {
+  color: red;	
+}
+#backlogs_container .stories .story .release_marker,
+#backlogs_container .stories .story .support_marker {
+  color: #777777
+}
 /*meta in story*/
 #backlogs_container .stories .story .fixed_version_id,
 #backlogs_container .stories .story .higher_item_id,

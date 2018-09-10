@@ -195,6 +195,24 @@ See RB.Taskboard.initialize()
   right:35px;
 }
 
+.story .story_mark{
+  -moz-border-radius:10px 10px 10px 10px;
+  -webkit-border-radius:10px 10px 10px 10px;
+  border-radius:10px 10px 10px 10px;
+  border:2px solid #FFFFFF;
+  background-color:#00DD00;
+  position:absolute;
+  padding:.4em;
+  bottom:-5px;
+}
+.story .priority_marker {
+  color: red;	
+}
+.story .release_marker,
+.story .support_marker {
+  color: #777777
+}
+
 .story .story_points_text:empty{
   display:none;
 }

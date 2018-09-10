@@ -51,6 +51,13 @@
         <%- end %>
       </div>
   <%- end %>
+  <%- if Backlogs.setting[:show_backlog_story_markers_sprint_taskboard] %>
+    <%- story_mark = add_marker_to_stories(story)%>
+    <%- if !story_mark.blank? %>
+      <div class="story_mark start_edit"><%=story_mark.html_safe %></div>
+    <%- end %>
+  <%- end %>
+
   <div class="meta">
     <div class="story_id"><%= id_or_empty(story) %></div>
     <div class="project_id"><%= story.project_id %></div>

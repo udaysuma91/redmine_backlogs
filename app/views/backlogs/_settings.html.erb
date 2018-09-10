@@ -379,10 +379,19 @@
     <%= check_box_tag("settings[show_project_name]",'enabled',
               Backlogs.setting[:show_project_name]) %>
   </p>
+</fieldset>
+
+<fieldset>
+  <legend><%= l(:backlogs_show_story_markers) %></legend>
   <p>
-  	<%= label_tag("settings_show_backlog_story_markers", l(:rb_show_backlog_story_markers))%>
-    <%= check_box_tag("settings[show_backlog_story_markers]",'enabled',
-              Backlogs.setting[:show_backlog_story_markers]) %>
+  	<%= label_tag("settings_show_backlog_story_markers_master_backlog", l(:rb_show_backlog_story_markers_master_backlog))%>
+    <%= check_box_tag("settings[show_backlog_story_markers_master_backlog]",'enabled',
+              Backlogs.setting[:show_backlog_story_markers_master_backlog]) %>
+  </p>
+  <p>
+  	<%= label_tag("settings_show_backlog_story_markers_sprint_taskboard", l(:rb_show_backlog_story_markers_sprint_taskboard))%>
+    <%= check_box_tag("settings[show_backlog_story_markers_sprint_taskboard]",'enabled',
+              Backlogs.setting[:show_backlog_story_markers_sprint_taskboard]) %>
   </p>
   <p>
   	<%= label_tag("settings_show_backlog_story_marker_release", l(:rb_show_backlog_story_marker_release))%>
