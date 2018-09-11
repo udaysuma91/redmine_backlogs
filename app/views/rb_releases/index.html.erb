@@ -24,7 +24,7 @@
   <thead>
   <th>#</th>
   <th><%= l(:field_release_ids) %></th>
-  <th><%= l(:field_release_start_date) %></th>
+<!--   <th><%= l(:field_release_start_date) %></th> -->
   <th><%= l(:field_release_end_date) %></th>
   </thead>
   <% reset_cycle %>
@@ -32,8 +32,8 @@
       <tr class="<%= cycle('odd', 'even') %>">
         <td class="id"><%= link_to r.id, {:controller => "rb_releases", :action => "show", :release_id => r.id} %></td>
         <td class="subject"><%= release_link_or_empty(r) %></td>
-        <td class="start_date"><%= r.release_start_date   %></td>
-        <td class="due_date"><%= r.release_end_date     %></td>
+        <!-- <td class="start_date"><%= r.release_start_date   %></td> -->
+        <td class="due_date"><%= r.release_end_date.blank? ? "(not set)" : r.release_end_date %></td>
       </tr>
   <% end %>
 </table>

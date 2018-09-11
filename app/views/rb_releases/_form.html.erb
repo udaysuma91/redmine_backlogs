@@ -11,12 +11,12 @@
     <%= f.select :status, RbRelease::RELEASE_STATUSES.collect {|s| [l("version_status_#{s}"), s]} %>
   </p>
   
+<!--   <p> -->
+    <%#= f.date_field :release_start_date, :required => true %>
+    <%#= calendar_for('release_release_start_date') %>
+<!--   </p> -->
   <p>
-    <%= f.date_field :release_start_date, :required => true %>
-    <%= calendar_for('release_release_start_date') %>
-  </p>
-  <p>
-    <%= f.date_field :release_end_date, :required => true %>
+    <%= f.date_field :release_end_date%>
     <%= calendar_for('release_release_end_date') %>
   </p>
   <p>
