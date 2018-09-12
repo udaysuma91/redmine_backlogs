@@ -350,20 +350,27 @@ RB.Backlog = RB.Object.create({
 
   updateseprator: function(){
     var capacity = this.$.children().find(".capacity-point").text();
+    var ularea = this.$.children('ul').children('li')
+    ularea.each(function () {
+      $(this).css('border-bottom','#AAAAAA 1px solid');
+      $(this).css('border-top','');
+    });
     if (capacity > 0){
       var totalpoint = 0.0;
-      var ularea = this.$.children('ul').children('li')
-      ularea.each(function () {
-        $(this).css('border-bottom','#AAAAAA 1px solid');
-      });
       ularea.each(function () {
         var storypoint = RB.$(this).data('this').getPoints()
         var storyid = $(this).attr('story');
         if (!(storypoint === undefined || storypoint === null || (isNaN(storypoint)))) {
           totalpoint += parseFloat(storypoint) || 0.0
           if(capacity < totalpoint && (totalpoint > 0.0)){
-            $( "li#"+storyid).prev().addClass("seperator-point").css('border-bottom','3px solid red');
-            return false;
+            if($("li#"+storyid).prev().length == 0) {
+              $( "li#"+storyid).addClass("seperator-point").css('border-top','3px solid red');
+              return false;
+            }
+            else{
+              $( "li#"+storyid).prev().addClass("seperator-point").css('border-bottom','3px solid red');
+              return false;
+            }
           }
         }
       });
