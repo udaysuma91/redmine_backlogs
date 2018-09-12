@@ -49,9 +49,8 @@ class ReleaseNotesControllerTest < ActionController::TestCase
   test "should use default format when not specified" do
     version = FactoryGirl.create(:version_with_release_notes)
     format = FactoryGirl.create(:release_notes_format)
-
     Setting.stubs(:plugin_redmine_backlogs).
-      returns(:default_generation_format_id => format.id)
+    returns(:default_generation_format_id => format.id)
 
     get :generate, :id => version.id
     assert_template 'generate'
@@ -61,9 +60,8 @@ class ReleaseNotesControllerTest < ActionController::TestCase
   test "should use default format when specified format not found" do
     version = FactoryGirl.create(:version_with_release_notes)
     format = FactoryGirl.create(:release_notes_format)
-
     Setting.stubs(:plugin_redmine_backlogs).
-      returns(:default_generation_format_id => format.id)
+    returns(:default_generation_format_id => format.id)
 
     get :generate, :id => version.id, :release_notes_format => 'garbage'
     assert_template 'generate'
@@ -76,7 +74,7 @@ class ReleaseNotesControllerTest < ActionController::TestCase
 
     # ensure the format is not retrieved from settings
     Setting.stubs(:plugin_redmine_backlogs).
-      returns(:default_generation_format_id => 0)
+    returns(:default_generation_format_id => 0)
 
     get :generate, :id => version.id, :release_notes_format => format.name
     assert_template 'generate'
