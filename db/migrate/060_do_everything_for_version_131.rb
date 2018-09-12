@@ -17,20 +17,20 @@
 class DoEverythingForVersion131 < ActiveRecord::Migration
   def up
     # remove release_notes.status => now a custom field
-    #remove_column :release_notes, :status
+    remove_column :release_notes, :status
 
     # don't allow nulls in release_notes.text
-    #change_table :release_notes do |t|
-    #  t.change :text, :text, :null => false
-    #end
+    change_table :release_notes do |t|
+      t.change :text, :text, :null => false
+    end
   end
 
   def down
-    #change_table :release_notes do |t|
-    #  t.column :status,   :string,  :limit => 12
-    #  t.change :text,     :text,    :limit => nil,  :null => true
-    #end
+    change_table :release_notes do |t|
+      t.column :status,   :string,  :limit => 12
+      t.change :text,     :text,    :limit => nil,  :null => true
+    end
 
-    #add_index :release_notes, :status
+    add_index :release_notes, :status
   end
 end

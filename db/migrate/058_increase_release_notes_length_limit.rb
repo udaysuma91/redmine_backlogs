@@ -16,10 +16,10 @@
 
 class IncreaseReleaseNotesLengthLimit < ActiveRecord::Migration
   def up
-    #change_column :release_notes, :text, :string, :limit => 2000
+    change_column :release_notes, :text, :string, :limit => 2000
   end
 
   def down
-    #change_column :release_notes, :text, :string, :limit => 254
+    change_column :release_notes, :text, :string, :limit => 254
   end
 end

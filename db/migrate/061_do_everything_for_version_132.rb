@@ -16,9 +16,9 @@
 
 class DoEverythingForVersion132 < ActiveRecord::Migration
   def up
-    #change_column :release_notes_formats, :header, :text, limit: 16.megabytes - 1
-    #change_column :release_notes_formats, :each_issue, :text, limit: 16.megabytes - 1
-    #change_column :release_notes_formats, :start, :text, limit: 16.megabytes - 1
-    #change_column :release_notes_formats, :end, :text, limit: 16.megabytes - 1
+    change_column :release_notes_formats, :header, :text, limit: 16.megabytes - 1
+    change_column :release_notes_formats, :each_issue, :text, limit: 16.megabytes - 1
+    change_column :release_notes_formats, :start, :text, limit: 16.megabytes - 1
+    change_column :release_notes_formats, :end, :text, limit: 16.megabytes - 1
   end
 end

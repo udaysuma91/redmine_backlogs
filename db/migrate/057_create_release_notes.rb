@@ -16,13 +16,13 @@
 
 class CreateReleaseNotes < ActiveRecord::Migration
   def up
-  	#create_table :release_notes do |t|
-    #	t.column :issue_id, :integer
-    #	t.column :text, :string
-  	#end
+  	create_table :release_notes do |t|
+    	t.column :issue_id, :integer
+    	t.column :text, :string
+  	end
   end
 
   def down
-    #drop_table :release_notes
+    drop_table :release_notes
   end
 end
