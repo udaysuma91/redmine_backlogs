@@ -193,31 +193,4 @@ else
   rb_match rb, 'projects/:project_id/taskboard',
             :to => 'rb_taskboards#current', :via => [:get]
   end
-  #release note plugins routes
-  get '/projects/:project_id/release_notes',
-    :to => 'release_notes#index',
-    :as => :release_notes_overview
-
-  resources :release_notes,
-    :only => [:create, :update, :destroy]
-
-  get "/versions/:id/generate_release_notes",
-    :to => "release_notes#generate",
-    :as => :generate_release_notes
-
-  get "/releases/:id/generate_release_notes",
-    :to => "release_notes#generate_for_release",
-    :as => :generate_release_notes_for_release
-
-
-  patch 'release_notes_formats/preview',
-    :to => 'release_notes_formats#preview',
-    :as => :preview_release_notes_format
-
-  resources :release_notes_formats,
-    :except => [:index, :show]
-
-  get 'settings/plugin/redmine_release_notes?tab=formats',
-    :to => 'settings#plugin',
-    :as => :release_notes_formats_tab
 end
