@@ -24,7 +24,7 @@
 
   <div class="fff-right">
     <div class="story_points start_edit">
-	    <div class="points editable" style="<%= "display:none;" unless sprint.story_points? %>" fieldname="story_points" fieldlabel="<%=l(:story_points)%>">
+	    <div class="points editable capacity-point" style="<%= "display:none;" unless sprint.story_points? %>" fieldname="story_points" fieldlabel="<%=l(:story_points)%>">
 	    	<%= h format_story_points(sprint.story_points, "0") %>
 	    </div>
 		<%- if sprint.story_points? %>
