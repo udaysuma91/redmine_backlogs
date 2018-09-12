@@ -1,0 +1,38 @@
+<% if @formats.any? %>
+  <%= form_tag(:action => :plugin) do %>
+    <div class="box tabular settings">
+      <p>
+      <%= label_tag 'settings[default_generation_format_id]',
+        t('release_notes.formats.default_generation_format') %>
+      <%= select_tag 'settings[default_generation_format_id]',
+        options_from_collection_for_select(@formats, 'id', 'name',
+                                @settings[:default_generation_format_id].to_i) %>
+      </p>
+      <p>
+      <%= label_tag 'settings_issue_custom_field_id',
+        t('release_notes.config.issue_custom_field.name') %>
+        <%= select_tag 'settings[issue_custom_field_id]',
+          options_for_release_notes_issue_custom_field(@settings),
+          :include_blank => true %>
+        <em class="info">
+          <%= t('release_notes.config.issue_custom_field.info') %>
+        </em>
+      </p>
+      <% %w(not_required todo done).each do |x| %>
+        <p>
+        <%= label_tag "settings[field_value_#{x}]",
+          t("release_notes.config.field_value_#{x}.name") %>
+          <%= select_tag "settings[field_value_#{x}]",
+            options_for_release_notes_issue_custom_field_value(@settings,
+                                          @settings["field_value_#{x}"]) %>
+        </p>
+    <% end %>
+    </div>
+    <%= submit_tag t(:button_save) %>
+  <% end %>
+<% else %>
+  <div class="nodata">
+    <%= t('release_notes.formats.none') %><br>
+    <%= link_to t('release_notes.formats.define_some'), new_rb_release_notes_format_path %>
+  </div>
+<% end %>

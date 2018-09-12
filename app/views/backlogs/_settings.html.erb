@@ -7,6 +7,7 @@
     td.selected { font-weight: bold; }
     td.ok { background-color:#00FF00 }
     td.error { background-color:#FF0000 }
+    #configure-release{float:right;font-size: 14px;}
   </style>
 <%- end %>
 
@@ -91,7 +92,10 @@
 <% end %>
 <fieldset>
   <legend><%= l(:backlogs_general_settings) %></legend>
-
+    <span id ="configure-release">
+      <% release_note_plugin = Redmine::Plugin.all.find{|plugin| (plugin.id == :redmine_release_notes)} %>
+      <%= link_to(l(:release_note_configure), plugin_settings_path(release_note_plugin)) if release_note_plugin.present? %>
+    </span>
   <p>
     <%= label_tag("settings_story_trackers", l(:backlogs_story_tracker)) %>
     <%= select_tag("settings[story_trackers]", options_from_collection_for_select(Tracker.all, :id, :name, RbStory.trackers), :multiple => true) %>
@@ -470,4 +474,75 @@
   </p>
   <% end %>
 
+</fieldset>
+
+<fieldset>
+  <legend><%= l(:release_notes_settings) %></legend>
+  <% @formats = ReleaseNotesFormat.select(:name).all %>
+  <% if @formats.any? %>
+    <p>
+    <%= label_tag 'settings[default_generation_format_id]',
+      t('release_notes.formats.default_generation_format') %>
+
+    <%= select_tag 'settings[default_generation_format_id]',
+      options_from_collection_for_select(@formats, 'id', 'name',
+                              @settings[:default_generation_format_id].to_i) %>
+    </p>
+    <p>
+    <%= label_tag 'settings_issue_custom_field_id',
+      t('release_notes.config.issue_custom_field.name') %>
+      <%= select_tag 'settings[issue_custom_field_id]',
+        options_for_release_notes_issue_custom_field(@settings),
+        :include_blank => true %>
+      <em class="info">
+        <%= t('release_notes.config.issue_custom_field.info') %>
+      </em>
+    </p>
+    <% %w(not_required todo done).each do |x| %>
+      <p>
+      <%= label_tag "settings[field_value_#{x}]",
+        t("release_notes.config.field_value_#{x}.name") %>
+        <%= select_tag "settings[field_value_#{x}]",
+          options_for_release_notes_issue_custom_field_value(@settings,
+                                        @settings["field_value_#{x}"]) %>
+      </p>
+    <% end %>
+  <% else %>
+    <div class="nodata">
+      <%= t('release_notes.formats.none') %><br>
+      <%= link_to t('release_notes.formats.define_some'), new_rb_release_notes_format_path %>
+    </div>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend><%= l(:release_notes_format) %></legend>
+  <% if @formats.any? %>
+    <table class='list'>
+      <thead>
+        <th><%= t('release_notes.formats.title') %></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @formats = ReleaseNotesFormat.all %>
+        <% @formats.each do |format| %>
+          <tr class='<%= cycle 'odd', 'even'%>'>
+            <td class='name'>
+              <%= link_to h(format.name), edit_rb_release_notes_format_path(format.id) %>
+            </td>
+            <td class='buttons'>
+              <%#= delete_link format %>
+              <%= link_to l('button_delete'), rb_release_notes_format_path(format),data: {:confirm => 'Are you sure?'}, :method => :delete , :class => 'icon icon-del' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class='nodata'><%= l(:label_no_data) %></div>
+  <% end %>
+
+  <p>
+  <%= link_to l('release_notes.formats.new'), new_rb_release_notes_format_path, :class => 'icon icon-add' %>
+  </p>
 </fieldset>

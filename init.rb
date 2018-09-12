@@ -1,4 +1,5 @@
 require 'redmine'
+require 'redmine_release_notes/hooks'
 
 if Rails::VERSION::MAJOR < 3
   require 'dispatcher'
@@ -38,6 +39,7 @@ object_to_prepare.to_prepare do
   require_dependency 'backlogs_my_controller_patch'
   require_dependency 'backlogs_issues_controller_patch'
   require_dependency 'backlogs_projects_helper_patch'
+  require_dependency 'backlogs_application_helper_patch'
 
   require_dependency 'backlogs_hooks'
 
@@ -54,10 +56,11 @@ end
 
 
 Redmine::Plugin.register :redmine_backlogs do
-  name 'Redmine Backlogs Fork'
-  author "friflaj, Mark Maglana, John Yani, mikoto20000, Frank Blendinger, Bo Hansen, stevel, Patrick Atamaniuk, TheMagician1"
-  description 'A plugin for agile teams'
+  name 'Redmine Backlogs Fork with Release Notes'
+  author "friflaj, Mark Maglana, John Yani, mikoto20000, Frank Blendinger, Bo Hansen, stevel, Patrick Atamaniuk, TheMagician1, Harry Garrood (Release Notes)"
+  description 'A plugin for agile teams including generating releasenotes (merged version 1.3.1)'
   version 'v2.0.2'
+  url 'https://github.com/TheMagician1/redmine_backlogs'
 
   settings :default => {
                          :epic_trackers                => nil,
@@ -83,6 +86,11 @@ Redmine::Plugin.register :redmine_backlogs do
                          :issue_release_relation       => 'single',
                          :show_estimated_hours         => 'enabled',
                          :show_velocity_based_estimate => 'enabled',
+                         :default_generation_format_id => 1,              # release note settings
+                         :issue_custom_field_id        => 0,              # release note settings
+                         :field_value_todo             => 'Todo',         # release note settings
+                         :field_value_done             => 'Done',         # release note settings
+                         :field_value_not_required     => 'Not required', # release note settings
                          :show_backlog_story_markers_master_backlog   => 'enabled',
                          :show_backlog_story_markers_sprint_taskboard => 'enabled',
                          :show_backlog_story_marker_release           => 'enabled',
@@ -188,8 +196,14 @@ Redmine::Plugin.register :redmine_backlogs do
 
     permission :subscribe_to_calendars,  { :rb_calendars  => :ical }
     permission :view_scrum_statistics,   { :rb_all_projects => :statistics }
+
   end
 
+  project_module :release_notes do
+    permission :release_notes,
+      { :release_notes => [:index, :new, :generate] },
+      :public => true
+  end
   # http://www.redmine.org/boards/3/topics/16587
   delete_menu_item :project_menu, :roadmap
   menu :project_menu, :roadmap, { :controller => 'versions', :action => 'index' }, :after => :activity, :param => :project_id,
@@ -226,4 +240,30 @@ def check_redmine_version_ge(major, minor=nil)
   return (Redmine::VERSION::MAJOR == major) unless minor
   return true if (Redmine::VERSION::MAJOR == major && Redmine::VERSION::MINOR >= minor)
   return false
+end
+################################################################# redmine release notes ######################
+# Copyright (C) 2012-2013 Harry Garrood
+# This file is a part of redmine_release_notes.
+
+# redmine_release_notes is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+
+# redmine_release_notes is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+
+# You should have received a copy of the GNU General Public License along with
+# redmine_release_notes. If not, see <http://www.gnu.org/licenses/>.
+
+
+ActionDispatch::Callbacks.to_prepare do
+  # Patches to the Redmine core.
+  patched_classes = %w(issue issues_controller settings_controller version)
+  patched_classes.each do |core_class|
+    require_dependency core_class
+    "RedmineReleaseNotes::#{core_class.camelize}Patch".constantize.perform
+  end
 end

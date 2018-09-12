@@ -1,0 +1,43 @@
+<div class="contextual">
+    <% if release_note.persisted? %>
+        <%= link_to_function l(:button_edit), 'toggle_release_notes()' %> |
+        <%= link_to l(:button_delete), rb_release_note_path(release_note),
+        :method => :delete, :confirm => l(:text_are_you_sure) %>
+    <% else %>
+        <%= link_to_function l(:button_add), 'toggle_release_notes()' %>
+    <% end %>
+</div>
+
+<div id="release-notes-display">
+  <p>
+  <strong><%= t('release_notes.title_plural') %></strong>
+  </p>
+  <% if release_note.text %>
+    <div class="wiki">
+    <p><%= h(release_note.text).gsub(/(\r\n|\r|\n)/, "<br>").html_safe %></p>
+    </div>
+  <% end %>
+</div>
+
+<%= form_for(release_note,
+             :remote => true,
+             :url => release_note.persisted? ?
+               rb_release_note_path(release_note) :
+               rb_release_notes_path,
+             :method => release_note.persisted? ? :put : :post,
+             :html => {:id => 'release-notes-form', :style => 'display: none;'}) do |f| %>
+  <p><strong><%= t('release_notes.title_plural') %></strong></p>
+  <div style='margin: 10px 10px 0px 10px;'>
+    <%= error_messages_for release_note %>
+    <%= f.hidden_field 'issue_id', :value => issue.id %>
+    <%= f.text_area 'text', :rows => 5,
+      :class => 'wiki-edit',
+      :no_label => true %>
+      <br />
+      <%= check_box_tag 'mark_completed', 1, issue.release_notes_done? %>
+      <%= label_tag 'mark_completed', t('release_notes.mark_complete') %>
+      <br />
+      <%= f.submit t(:button_submit), :onclick => "$('#release_notes>.flash.error').remove(); return true;" %>
+      <%= link_to_function t(:button_cancel), 'toggle_release_notes()' %>
+  </div>
+<% end %>
