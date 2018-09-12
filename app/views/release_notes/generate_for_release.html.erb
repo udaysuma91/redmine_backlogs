@@ -1,0 +1,16 @@
+<% html_title l('release_notes.generate_title_release', :release => @release.name) %>
+
+<%= render :partial => 'warnings_release_page',
+  :locals => { :release => @release, :project => @project } %>
+
+<div style="width:100%;">
+<h2><%= l('release_notes.generate_title_release', :release => @release.name) %></h2>
+<p>
+<%= link_to l('release_notes.raw'), :raw => "true",
+  :release_notes_format => params[:release_notes_format] %> | 
+<%= link_to l('release_notes.download'), :download => "true",
+  :release_notes_format => params[:release_notes_format] %>
+</p>
+<%= render_other_formats(@formats) %>
+
+<%= render :partial => 'generated_release_notes' %>

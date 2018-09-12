@@ -378,4 +378,55 @@ class RbRelease < ActiveRecord::Base
     end #if project.nil?
   end
 
+  # below methods used to add release notes functionality on relase page
+  def release_notes_percent_completion(release)
+    required_count  = release.issues.release_notes_required.count
+    if required_count > 0
+      done_count = release.issues.release_notes_done.count
+      100 * done_count / required_count
+    else
+      0
+    end
+  end
+
+  def release_notes_stats_release
+    fixed_issues = (self.issues)
+    stats = Hash.new
+          stats[:required]     = fixed_issues.release_notes_required.count
+          stats[:done]         = fixed_issues.release_notes_done.count
+          stats[:done_empty]   = fixed_issues.done_but_release_notes_nil.count
+          stats[:todo]         = fixed_issues.release_notes_todo.count
+          stats[:not_required] = fixed_issues.release_notes_not_required.count
+          stats[:none]         = fixed_issues.release_notes_none.count
+          stats[:no_cf]        = fixed_issues.release_notes_no_cf_defined.count
+          stats[:invalid]      = fixed_issues.release_notes_invalid.count
+          stats[:nil]          = fixed_issues.release_notes_custom_value_nil.count
+          stats[:total]        = issues_count
+          stats[:completion]   = release_notes_percent_completion(self)
+
+    stats
+  end
+
+  # Returns assigned issues count
+  def issues_count
+    load_issue_counts
+    @issue_count
+  end
+  private
+
+  def load_issue_counts
+    unless @issue_count
+      @open_issues_count = 0
+      @closed_issues_count = 0
+      self.issues.group(:status).count.each do |status, count|
+        if status.is_closed?
+          @closed_issues_count += count
+        else
+          @open_issues_count += count
+        end
+      end
+      @issue_count = @open_issues_count + @closed_issues_count
+    end
+  end
+
 end
