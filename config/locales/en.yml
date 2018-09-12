@@ -304,6 +304,7 @@ en:
   title_marker_release: "Connected to a release"
   title_marker_support: "Related to a support case"
 
+
   ######## release notes #######
   release_notes:
     title: "Release note"

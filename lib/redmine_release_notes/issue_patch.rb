@@ -60,7 +60,6 @@ module RedmineReleaseNotes
           todo_value = Setting.plugin_redmine_backlogs["field_value_todo"]
           done_value = Setting.plugin_redmine_backlogs["field_value_done"]
           none_value = Setting.plugin_redmine_backlogs["field_value_not_required"]
-
           joins_release_notes.
             where('custom_values.value not in (?)', [done_value, todo_value,none_value])
         end
