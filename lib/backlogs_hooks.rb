@@ -308,13 +308,13 @@ module BacklogsPlugin
       def view_versions_show_bottom(context={ })
         begin
           version = context[:version]
-          project = version.project
+          project = context[:release].present? ? (context[:release].project) : (version.project)
 
           return '' unless Backlogs.configured?(project)
 
           snippet = ''
 
-          if User.current.allowed_to?(:edit_wiki_pages, project)
+          if User.current.allowed_to?(:edit_wiki_pages, project) and context[:release].blank?
             snippet += '<span id="edit_wiki_page_action">'
             snippet += link_to l(:button_edit_wiki),
                       url_for_prefix_in_hooks + url_for({:controller => 'rb_wikis', :action => 'edit', :sprint_id => version.id }),

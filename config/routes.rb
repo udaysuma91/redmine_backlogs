@@ -200,6 +200,11 @@ else
     :to => "release_notes#generate",
     :as => :generate_release_notes
 
+  get "/releases/:id/generate_release_notes",
+    :to => "release_notes#generate_for_release",
+    :as => :generate_release_notes_for_release
+
+
   patch 'release_notes_formats/preview',
     :to => 'release_notes_formats#preview',
     :as => :preview_release_notes_format
