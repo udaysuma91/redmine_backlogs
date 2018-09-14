@@ -1,6 +1,7 @@
 <% stats = @release.release_notes_stats_release %>
 <% cf_none_value =  Setting.plugin_redmine_backlogs[:field_value_not_required] %>
 <% cf_name = CustomField.find_by_id(Setting.plugin_redmine_backlogs["issue_custom_field_id"]).name %>
+<% issues = @release.issues %>
 
 <fieldset id="release-notes-completion">
   <legend><%= l('release_notes.progress') %></legend>
@@ -23,7 +24,7 @@
 		'toggle_release_notes_div("release-notes-details-required")', :class => "summary" %></td></tr>
     <tr><td>
       <%= render :partial => 'release_notes/dashboard_list_required',
-	:locals => {:stats => stats} %></td></tr>
+	:locals => {:stats => stats, :issues => issues} %></td></tr>
 
     <%# #3 Not requiring release notes %>
     <tr><td>
@@ -31,7 +32,7 @@
 		'toggle_release_notes_div("release-notes-details-not-required")', :class => "summary" %></td></tr>
     <tr><td>
       <%= render :partial => 'release_notes/dashboard_list_not_required',
-	:locals =>{:stats => stats} %></td></tr>
+	:locals =>{:stats => stats, :issues => issues} %></td></tr>
 	
     <%# #4 error %>
     <tr><td>
@@ -39,7 +40,7 @@
 		'toggle_release_notes_div("release-notes-details-error")', :class => "summary error-text"  %></td></tr>
     <tr><td>
       <%= render :partial => 'release_notes/dashboard_list_error',
-	:locals =>{:stats => stats} %></td></tr>
+	:locals =>{:stats => stats, :issues => issues} %></td></tr>
 
     <%# #5 Generate Release notes %>
     <tr><th class="summary"><%= link_to t('release_notes.generate'), generate_release_notes_for_release_rb_path(@release) %></td></tr>
