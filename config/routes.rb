@@ -137,7 +137,7 @@ def rb_common_routes(rb)
           :as => :generate_release_notes
 
   rb_match rb, 'release_notes_formats/preview',
-          :to => 'release_notes_formats#preview', :via => [:patch],
+          :to => 'release_notes_formats#preview', :via => [:patch, :put],
           :as => :preview_release_notes_format
 
   rb_match rb, '/projects/:project_id/release_notes',
