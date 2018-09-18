@@ -180,6 +180,8 @@ class RbStory < RbGeneric
     trackers = []
     if has_settings_table
       trackers = Backlogs.setting[tracker_setting]
+      trackers << Backlogs.setting[:default_epic_tracker] unless trackers.blank? || trackers.include?(Backlogs.setting[:default_epic_tracker])
+      trackers
       trackers = [] if trackers.blank?
     end
 
