@@ -1,7 +1,6 @@
 QueriesHelper.module_eval do
-  # Original generates a link to a version
-  # Now generate a link to a sprint
-  def column_content(column, item) # override queires helper method
+  # Show linked releases
+  def column_content(column, item) # override queries helper method
     value = column.value_object(item)
     if column.name == :releases
       releases = RbIssueRelease.where(issue_id: item.id).pluck(:release_id)
