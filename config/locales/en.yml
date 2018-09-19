@@ -175,8 +175,10 @@ en:
   label_release_multiview: "Release multiview"
   label_release_multiview_new: "New release multiview"
   label_release_new: "New release"
+  label_release_plan_new: "Release Planning"
   label_release_planned_velocity_end_date: "Planned velocity estimated end date"
   label_release_planning: "Release Planning"
+  release_planning_edit: "Edit"
   label_release_plural: Releases
   label_release_relationship_added: Added
   label_release_relationship_auto: Auto
@@ -318,6 +320,8 @@ en:
     generate: "Generate release notes"
     generate_title: "Manage release notes for version %{version}"
     show_closed_versions: "Show closed versions"
+
+    generate_title_release: "Manage release notes for release %{release}"
 
     progress: "Release notes progress"
     x_issues_in_total: "%{count} issues in total"

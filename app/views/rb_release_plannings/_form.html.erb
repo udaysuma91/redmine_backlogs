@@ -1,0 +1,7 @@
+<div class="box tabular">
+  <% rb_labelled_fields_for :release_planning, @release_planning do |f| %>
+    <p><%= f.text_field :name, :required => true %></p>
+    <P><%= f.text_area :description, :cols => 100, :rows => 10, :class => 'wiki-edit' %></P>
+    <%= wikitoolbar_for 'release_planning_description' %>
+  <% end %>
+</div>

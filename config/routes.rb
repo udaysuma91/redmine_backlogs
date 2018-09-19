@@ -20,8 +20,13 @@ def rb_match(object, path, hash)
 end
 
 def rb_common_routes(rb)
+  #release planning routes
+  rb_match rb, 'release_plannings/:project_id/new', :to => 'rb_release_plannings#new', :via => [:get], :as => :new_release_planing
+  rb_match rb, 'release_plannings/:project_id/create', :to => 'rb_release_plannings#create', :via => [:post], :as => :create_release_planing
+  rb_match rb, 'release_plannings/:project_id/:id/edit', :to => 'rb_release_plannings#edit', :via => [:get], :as => :edit_release_planing
+  rb_match rb, 'release_plannings/:project_id/:id/update', :to => 'rb_release_plannings#update', :via => [:put, :patch], :as => :update_release_planing
   rb_match rb, 'releases/:project_id',
-               :to => 'rb_releases#index', :via => [:get]
+               :to => 'rb_releases#index', :via => [:get], :as => :releases_path
   rb_match rb, 'release/:project_id/new', :to => 'rb_releases#new', :via => [:get]
   rb_match rb, 'release/:project_id/new', :to => 'rb_releases#create', :via => [:post]
   rb_match rb, 'release/:release_id/shapshot',
@@ -132,7 +137,7 @@ def rb_common_routes(rb)
           :as => :generate_release_notes
 
   rb_match rb, 'release_notes_formats/preview',
-          :to => 'release_notes_formats#preview', :via => [:patch],
+          :to => 'release_notes_formats#preview', :via => [:patch, :put],
           :as => :preview_release_notes_format
 
   rb_match rb, '/projects/:project_id/release_notes',
@@ -199,6 +204,11 @@ else
   get "/versions/:id/generate_release_notes",
     :to => "release_notes#generate",
     :as => :generate_release_notes
+
+  get "/releases/:id/generate_release_notes",
+    :to => "release_notes#generate_for_release",
+    :as => :generate_release_notes_for_release
+
 
   patch 'release_notes_formats/preview',
     :to => 'release_notes_formats#preview',

@@ -6,7 +6,7 @@
      </tr>
     <% end %>
      <tr><td> 
-       <% version.fixed_issues.release_notes_invalid.each do |issue|  %>
+       <% issues.release_notes_invalid.each do |issue|  %>
          <%= link_to_issue(issue,:subject => false, :tracker => false) + ", " %>
        <% end %>
      </td></tr>

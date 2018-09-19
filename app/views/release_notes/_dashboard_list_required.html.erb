@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td>
-      <% version.fixed_issues.release_notes_done.each do |issue|  %>
+      <% issues.release_notes_done.each do |issue|  %>
       <%= link_to_issue(issue,:subject => false, :tracker => false) + ", " %>
       <% end %>
     </td>
@@ -28,7 +28,7 @@
    </tr>
    <tr>
      <td>
-       <% version.fixed_issues.release_notes_todo.each do |issue|  %>
+       <% issues.release_notes_todo.each do |issue|  %>
          <%= link_to_issue(issue,:subject => false, :tracker => false) + ", " %>
        <% end %>
      </td>

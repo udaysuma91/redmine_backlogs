@@ -1,10 +1,21 @@
-<script>
-  function toggle_release_notes_div(id) {
-	var el = document.getElementById(id);
-	el.style.display = (el.style.display == 'none' ? 'block': 'none' );
-  }
+<% if params[:controller] == "rb_releases" %>
+  <script>
+    function toggle_release_notes_div(id) {
+    var el = document.getElementById(id);
+    el.style.display = (el.style.display == 'none' ? 'block': 'none' );
+    }
 
-$( "<%= escape_javascript render :partial => 'release_notes/dashboard', :locals => {:version => version}  %> ")
-  .appendTo('#version-summary')
-</script>
+  $( "<%= escape_javascript render :partial => 'release_notes/release_dashboard', :locals => {:release => release}  %> ")
+    .appendTo('#version-summary')
+  </script>
+<% else %>
+  <script>
+    function toggle_release_notes_div(id) {
+    var el = document.getElementById(id);
+    el.style.display = (el.style.display == 'none' ? 'block': 'none' );
+    }
 
+  $( "<%= escape_javascript render :partial => 'release_notes/dashboard', :locals => {:version => version}  %> ")
+    .appendTo('#version-summary')
+  </script>
+<% end %>

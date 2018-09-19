@@ -175,6 +175,7 @@ module Backlogs
         unloadable
         has_many :releases, -> { order "#{RbRelease.table_name}.release_start_date DESC, #{RbRelease.table_name}.name DESC" }, :class_name => 'RbRelease', :inverse_of => :project, :dependent => :destroy
         has_many :releases_multiview, :class_name => 'RbReleaseMultiview', :dependent => :destroy
+        has_one :release_planning, :class_name => 'RbReleasePlanning'
         include Backlogs::ActiveRecord::Attributes
       end
     end
