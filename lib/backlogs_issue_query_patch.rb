@@ -65,14 +65,10 @@ module Backlogs
                                         :order => 21 },
             "story_points" => { :type => :float,
                                 :name => l(:field_story_points),
-                                :order => 22 },
-            "releases" => { :type => :list_optional,
-                            :name => l(:field_releases),
-                            :values => lambda { project.releases.collect{|s| [s.name, s.id.to_s] } } }
-                          }
+                                :order => 22 }
+            }
         end
 
-        #TODO: Make search for Release in multirelease possible
         if project && Backlogs.setting[:issue_release_relation] != 'multiple'
           backlogs_filters["release_id"] = {
             :type => :list_optional,
@@ -80,6 +76,12 @@ module Backlogs
             :values => RbRelease.where(project_id: project).order('name ASC').collect { |d| [d.name, d.id.to_s]},
             :order => 23
           }
+        else
+          backlogs_filters["releases"] = { :type => :list_optional,
+                            :name => l(:field_releases),
+                            :values => lambda { project.releases.collect{|s| [s.name, s.id.to_s] } },
+                            :order => 23
+                          }
         end
 
         if check_redmine_version_ge(3, 4)
