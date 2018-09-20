@@ -364,11 +364,11 @@ RB.Backlog = RB.Object.create({
           totalpoint += parseFloat(storypoint) || 0.0
           if(capacity < totalpoint && (totalpoint > 0.0)){
             if($("li#"+storyid).prev().length == 0) {
-              $( "li#"+storyid).addClass("seperator-point").css('border-top','3px solid red');
+              $( "li#"+storyid).addClass("seperator-point").css('border-top','2px solid red');
               return false;
             }
             else{
-              $( "li#"+storyid).prev().addClass("seperator-point").css('border-bottom','3px solid red');
+              $( "li#"+storyid).prev().addClass("seperator-point").css('border-bottom','2px solid red');
               return false;
             }
           }
