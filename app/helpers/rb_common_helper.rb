@@ -422,7 +422,8 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
   end
 
   def is_support_id_present?(story)
-    support_id_field = story.custom_field_values.find{|value| value.custom_field_id == Backlogs.setting[:show_backlog_story_marker_support_id].to_i}
+    #support_id_field = story.custom_field_values.find{|value| value.custom_field_id == Backlogs.setting[:show_backlog_story_marker_support_id].to_i}
+    support_id_field = CustomValue.find_by(customized_type:"Issue", custom_field_id:Backlogs.setting[:show_backlog_story_marker_support_id].to_i,customized_id:story.id)
     (support_id_field.present? and support_id_field.value.present?) ? true : false
   end
 
