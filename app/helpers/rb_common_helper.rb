@@ -415,9 +415,10 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
               l(:title_marker_release) + '"></span>' if Backlogs.setting[:show_backlog_story_marker_release] && story.issue_releases.present?
     string += '<span class="fas fa-user support_marker" title="' +
               l(:title_marker_support) + '"></span>' if is_support_id_present?(story)
-    string += '<span class="fas ' + (RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]) +
-              ' priority_marker ' + story.priority.name + '" title="' +
-              story.priority.name + '"></span>' if Backlogs.setting[:show_backlog_story_marker_priority] && !(RbCommonHelper::PRIORITY_VALUES[(story.priority.name).to_sym]).blank?
+    priority_name = story.priority.name
+    string += '<span class="fas ' + (RbCommonHelper::PRIORITY_VALUES[(priority_name).to_sym]) +
+              ' priority_marker ' + priority_name + '" title="' +
+              priority_name + '"></span>' if Backlogs.setting[:show_backlog_story_marker_priority] && !(RbCommonHelper::PRIORITY_VALUES[(priority_name).to_sym]).blank?
     string
   end
 
