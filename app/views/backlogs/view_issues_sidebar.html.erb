@@ -1,3 +1,7 @@
+<ul>
+<li><%= link_to l(:label_storie_to_be_refined_link), stories_to_refined_rb_path(@project) %></li>
+</ul>
+
 <% if sprints && sprints.size > 0 %>
   <h3><%= l(:backlogs_sprints) %></h3>
   <% sprints.each do |sp| %>

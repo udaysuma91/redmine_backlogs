@@ -20,6 +20,8 @@ def rb_match(object, path, hash)
 end
 
 def rb_common_routes(rb)
+  # stories to be redefined
+  rb_match rb, 'stories_to_refine/projects/:project_id', :to => 'rb_refine_stories#index', :via => [:get], :as => :stories_to_refined
   #release planning routes
   rb_match rb, 'release_plannings/:project_id/new', :to => 'rb_release_plannings#new', :via => [:get], :as => :new_release_planing
   rb_match rb, 'release_plannings/:project_id/create', :to => 'rb_release_plannings#create', :via => [:post], :as => :create_release_planing

@@ -1,0 +1,32 @@
+<%- content_for :header_tags do %>
+  <%= stylesheet_link_tag 'refine_stories', :plugin => 'redmine_backlogs' %>
+<%- end %>
+
+<h2><%=l(:label_storie_to_be_refined)%></h2>
+<% if @query.valid? %>
+  <% if @issues.empty? %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+  <% else %>
+    <%= render_query_totals(@query) %>
+    <div class="autoscroll">
+      <table id = "refine_issues">
+        <thead>
+        <th><%= l(:label_storie_to_be_refined_user) %></th>
+        <th><%= l(:field_label_storie_to_be_refined) %></th>
+        </thead>  
+        <tbody>
+        <% grouped_issue_list(@issues, @query) do |issue, level, group_name, group_count, group_totals| -%>
+        <% if group_name %>
+          <% reset_cycle %>
+          <tr>
+              <td class="subject"><%= group_name %></td>
+              <td class="count"><%= group_count %></td>
+          </tr>
+        <% end %>
+        <% end -%>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+ <% end %>
+</div>

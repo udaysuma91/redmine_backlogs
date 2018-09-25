@@ -1,0 +1,18 @@
+#refine_issues {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+#refine_issues td, #refine_issues th {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+#refine_issues th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #fff;
+    color: black;
+}

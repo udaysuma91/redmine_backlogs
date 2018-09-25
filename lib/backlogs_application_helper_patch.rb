@@ -39,6 +39,8 @@ module Backlogs
             return object.value.to_s
           end
           return html ? h(object) : object.to_s
+        elsif object.class.name == "User" && params[:controller] == "rb_refine_stories"
+          link_to "#{object.to_s}", project_issues_path({"set_filter"=>"1", "sort"=>"id:desc", "f"=>["status_id", "assigned_to_id", ""], "op"=>{"status_id"=>"=", "assigned_to_id"=>"="}, "v"=>{"status_id"=>["17"], "assigned_to_id"=>["#{object.id}"]}, "group_by"=>"assigned_to", "t"=>[""], "project_id"=>"#{@project.identifier}"})
         else
           format_object_without_backlogs(object, html=true, &block)
         end 
