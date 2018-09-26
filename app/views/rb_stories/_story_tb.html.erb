@@ -52,7 +52,7 @@
       </div>
   <%- end %>
   <%- if Backlogs.setting[:show_backlog_story_markers_sprint_taskboard] %>
-    <%- story_mark = add_marker_to_stories(story, story.priority.name)%>
+    <%- story_mark = add_marker_to_stories(story)%>
     <%- if !story_mark.blank? %>
       <div class="story_mark start_edit"><%=story_mark.html_safe %></div>
     <%- end %>

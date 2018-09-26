@@ -15,7 +15,7 @@
      <%- end %>
     <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
     <%- if Backlogs.setting[:show_backlog_story_markers_master_backlog] %>
-    <%- story_mark = add_marker_to_stories(story, story.priority.name)%>
+    <%- story_mark = add_marker_to_stories(story)%>
     <%- if !story_mark.blank? %>
     <span class="story_mark start_edit">- <%=story_mark.html_safe %></span>
     <%- end %>
