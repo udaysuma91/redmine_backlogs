@@ -50,13 +50,13 @@ class RbGeneric < Issue
   def self.__find_options_pbl_condition(project_id, tracker_ids, include_releases)
     if include_releases
     ["
-      issues.project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
+      project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
       and tracker_id in (?)
       and fixed_version_id is NULL
       and is_closed = ?", tracker_ids, false]
     else
       ["
-      issues.project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
+      project_id in (#{Project.find(project_id).projects_in_shared_product_backlog.map{|p| p.id}.join(',')})
       and tracker_id in (?)
       and release_id is NULL
       and fixed_version_id is NULL
