@@ -477,6 +477,23 @@
 </fieldset>
 
 <fieldset>
+  <legend><%= l(:master_backlog_tracker_background_colors) %></legend>
+  <p>
+    <%= label_tag("settings_show_master_backlog_tracker_color", l(:show_master_backlog_tracker_color)) %>
+    <%= check_box_tag("settings[show_master_backlog_tracker_color]", 'enabled',
+        Backlogs.setting[:show_master_backlog_tracker_color]) %>
+    <em class="info"><%= l(:master_backlog_bg_color_explanation) %></em>
+  </p>
+  <% Tracker.order(:name).each do |tracker| %>
+  <p>
+    <%= label_tag("settings_tracker_bg_color_#{tracker.id}]", tracker.name) %>
+    <%= text_field_tag("settings[tracker_bg_color_#{tracker.id}]", Backlogs.setting["tracker_bg_color_#{tracker.id}"]) %>
+  </p>
+  <% end %>
+
+</fieldset>
+
+<fieldset>
   <legend><%= l(:release_notes_settings) %></legend>
   <% @formats = ReleaseNotesFormat.select(:name).all %>
   <% if @formats.any? %>
