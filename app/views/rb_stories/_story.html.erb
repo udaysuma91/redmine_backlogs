@@ -1,4 +1,4 @@
-<%- bg_color = Backlogs.setting[:show_master_backlog_color_tracker_wise] == "enabled" && Backlogs.setting["tracker_bg_color_#{story.tracker_id}"].present? ? (Backlogs.setting["tracker_bg_color_#{story.tracker_id}"]) : '' %>
+<%- bg_color = Backlogs.setting[:show_master_backlog_tracker_color] == "enabled" && Backlogs.setting["tracker_bg_color_#{story.tracker_id}"].present? ? (Backlogs.setting["tracker_bg_color_#{story.tracker_id}"]) : '' %>
 <li class="model story fff-wrapper <%= mark_if_closed(story) %> tracker<%= story ? story.tracker_id : '' %>" id="<%= story_html_id_or_empty(story) %>" story ="story_<%=story.id%>" style ="background-color:<%=bg_color%>;" >
   <%- story_color = nil %>
   <%- if User.current.backlogs_preference[:show_backlog_story_color] == '1' && story.assigned_to.present? && story.assigned_to.is_a?(User) %>
